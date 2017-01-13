@@ -1,3 +1,16 @@
-<p>
-  facets-cmp works!
-</p>
+<div class="facet-group-wrapper" *ngFor="let facet_group of facet_groups">
+  <div class="facet-group" (click)="facet_group.expanded = !facet_group.expanded;">
+    <span class="facet-chevron glyphicon" [ngClass]="facet_group.expanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
+    <span class="facet-group-name">{{facet_group.name}}</span>
+  </div>
+  <div class="facet-list-wrapper" *ngIf="facet_group.expanded">
+    <div class="facet">
+      <input type="checkbox">
+      <label for=""><span></span>facet (count)</label>
+    </div>
+    <div class="facet">
+      <input type="checkbox">
+      <label for=""><span></span>facet<b>(count)</b></label>
+    </div>
+  </div>
+</div>

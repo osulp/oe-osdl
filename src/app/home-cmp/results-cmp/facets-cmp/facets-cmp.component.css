@@ -1,0 +1,45 @@
+.facet-group-wrapper{
+    min-height:50px;
+    vertical-align: middle;
+    border-bottom:1px solid #D1CDC7;
+    width:100%;
+    padding:14px 0;
+}
+
+.facet-group:hover{
+    cursor: pointer;
+}
+
+.facet-chevron{
+    color:#C34500;
+    padding:8px;
+    border:1px solid #C34500;
+    border-radius:4px;
+    font-size: 1.1em;
+}
+
+.facet-chevron.expanded{
+    color:#244068;
+    border-color:#244068;
+}
+
+.facet-group-name{
+    font-weight: bold;
+    padding-left:13px;
+}
+
+.facet-list-wrapper{
+    margin-top:20px;
+}
+
+.facet{
+    padding:5px 0;
+}
+
+.facet label{
+    color:#C34500;
+}
+.facet label b{
+    padding-left:3px;
+    color:#244068;
+}

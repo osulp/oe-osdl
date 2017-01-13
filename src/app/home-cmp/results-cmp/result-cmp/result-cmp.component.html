@@ -1,3 +1,31 @@
-<p>
-  result-cmp works!
-</p>
+<div *ngIf="viewType === 'tile'" class="row">
+  <!--Put into a for loop for results with the attached metadata record attributes-->
+  Tile view
+  <div class="tile-wrapper col-xs-6">
+    <div class="record-title">Dataset Name</div>
+    <div class="framework-record"></div>
+    <div class="record-thumbnail">Thumbnail</div>
+    <div class="record-abstract ellipsis">
+      <div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+          occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+    </div>
+    <div class="middle-row row">
+      <div class="record-date col-xs-6"><b>Updated:</b> Date</div>
+      <div class="record-misc col-xs-6"><b>Source:</b></div>
+    </div>
+    <div class="bottom-row row">
+      <!--Check if download data or map service-->
+      <div class="record-download col-xs-6"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
+      <div class="record-details col-xs-6">Details</div>
+    </div>
+  </div>
+</div>
+<div id="list-view-wrapper" *ngIf="viewType === 'list'" class="row">
+  List view
+</div>

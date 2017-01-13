@@ -1,3 +1,28 @@
-<p>
-  sort-bar-cmp works!
-</p>
+<div id="sort-bar-wrapper">
+  <div id="sort-bar" class="row no-padding">
+    <div id="data-set-num" class="col-lg-5 col-md-5 col-xs-3">
+      <h2># of data sets</h2>
+    </div>
+    <div id="sort-bar-right" class="col-lg-7 col-md-7 col-xs-9">
+      <div class="row no-padding">
+        <div id="show-framework-wrapper" class="col-xs-5">
+          <input #showFramework type="checkbox" id="showFramework">
+          <label for="showFramework"><span></span>Show only Framework data</label></div>
+        <div id="sort-by-wrapper" class="col-xs-5">
+          <label for="sortBy">Sort by:</label>
+          <span class="osdl-select">      
+            <select class="selectpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event)">
+              <option *ngFor="let item of sortByArr" [ngValue]="item" [value]="item" [selected]="item.val === selectedSortBy.val ? 'selected' : ''" >
+                  {{item.val}}
+              </option>
+            </select>
+          </span>
+        </div>
+        <div id="view-type-wrapper" class="col-xs-2" (click)="toggleViewType()">
+          <div id="tile-view" title="View results in a tile view" [ngClass]="viewType === 'tile' ? 'active' : ''">&nbsp;</div>
+          <div id="list-view" title="View results in a list view" [ngClass]="viewType === 'list' ? 'active' : ''">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

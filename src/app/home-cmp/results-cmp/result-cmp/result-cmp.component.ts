@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-result-cmp',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./result-cmp.component.css']
 })
 export class ResultCmpComponent implements OnInit {
+  @Input() viewType:any;
 
   constructor() { }
 

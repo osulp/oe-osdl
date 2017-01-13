@@ -1,5 +1,15 @@
-<p>
-  <app-sort-bar-cmp></app-sort-bar-cmp>
-  <app-facets-cmp></app-facets-cmp>
-  <app-result-cmp></app-result-cmp>
-</p>
+<div id="results-wrapper">
+  <div id="results-top-bar-wrapper">
+    <app-sort-bar-cmp (onViewTypeChange)="onViewTypeChangeHandler($event)"></app-sort-bar-cmp>
+  </div>
+  <div id="results-bottom-wrapper">
+    <div class="row no-padding">
+      <div class="col-xs-3">
+        <app-facets-cmp></app-facets-cmp>
+      </div>
+      <div class="col-xs-9">
+        <app-result-cmp [viewType]="viewType"></app-result-cmp>
+      </div>
+    </div>
+  </div>
+</div>

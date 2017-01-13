@@ -10,8 +10,12 @@ import {FacetsCmpComponent} from './facets-cmp/facets-cmp.component';
   styleUrls: ['./results-cmp.component.css']
 })
 export class ResultsCmpComponent implements OnInit {
-
+  viewType:any;
   constructor() { }
+
+  onViewTypeChangeHandler(view:any){
+    this.viewType = view;
+  }
 
   ngOnInit() {
   }

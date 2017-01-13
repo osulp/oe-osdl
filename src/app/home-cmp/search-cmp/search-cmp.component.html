@@ -1,20 +1,27 @@
-<div id="search-bar">
-  <p id="search-title">Find Geospatial &amp; Oregon Framework Data</p>
-  <div class="row search-wrapper" [ngClass]="viewType">
-    <div class="col-md-12">
-      <div class="search">
-        <span class="glyphicon glyphicon-search"></span>
-        <!--<input [(ngModel)]="searchTerms" #searchInput type="text" [(ngFormControl)]="term" [placeholder]="isMobile ? 'Select and explore' : 'Search by location or indicator name'"
+<div id="search-bar" class="container">
+  <div class="row">
+    <div class="col-xs-12" id="search-title">Find Geospatial &amp; Oregon Framework Data</div>
+    </div>
+    <div class="row search-wrapper" [ngClass]="viewType">
+      <div class="col-md-12">
+        <div class="search row">
+          <div class="col-xs-8">
+            <span class="glyphicon glyphicon-search"></span>
+            <!--<input [(ngModel)]="searchTerms" #searchInput type="text" [(ngFormControl)]="term" [placeholder]="isMobile ? 'Select and explore' : 'Search by location or indicator name'"
           (click)="inputSearchClickHandler($event);" (blur)="blurHandler($event);" (keydown)="inputKeypressHandler($event);"
         />-->
-         <input #searchInput type="text"/>
-        <!--<div id="explore-btn" (mousedown)="searchByText($event)">
+            <input #searchInput type="text" placeholder="Enter keyword here" />
+            <!--<div id="explore-btn" (mousedown)="searchByText($event)">
           Explore
         </div>-->
-        <div id="explore-btn">
-          Explore
-        </div>
-        <!--<div *ngIf="searchTerms" class="list-group">
+          </div>
+          <div id="explore-btn" class="col-xs-2">
+            Search
+          </div>
+          <div id="clear-btn" class="col-xs-2" [innerHTML]="isHandheld ? 'Clear' : 'Clear Filters'">
+            
+          </div>
+          <!--<div *ngIf="searchTerms" class="list-group">
           <a *ngFor="let item of tempResults" href="javascript:void(0);" class="list-group-item" [attr.data-search-item]="item | json"
             (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''">
             <div class="search-result-wrapper">
@@ -37,7 +44,7 @@
             </div>
           </a>
         </div>-->
+        </div>
       </div>
     </div>
   </div>
-</div>

@@ -1,0 +1,105 @@
+#list-view-wrapper{
+    background-color:#fff;
+    border-radius:4px;
+    padding:30px;
+}
+
+.tile-wrapper{
+    height:432px;
+    background-color:#fff;
+    border-radius:4px;
+    padding:20px 30px 0 30px;
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.30);
+}
+
+.record-title{
+    font-weight: bold;    
+}
+.record-thumbnail{
+    min-height:150px;
+    text-align: center;
+    vertical-align: middle;
+    padding:10px;
+}
+
+.record-abstract{
+    color:#6F7C82;
+    line-height: 1.2em;
+    padding-bottom:20px;   
+    /*border-bottom:1px solid #D1CDC7;     */
+}
+.middle-row{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid #D1CDC7; 
+}
+.record-date, .record-misc {
+    font-size:.8em;
+}
+.bottom-row{
+    max-height:40px;    
+    width:100%;
+    position: absolute;
+    bottom:0;
+    left:15px;
+    padding-left:0;
+    padding-right:0;    
+}
+.bottom-row div{
+    text-align: center;
+    background-color: #F3F3F5;
+    border-radius: 0 0 4px 0;
+    padding:10px;
+    color:#6F7C82;
+}
+.bottom-row div:first-child{
+    border-right:solid 2px #FFF;
+    border-radius: 0 0 0 4px;
+}
+.bottom-row div:hover{
+    text-align: center;
+    background-color:#244068;
+    color:#fff;
+    cursor:pointer;
+}
+.bottom-row span{
+    padding-right:5px;
+}
+
+/*ellipsis stlyling*/
+
+.ellipsis {
+    overflow: hidden;
+    height: 145px;    
+    }
+
+.ellipsis:before {
+    content:"";
+    float: left;
+    width: 5px; height: 150px; }
+
+.ellipsis > *:first-child {
+    float: right;
+    width: 100%;
+    margin-left: -5px; }        
+
+.ellipsis:after {
+    content: "\02026";  
+
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+
+    float: right; position: relative;
+    top: -25px; left: 100%; 
+    width: 3em; margin-left: -3em;
+    padding-right: 5px;
+
+    text-align: right;
+
+    background: -webkit-gradient(linear, left top, right top,
+        from(rgba(255, 255, 255, 0)), to(white), color-stop(50%, white));
+    background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);           
+    background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white); }

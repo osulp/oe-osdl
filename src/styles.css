@@ -14,4 +14,51 @@
 
 body {
     background-color:#E9E9E6 !important;
+    font-family: 'AvenirLTStd-Light', 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+h2{
+    font-family: 'AvenirLTCom-Book', 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin:4px;
+    font-size:22px;
+    font-weight: bold;
+}
+
+input[type="checkbox"] {
+    display:none;
+}
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:18px;
+    height:18px;        
+    background:url('assets/img/checkbox.png') top no-repeat;
+    margin: -4px 10px;    
+}
+input[type="checkbox"]:checked + label span {
+    background:url('assets/img/checked-box.png') top no-repeat;
+}
+
+.btn.dropdown-toggle.btn-default, 
+.btn.dropdown-toggle.btn-default:hover{
+    box-shadow: none;
+    background-color:#F3F2ED;
+    color:#D1CDC7;
+    border-color:#D1CDC7;
+}
+
+.dropdown-menu{
+    background-color: #F3F2ED;    
+}
+
+.dropdown-menu > li > a{
+    color:#C34500;
+    padding:10px;
+    margin:0 5px;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li.selected a{
+    background-color:rgba(187,178,164,0.20);
+    border-radius:4px;
+}
+
+

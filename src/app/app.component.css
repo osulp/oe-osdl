@@ -92,3 +92,9 @@ a.a-nav {
     #footer {
         padding: 16px 115px 14px 135px;
     }
+
+@media only screen and (max-width : 1200px) {
+    .osdl-logo{
+        padding-left:20px;
+    }
+}
