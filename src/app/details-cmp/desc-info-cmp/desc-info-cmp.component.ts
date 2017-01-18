@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./desc-info-cmp.component.css']
 })
 export class DescInfoCmpComponent implements OnInit {
-
+  metaInfo:any = 'all';
   constructor() { }
 
   ngOnInit() {
