@@ -4,7 +4,7 @@
     <div class="tile-wrapper">
       <div class="record-title">Dataset Name</div>
       <div class="framework-record">
-        <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset"/>
+        <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
       </div>
       <div class="record-thumbnail">Thumbnail</div>
       <div class="record-abstract ellipsis">
@@ -53,5 +53,40 @@
   </div>
 </div>
 <div id="list-view-wrapper" *ngIf="viewType === 'list'" class="row">
-  List view
+  <div class="list-result col-sm-12">
+    <div class="row">
+      <div class="record-thumbnail col-xs-2">Thumbnail</div>
+      <div class="record-list-title-col col-xs-9">
+        <div class="record-title">Dataset Name</div>
+        <div class="row list-download-details">
+          <!--Check if download data or map service-->
+          <div class="record-download col-xs-6"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
+          <div class="record-details col-xs-6">Details</div>
+        </div>
+      </div>
+      <div class="col-xs-1">
+        <div class="framework-record">
+          <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="list-result not-first col-sm-12">
+    <div class="row">
+      <div class="record-thumbnail col-xs-2">Thumbnail</div>
+      <div class="record-list-title-col col-xs-9">
+        <div class="record-title">Dataset Name</div>
+        <div class="row list-download-details">
+          <!--Check if download data or map service-->
+          <div class="record-download col-xs-6"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
+          <div class="record-details col-xs-6">Details</div>
+        </div>
+      </div>
+      <div class="col-xs-1">
+        <div class="framework-record">
+          <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
