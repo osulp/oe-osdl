@@ -1,15 +1,15 @@
 <div id="results-wrapper">
-  <div id="results-top-bar-wrapper">
-    <app-sort-bar-cmp (onViewTypeChange)="onViewTypeChangeHandler($event)"></app-sort-bar-cmp>
-  </div>
-  <div id="results-bottom-wrapper">
-    <div class="row no-padding">
-      <div class="col-xs-3">
-        <app-facets-cmp></app-facets-cmp>
-      </div>
-      <div class="col-xs-9">
-        <app-result-cmp [viewType]="viewType"></app-result-cmp>
-      </div>
+    <div id="results-top-bar-wrapper">
+        <app-sort-bar-cmp [numRecords]="solr_results.response ? solr_results.response.numFound : '0'" (onViewTypeChange)="onViewTypeChangeHandler($event)" (onFrameworkOnlyChange)="onFrameworkOnlyChange($event)"></app-sort-bar-cmp>
     </div>
-  </div>
+    <div id="results-bottom-wrapper">
+        <div class="row no-padding">
+            <div class="col-xs-3">
+                <app-facets-cmp [solrFacets]="solr_results.facet_counts  ? solr_results.facet_counts.facet_fields : {}"></app-facets-cmp>
+            </div>
+            <div class="col-xs-9">
+                <app-result-cmp [viewType]="viewType" [solrResults]="solr_results.response ? solr_results.response.docs : []"></app-result-cmp>
+            </div>
+        </div>
+    </div>
 </div>

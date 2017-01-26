@@ -1,16 +1,24 @@
 <div class="facet-group-wrapper" *ngFor="let facet_group of facet_groups">
-  <div class="facet-group" (click)="facet_group.expanded = !facet_group.expanded;">
-    <span class="facet-chevron glyphicon" [ngClass]="facet_group.expanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
-    <span class="facet-group-name">{{facet_group.name}}</span>
-  </div>
-  <div class="facet-list-wrapper" *ngIf="facet_group.expanded">
-    <div class="facet">
-      <input type="checkbox">
-      <label for=""><span></span>facet (count)</label>
+    <div class="facet-group" (click)="facet_group.expanded = !facet_group.expanded;">
+        <span class="facet-chevron glyphicon" [ngClass]="facet_group.expanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
+        <span class="facet-group-name">{{facet_group.name}}</span>
     </div>
-    <div class="facet">
-      <input type="checkbox">
-      <label for=""><span></span>facet<b>(count)</b></label>
+    <div class="facet-list-wrapper" *ngIf="facet_group.expanded">
+        <div *ngFor="let solr_facet of facet_group.solrFields">
+            <div *ngIf="facet_group.name !== 'Topics'">
+                <div *ngFor="let sf of solrFacets[solr_facet]; let idx = index">
+                    <div *ngIf="idx % 2 === 0" class="facet">
+                        <input [id]="'sf'+solrFacets[solr_facet][idx]" type="checkbox">
+                        <label [for]="'sf'+solrFacets[solr_facet][idx]"><span></span>{{sf}} ({{solrFacets[solr_facet][idx+1]}})</label>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="facet_group.name === 'Topics'">
+                <div class="facet">
+                    <input [id]="'sf'+solr_facet" type="checkbox">
+                    <label [for]="'sf'+solr_facet"><span></span>{{solr_facet}}<b></b></label>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

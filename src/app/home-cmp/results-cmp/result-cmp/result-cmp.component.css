@@ -1,169 +1,195 @@
-#list-view-wrapper{
-    background-color:#fff;
-    border-radius:4px;
-    padding:30px 30px 10px 30px;
-     box-shadow:0 2px 5px 0 rgba(0,0,0,0.30);
-     margin:0 0 0 10px;
+#list-view-wrapper {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 30px 30px 10px 30px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.30);
+    margin: 0 0 0 10px;
 }
 
-.tile-row-wrapper{
-    margin-left:-30px;
-    margin-right:-30px;    
+.tile-row-wrapper {
+    margin-left: -30px;
+    margin-right: -30px;
 }
 
-.tile-wrapper{
-    height:432px;
-    background-color:#fff;
-    border-radius:4px;
-    padding:20px 30px 0 30px;
-    box-shadow:0 2px 5px 0 rgba(0,0,0,0.30);
+.tile-wrapper {
+    height: 432px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 20px 30px 0 30px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.30);
     margin-left: 25px;
     margin-right: 25px;
-    margin-bottom:40px;
+    margin-bottom: 40px;
 }
 
-.list-result{
-    padding-bottom:10px;
+.list-result {
+    padding-bottom: 10px;
 }
 
-.list-result.not-first{
-    padding-top:10px;
-    border-top:1px solid #D1CDC7;
+.list-result.not-first {
+    padding-top: 10px;
+    border-top: 1px solid #D1CDC7;
 }
 
-.record-title{
-    font-weight: bold;    
+.record-title {
+    font-weight: bold;
+    min-height: 40px;
 }
 
-#list-view-wrapper .record-title{
-    font-size:1.2em;
+#list-view-wrapper .record-title {
+    font-size: 1.1em;
+    min-height: 20px;
 }
 
-.framework-record{
-    position:absolute;
-    top:10px;
-    right:50px;
-}
-#list-view-wrapper .framework-record{
-    right:0;
-    top:0;
+.framework-record {
+    position: absolute;
+    top: 10px;
+    right: 50px;
 }
 
-.record-thumbnail{
-    min-height:150px;
+#list-view-wrapper .framework-record {
+    right: 0;
+    top: 0;
+}
+
+.record-thumbnail {
+    min-height: 150px;
+    max-height: 150px;
     text-align: center;
     vertical-align: middle;
-    padding:10px;
-}
-#list-view-wrapper .record-thumbnail{
-    min-height:75px;
+    padding: 10px;
 }
 
-.record-abstract{
-    color:#6F7C82;
+.record-thumbnail img {
+    height: 125px;
+}
+
+#list-view-wrapper .record-thumbnail img {
+    height: 50px;
+}
+
+#list-view-wrapper .record-thumbnail {
+    min-height: 50px;
+    padding: 0;
+}
+
+.record-abstract {
+    color: #6F7C82;
     line-height: 1.2em;
-    padding-bottom:20px;   
+    padding-bottom: 20px;
     /*border-bottom:1px solid #D1CDC7;     */
 }
-.middle-row{
-    margin-top:10px;
-    padding-top:10px;
-    border-top:1px solid #D1CDC7; 
+
+.middle-row {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #D1CDC7;
 }
-.record-date, .record-misc {
-    font-size:.8em;
+
+.record-date,
+.record-misc {
+    font-size: .8em;
 }
-.bottom-row{
-    max-height:40px;    
+
+.bottom-row {
+    max-height: 40px;
     /*width:100%;*/
     position: relative;
-    bottom:-21px;
+    bottom: -21px;
     /*left:15px;*/
-    padding-left:0;
-    padding-right:0;    
-    margin-left:-30px;
-    margin-right:-30px;    
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: -30px;
+    margin-right: -30px;
 }
-.bottom-row div{
+
+.bottom-row div {
     text-align: center;
     background-color: #F3F3F5;
     border-radius: 0 0 4px 0;
-    padding:10px;
-    color:#6F7C82;
+    padding: 10px;
+    color: #6F7C82;
 }
-.bottom-row div:first-child{
-    border-right:solid 2px #FFF;
+
+.bottom-row div:first-child {
+    border-right: solid 2px #FFF;
     border-radius: 0 0 0 4px;
 }
-.bottom-row div:hover{
+
+.bottom-row div:hover {
     text-align: center;
-    background-color:#244068;
-    color:#fff;
-    cursor:pointer;
-}
-.bottom-row span{
-    padding-right:5px;
+    background-color: #244068;
+    color: #fff;
+    cursor: pointer;
 }
 
-.list-download-details{
-    max-width:230px;
-    color:#C34500;
-    padding-top:10px;
+.bottom-row span {
+    padding-right: 5px;
 }
 
-.list-download-details div{
-    width:50%;
+.list-download-details {
+    max-width: 230px;
+    color: #C34500;
+    padding-top: 10px;
 }
-.list-download-details div:hover{
-    cursor:pointer;
+
+.list-download-details div {
+    width: 50%;
+}
+
+.list-download-details div:hover {
+    cursor: pointer;
 }
 
 .list-download-details div:hover {
     text-decoration: underline;
 }
 
-.list-download-details div:first-child{
-    border-right:1px solid #D1CDC7;
+.list-download-details div:first-child {
+    border-right: 1px solid #D1CDC7;
 }
 
-.list-download-details span{
-    padding-right:5px;
+.list-download-details span {
+    padding-right: 5px;
 }
+
 
 /*ellipsis stlyling*/
 
 .ellipsis {
     overflow: hidden;
-    height: 145px;    
-    }
+    height: 125px;
+}
 
 .ellipsis:before {
-    content:"";
+    content: "";
     float: left;
-    width: 5px; height: 150px; }
+    width: 5px;
+    height: 135px;
+}
 
-.ellipsis > *:first-child {
+.ellipsis>*:first-child {
     float: right;
     width: 100%;
-    margin-left: -5px; }        
+    margin-left: -5px;
+}
 
 .ellipsis:after {
-    content: "\02026";  
-
+    content: "\02026";
     box-sizing: content-box;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
-
-    float: right; position: relative;
-    top: -25px; left: 100%; 
-    width: 3em; margin-left: -3em;
+    float: right;
+    position: relative;
+    top: -25px;
+    left: 100%;
+    width: 3em;
+    margin-left: -3em;
     padding-right: 5px;
-
     text-align: right;
-
-    background: -webkit-gradient(linear, left top, right top,
-        from(rgba(255, 255, 255, 0)), to(white), color-stop(50%, white));
-    background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);           
+    background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), to(white), color-stop(50%, white));
+    background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
     background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
     background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white); }
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+}

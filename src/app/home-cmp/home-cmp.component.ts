@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {SearchCmpComponent} from './search-cmp/search-cmp.component';
-import {ResultsCmpComponent} from './results-cmp/results-cmp.component';
+import { SearchCmpComponent } from './search-cmp/search-cmp.component';
+import { ResultsCmpComponent } from './results-cmp/results-cmp.component';
+import { OsdlSolrSrvService, ResultsStoreSrvService } from '../services/index';
 
 @Component({
   selector: 'app-home-cmp',
@@ -8,10 +9,26 @@ import {ResultsCmpComponent} from './results-cmp/results-cmp.component';
   styleUrls: ['./home-cmp.component.css']
 })
 export class HomeCmpComponent implements OnInit {
-
-  constructor() { }
+  solr_results: any;
+  constructor(
+    public _osdl_solr_service: OsdlSolrSrvService,
+    public _results_store_service: ResultsStoreSrvService
+  ) { }
 
   ngOnInit() {
+    // this._osdl_solr_service.get().subscribe((results: any) => {
+    //   this._results_store_service.updateResults([results]);
+    //   console.log('results from solr search', results);
+    // });
+
+    this._results_store_service.selectionChanged$.subscribe(
+      results => {
+        console.log('store updated! in home cmp', results);
+        this.solr_results = results;
+      },
+      err => console.error(err),
+      () => console.log('done with subscribe event results store selected')
+    );
   }
 
 }
