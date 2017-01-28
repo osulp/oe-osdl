@@ -9,7 +9,7 @@ import { OsdlSolrSrvService, ResultsStoreSrvService } from '../../services/index
   templateUrl: './results-cmp.component.html',
   styleUrls: ['./results-cmp.component.css']
 })
-export class ResultsCmpComponent implements OnInit {  
+export class ResultsCmpComponent implements OnInit {
   viewType: any;
   solr_results: any = {};
   constructor(
@@ -21,9 +21,14 @@ export class ResultsCmpComponent implements OnInit {
     this.viewType = view;
   }
 
+  onSortChange(selectedSort: any) {
+    const sortParam = [{ key: 'sort', value: selectedSort }];
+    this._osdl_solr_service.get(sortParam, 'sort');
+  }
+
   onFrameworkOnlyChange(showOnly: boolean) {
-    //trigger new search with only framework if true, else show all
-    console.log('show only framework: ', showOnly);
+    const frameworkParam = showOnly ? [{ key: 'fq', value: 'keywords_ss:*Framework' }] : [];
+    this._osdl_solr_service.get(frameworkParam, 'framework');
   }
 
   ngOnInit() {

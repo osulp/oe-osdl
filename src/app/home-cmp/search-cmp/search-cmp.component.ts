@@ -19,12 +19,8 @@ export class SearchCmpComponent {
   ) { }
 
   ngOnInit() {
-    console.log('init search');
-    this._osdl_solr_service.get().subscribe((results: any) => {
-      this._results_store_service.updateResults(results);
-      //this.solr_results = results;
-      console.log('results from solr search', this.solr_results);
-    });
+    this._osdl_solr_service.setBaseSearchState();
+    this._osdl_solr_service.get();
     this._results_store_service.selectionChanged$.subscribe(
       results => {
         console.log('store updated! in search cmp', results);

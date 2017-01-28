@@ -17,9 +17,8 @@ import { FacetsCmpComponent } from './home-cmp/results-cmp/facets-cmp/facets-cmp
 import { SortBarCmpComponent } from './home-cmp/results-cmp/sort-bar-cmp/sort-bar-cmp.component';
 import { TitleBarCmpComponent } from './details-cmp/title-bar-cmp/title-bar-cmp.component';
 import { DescInfoCmpComponent } from './details-cmp/desc-info-cmp/desc-info-cmp.component';
-import { OsdlSolrSrvService, ResultsStoreSrvService } from './services/index';
+import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, FacetsStoreSrvService } from './services/index';
 import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
-import { FacetAssocPipe } from './pipes/facet-assoc.pipe';
 
 const appRoutes: Routes = [
   { path: '', component: HomeCmpComponent },
@@ -45,8 +44,7 @@ const appRoutes: Routes = [
     SortBarCmpComponent,
     TitleBarCmpComponent,
     DescInfoCmpComponent,
-    ResourcesCmpComponent,
-    FacetAssocPipe
+    ResourcesCmpComponent    
   ],
   imports: [
     BrowserModule,
@@ -55,7 +53,7 @@ const appRoutes: Routes = [
     JsonpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [OsdlSolrSrvService, ResultsStoreSrvService],
+  providers: [OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, FacetsStoreSrvService],
   bootstrap: [AppComponent]
 
 })

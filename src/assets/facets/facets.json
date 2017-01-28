@@ -1,0 +1,53 @@
+{
+    "groups": [{
+            "name": "Collections",
+            "expanded": false,
+            "solrFields": [
+                { "facet": "sys.src.collections_ss" }
+            ]
+        },
+        {
+            "name": "Formats",
+            "expanded": false,
+            "solrFields": [
+                { "facet": "dataAccessType_ss" }
+            ]
+        },
+        {
+            "name": "Sources",
+            "expanded": false,
+            "solrFields": [
+                { "facet": "contact.organizations_ss" }
+            ]
+        },
+        {
+            "name": "Topics",
+            "expanded": true,
+            "solrFields": [
+                { "facet": "Admin Boundaries" },
+                { "facet": "Bioscience" },
+                { "facet": "Cadastral" },
+                { "facet": "Climate" },
+                { "facet": "Coastal and Marine" },
+                { "facet": "Elevation" },
+                { "facet": "Geodetic Control" },
+                { "facet": "Geoscience" },
+                { "facet": "Hazards" },
+                { "facet": "Preparedness" },
+                { "facet": "Hydrography" },
+                { "facet": "Imagery" },
+                { "facet": "Land Use/Land Cover" },
+                { "facet": "Transportation" },
+                { "facet": "Utilities" },
+                { "facet": "Reference" }
+            ]
+        },
+        {
+            "name": "Keywords",
+            "expanded": false,
+            "solrFields": [
+                { "facet": "keywords" }
+            ]
+        }
+    ]
+}

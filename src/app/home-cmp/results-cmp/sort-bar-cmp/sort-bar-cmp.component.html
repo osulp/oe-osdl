@@ -11,8 +11,8 @@
                 <div id="sort-by-wrapper" class="col-xs-5">
                     <label for="sortBy">Sort by:</label>
                     <span class="osdl-select">      
-            <select class="selectpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event)">
-              <option *ngFor="let item of sortByArr" [ngValue]="item" [value]="item" [selected]="item.val === selectedSortBy.val ? 'selected' : ''" >
+            <select class="selectpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event, sortBy)">
+              <option *ngFor="let item of sortByArr" [ngValue]="item.solrVal" [value]="item.solrVal" [selected]="item.val === selectedSortBy.val ? 'selected' : ''" >
                   {{item.val}}
               </option>
             </select>

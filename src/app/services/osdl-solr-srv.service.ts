@@ -1,67 +1,82 @@
 import { Injectable } from '@angular/core';
 import { Jsonp, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-//import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
+import { ResultsStoreSrvService } from './results-store-srv.service';
+import { SearchStateSrvService } from './search-state-srv.service';
 
 @Injectable()
 export class OsdlSolrSrvService {
-    //_resultStore: BehaviorSubject<any>;
     SOLRURL: string = 'http://lib-solr1.library.oregonstate.edu:8984/solr/geoportal/select';
 
-    constructor(private jsonp: Jsonp) {
-        //this._resultStore = <BehaviorSubject<any>>new BehaviorSubject({});
+    constructor(
+        private jsonp: Jsonp,
+        private _resultStore: ResultsStoreSrvService,
+        private _searchState: SearchStateSrvService
+    ) { }
+
+    setBaseSearchState() {
+        this._searchState.setBaseSearchState();
     }
 
-    // get results() {
-    //     return this._resultStore.asObservable();
-    // }
+    get(newParams?: any[], searchType?: any) {
+        const params: URLSearchParams = this._searchState.getState();
 
-    // loadAll() {
-    //     this.get().subscribe(data => {
-    //         this._resultStore.next(data);
-    //     });
-    // }
+        // let params = baseParams ? new URLSearchParams(JSON.stringify(baseParams)) : this._baseParams;
+        console.log('get check',params, searchType, newParams);
+        if (searchType) {
+            switch (searchType) {
+                case 'facets':
+                    // check for framework before deleting
+                    const hasFramework = params.getAll('fq').filter((p: any) => p === 'keywords_ss:*Framework').length > 0;
+                    params.delete('fq');
+                    newParams.forEach((p: any, idx: number) => {
+                        if (idx === 0) {
+                            params.set('fq', 'id.table_s:table.docindex');
+                        }
+                        params.append(p.key, p.value);
+                    });
+                    if (newParams.length === 0) {
+                        params.set('fq', 'id.table_s:table.docindex');
+                    }
+                    if (hasFramework) {
+                        params.append('fq', 'keywords_ss:*Framework');
+                    }
+                    break;
+                case 'textquery':
+                    break;
+                case 'sort':
+                    params.delete('sort');
+                    params.set('sort',newParams[0].value);
+                    break;
+                case 'framework':
+                    if (newParams.length > 0) {
+                        params.append(newParams[0].key, newParams[0].value);
+                    } else {
+                        //need to remove                        
+                        const facetParams = params.getAll('fq').filter((p: any) => p !== 'keywords_ss:*Framework');
+                        params.delete('fq');
+                        facetParams.forEach((fp: any, idx: number) => {
+                            if (idx === 0) {
+                                params.set('fq', fp);
+                            } else {
+                                params.append('fq', fp);
+                            }
+                        });
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        this._searchState.updateState(params);
+        this.search(params).subscribe((results: any) => {
+            this._resultStore.updateResults(results);
+        });
+    }
 
-    get(): Observable<any[]> {
-        const params = new URLSearchParams();
-        params.set('start', '0');
-        params.set('rows', '10');
-        params.set('wt', 'json');
-        params.set('facet', 'true');
-        params.set('q', '*:*');
-        params.set('fq', 'id.table_s:table.docindex');
-        params.set('facet.field', 'sys.metadatatype.identifier_s');
-        params.append('facet.field', 'keywords');
-        params.append('facet.field', 'keywords_ss');
-        params.append('facet.field', 'contact.organizations_ss');
-        params.append('facet.field', 'sys.src.collections_txt');
-        params.append('facet.field', 'sys.src.collections_ss');
-        params.append('facet.field', 'dataAccessType_ss');
-        params.append('facet.field', 'sys.src.site.name_s');
-        params.append('facet.field', 'sys.src.site.name_s');
-        params.set('f.sys.metadatatype.identifier_s.facet.mincount', '0');
-        params.set('f.sys.metadatatype.identifier_s.facet.limit', '10');
-        params.set('f.keywords.facet.mincount', '1');
-        params.set('f.keywords_ss.facet.limit', '10');
-        params.set('f.contact.people_ss.facet.mincount', '1');
-        params.set('f.contact.organizations_ss.facet.limit', '10');
-        params.set('f.keywords.facet.mincount', '1');
-        params.set('f.keywords.facet.limit', '10');
-        params.set('f.contact.organizations_ss.facet.mincount', '1');
-        params.set('f.contact.organizations_ss.facet.limit', '10');
-        params.set('f.contact.people_ss.facet.mincount', '1');
-        params.set('f.contact.people_ss.facet.limit', '10');
-        params.set('f.sys.src.collections_txt.facet.mincount', '1');
-        params.set('f.sys.src.collections_txt.facet.limit', '10');
-        params.set('f.sys.src.collections_ss.facet.mincount', '1');
-        params.set('f.sys.src.collections_ss.facet.limit', '10');
-        params.set('f.dataAccessType_ss.facet.mincount', '1');
-        params.set('f.dataAccessType_ss.facet.limit', '10');
-        params.set('f.sys.src.site.name_s.facet.mincount', '1');
-        params.set('f.sys.src.site.name_s.facet.limit', '10');
-        params.set('f.sys.src.collections_ss.facet.limit', '10');
-        params.set('json.wrf', 'JSONP_CALLBACK');
+
+    search(params: URLSearchParams): Observable<any[]> {
         return this.jsonp
             .get(this.SOLRURL, { search: params })
             .map(function (res: Response) {

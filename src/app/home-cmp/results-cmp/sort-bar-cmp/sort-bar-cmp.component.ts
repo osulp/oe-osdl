@@ -9,6 +9,7 @@ export class SortBarCmpComponent implements OnInit {
   @Input() numRecords: any;
   @Output() onViewTypeChange = new EventEmitter();
   @Output() onFrameworkOnlyChange = new EventEmitter();
+  @Output() onSortChange = new EventEmitter();
   sortByArr: any = [];
   selectedSortBy: any = {};
   viewType: any = 'tile';
@@ -17,8 +18,9 @@ export class SortBarCmpComponent implements OnInit {
   constructor() { }
 
   onSortByChange(selectedSort: any) {
-    console.log('selected sort is: ', selectedSort);
+    //console.log('selected sort is: ', selectedSort);    
     this.selectedSortBy = selectedSort;
+    this.onSortChange.emit(selectedSort);
   }
 
   toggleFrameworkOnly(chkShowFramework) {
@@ -33,10 +35,10 @@ export class SortBarCmpComponent implements OnInit {
 
   ngOnInit() {
     this.sortByArr = [
-      { val: 'Newest first' },
-      { val: 'Oldest first' },
-      { val: 'Title A-Z' },
-      { val: 'Title Z-A' }
+      { val: 'Newest first', solrVal: 'sys.src.item.lastmodified_tdt desc' },
+      { val: 'Oldest first', solrVal: 'sys.src.item.lastmodified_tdt asc' },
+      { val: 'Title A-Z', solrVal: 'title asc' },
+      { val: 'Title Z-A', solrVal: 'title desc' }
     ];
     this.onViewTypeChange.emit(this.viewType);
   }

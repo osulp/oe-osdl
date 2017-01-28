@@ -2,8 +2,8 @@
     <!--Put into a for loop for results with the attached metadata record attributes-->
     <div *ngFor="let result of solrResults" class="col-md-6 col-sm-12">
         <div class="tile-wrapper">
-            <div class="record-title">{{result.title[0]}}</div>
-            <div *ngIf="result['keywords'].indexOf('Framework') !== -1" class="framework-record">
+            <div class="record-title">{{result.title}}</div>
+            <div *ngIf="result['keywords'] ? result['keywords'].indexOf('Framework') !== -1 : false" class="framework-record">
                 <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
             </div>
             <div class="record-thumbnail">
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="record-thumbnail col-xs-2"><img [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" /></div>
             <div class="record-list-title-col col-xs-9">
-                <div class="record-title">{{result.title[0]}}</div>
+                <div class="record-title">{{result.title}}</div>
                 <div class="row list-download-details">
                     <!--Check if download data or map service-->
                     <div class="record-download col-xs-6" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
