@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchCmpComponent } from './search-cmp/search-cmp.component';
 import { ResultsCmpComponent } from './results-cmp/results-cmp.component';
 import { OsdlSolrSrvService, ResultsStoreSrvService } from '../services/index';
@@ -10,10 +10,16 @@ import { OsdlSolrSrvService, ResultsStoreSrvService } from '../services/index';
 })
 export class HomeCmpComponent implements OnInit {
   solr_results: any;
+  @ViewChild(ResultsCmpComponent) resultsCmp: ResultsCmpComponent;
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     public _results_store_service: ResultsStoreSrvService
   ) { }
+
+  onRemoveFilterHandler(filter: any) {
+    filter.selected = false;   
+    this.resultsCmp.facetsCmp.setSelectedFacets(filter);
+  }
 
   ngOnInit() {
     // this._osdl_solr_service.get().subscribe((results: any) => {

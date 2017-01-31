@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ResultCmpComponent } from './result-cmp/result-cmp.component';
 import { SortBarCmpComponent } from './sort-bar-cmp/sort-bar-cmp.component';
 import { FacetsCmpComponent } from './facets-cmp/facets-cmp.component';
@@ -10,6 +10,7 @@ import { OsdlSolrSrvService, ResultsStoreSrvService } from '../../services/index
   styleUrls: ['./results-cmp.component.css']
 })
 export class ResultsCmpComponent implements OnInit {
+  @ViewChild(FacetsCmpComponent) facetsCmp: FacetsCmpComponent;
   viewType: any;
   solr_results: any = {};
   constructor(

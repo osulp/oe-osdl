@@ -6,16 +6,16 @@
     <div class="facet-list-wrapper" *ngIf="facet_group.expanded">
         <div *ngFor="let solr_facet of facet_group.solrFields">
             <div *ngIf="facet_group.name !== 'Topics'">
-                <div *ngFor="let sf of solrFacets.facet_fields[solr_facet.facet]; let idx = index">
-                    <div *ngIf="idx % 2 === 0" class="facet">
-                        <input [id]="'sf'+solrFacets.facet_fields[solr_facet.facet][idx]" #facetChkBox type="checkbox" (click)="setSelectedFacets({facet:solr_facet.facet,query:solrFacets.facet_fields[solr_facet.facet][idx],selected:facetChkBox.checked,type:'facet'})" />
-                        <label [for]="'sf'+solrFacets.facet_fields[solr_facet.facet][idx]"><span></span>{{sf}} ({{solrFacets.facet_fields[solr_facet.facet][idx+1]}})</label>
+                <div *ngFor="let sf of solr_facet.fields">
+                    <div class="facet">
+                        <input [id]="'sf'+sf.field" #facetChkBox type="checkbox" [(ngModel)]="sf.selected" (ngModelChange)="setSelectedFacets({facet:solr_facet.facet,query:sf.field,selected:facetChkBox.checked,type:'facet'})" />
+                        <label [for]="'sf'+sf.field"><span></span>{{sf.field}} <b>({{sf.count}})</b></label>
                     </div>
                 </div>
             </div>
             <div *ngIf="facet_group.name === 'Topics' && solrFacets.facet_queries">
                 <div class="facet">
-                    <input #facetChkBox [id]="'sf'+solr_facet.facet" (click)="setSelectedFacets({facet:solr_facet.facet,query:solr_facet.facet,selected:facetChkBox.checked,type:'query'})" type="checkbox">
+                    <input #facetChkBox [id]="'sf'+solr_facet.facet" [(ngModel)]="solr_facet.selected" (ngModelChange)="setSelectedFacets({facet:solr_facet.facet,query:solr_facet.facet,selected:facetChkBox.checked,type:'query'})" type="checkbox">
                     <label [for]="'sf'+solr_facet.facet"><span></span>{{solr_facet.facet}}<b>({{solrFacets.facet_queries[solr_facet.facet]}}) </b></label>
                 </div>
             </div>

@@ -7,7 +7,7 @@
                 <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
             </div>
             <div class="record-thumbnail">
-                <img [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" />
+                <img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'" />
             </div>
             <div class="record-abstract ellipsis">
                 <div>

@@ -19,11 +19,20 @@ export class OsdlSolrSrvService {
         this._searchState.setBaseSearchState();
     }
 
-    get(newParams?: any[], searchType?: any) {
+    textSearch(newParams?: any[], update?: boolean): Observable<any[]> {
+        const params = this.setParams(newParams, 'textquery', update);
+        return this.jsonp
+            .get(this.SOLRURL, { search: params })
+            .map(function (res: Response) {
+                return res.json().response.docs || {};
+            });
+    }
+
+    setParams(newParams: any, searchType: any, update?: boolean) {
         const params: URLSearchParams = this._searchState.getState();
 
         // let params = baseParams ? new URLSearchParams(JSON.stringify(baseParams)) : this._baseParams;
-        console.log('get check',params, searchType, newParams);
+        console.log('get check', params, searchType, newParams);
         if (searchType) {
             switch (searchType) {
                 case 'facets':
@@ -44,10 +53,12 @@ export class OsdlSolrSrvService {
                     }
                     break;
                 case 'textquery':
+                    params.delete('q');
+                    params.set('q', newParams[0].value === '' ? '*:*': newParams[0].value);
                     break;
                 case 'sort':
                     params.delete('sort');
-                    params.set('sort',newParams[0].value);
+                    params.set('sort', newParams[0].value);
                     break;
                 case 'framework':
                     if (newParams.length > 0) {
@@ -69,7 +80,15 @@ export class OsdlSolrSrvService {
                     break;
             }
         }
-        this._searchState.updateState(params);
+        if (update) {
+            this._searchState.updateState(params);
+        }
+        return params;
+    }
+
+
+    get(newParams?: any[], searchType?: any) {
+        const params = this.setParams(newParams, searchType, true);
         this.search(params).subscribe((results: any) => {
             this._resultStore.updateResults(results);
         });

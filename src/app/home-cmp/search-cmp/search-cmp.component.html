@@ -1,50 +1,56 @@
 <div id="search-bar" class="container">
-  <div class="row">
-    <div class="col-xs-12" id="search-title">Find Geospatial &amp; Oregon Framework Data</div>
+    <div class="row">
+        <div class="col-xs-12" id="search-title">Find Geospatial &amp; Oregon Framework Data</div>
     </div>
     <div class="row search-wrapper" [ngClass]="viewType">
-      <div class="col-md-12">
-        <div class="search row">
-          <div class="col-xs-8">
-            <span class="glyphicon glyphicon-search"></span>
-            <!--<input [(ngModel)]="searchTerms" #searchInput type="text" [(ngFormControl)]="term" [placeholder]="isMobile ? 'Select and explore' : 'Search by location or indicator name'"
-          (click)="inputSearchClickHandler($event);" (blur)="blurHandler($event);" (keydown)="inputKeypressHandler($event);"
-        />-->
-            <input #searchInput type="text" placeholder="Enter keyword here" />
-            <!--<div id="explore-btn" (mousedown)="searchByText($event)">
-          Explore
-        </div>-->
-          </div>
-          <div id="explore-btn" class="col-xs-2">
-            Search
-          </div>
-          <div id="clear-btn" class="col-xs-2" [innerHTML]="isHandheld ? 'Clear' : 'Clear Filters'">
-            
-          </div>
-          <!--<div *ngIf="searchTerms" class="list-group">
-          <a *ngFor="let item of tempResults" href="javascript:void(0);" class="list-group-item" [attr.data-search-item]="item | json"
-            (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''">
-            <div class="search-result-wrapper">
-              <div [ngClass]="{isPlace: item.Type == 'Place', isIndicator: item.Type == 'Indicator'}" class="search-result-type">
-                {{item.Type}}
-              </div>
-              <div class="search-result-content">
-                <div class="search-result-name">
-                  <span>{{item.Name !== item.DisplayName ? item.DisplayName : item.Name}}</span>
-                  <span *ngIf="item.TypeCategory" class="typeCategory">({{item.TypeCategory}})</span>
-                  <span *ngIf="item.Desc && item.Type === 'Place'" class="ct-tag">
-                                    <b *ngIf="item.Desc.split('~').length > 0">{{(item.TypeCategory === 'Unincorporated Place' ? 'Data shown for ' : 'Includes data for ') + item.Desc.split('~')[0]}}</b>
-                                </span>
-                  <span *ngIf="item.Desc && item.Type === 'Place'" class="glyphicon glyphicon-flag ct-tag-flag">
-                                </span>
+        <div class="col-md-12">
+            <div class="search row">
+                <div class="col-xs-8">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <input #searchInput type="text" [(ngModel)]="searchString" [formControl]="searchTerm" placeholder="Enter keyword here" (click)="inputSearchClickHandler($event);" (keydown)="inputKeypressHandler($event);" (blur)="blurHandler($event);" />
+                    <div *ngIf="searchString" class="list-group">
+                        <!--<a *ngFor="let item of temp_search_results" href="javascript:void(0);" class="list-group-item" [attr.data-search-item]="item | json" (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''">-->
+                        <a *ngFor="let item of temp_search_results" href="javascript:void(0);" class="list-group-item" (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''">
+                            <div class="search-result-wrapper container">
+                                <!--<div [ngClass]="{isPlace: item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 ? 'Indicator' : 'Place' : 'Place' }" class="search-result-type">
+                                    {{item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 ? 'Download' : 'Map Service' : 'Download'}}
+                                </div>-->
+                                <div class="search-result-content row">
+                                    <div class="search-result-name col-xs-12">
+                                        <span>{{item.title}}</span>
+                                        <span *ngIf="item['keywords'] ? item['keywords'].indexOf('Framework') !== -1 : false" class="framework-record">
+                <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
+            </span>
+
+                                    </div>
+                                    <div class="search-result-thumb col-xs-1">
+                                        <img *ngIf="item['url.thumbnail_s'] !== undefined" [src]="item['url.thumbnail_s'] !== undefined ? item['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" />
+                                    </div>
+                                    <div [title]="item.description" class="search-result-desc col-xs-5">
+                                        {{item.description}}
+                                    </div>
+                                    <div *ngIf="item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 : false" class="download-link col-xs-2">
+                                        <span class="glyphicon glyphicon-download-alt"></span>
+                                        <a [href]="item.links[1]" download>Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div *ngIf="item.Desc" class="search-result-desc" [innerHTML]="item.Desc.split('~').length > 1 ? item.Desc.split('~')[1] : ''">
+                <div id="search-btn" (mousedown)="searchByText($event)" class="col-xs-2">
+                    Search
                 </div>
-              </div>
+                <div id="clear-btn" class="col-xs-2" [innerHTML]="isHandheld ? 'Clear' : 'Clear Filters'">
+                </div>
             </div>
-          </a>
-        </div>-->
+            <div class="filter-row-wrapper row">
+                <div *ngFor="let filter of filters" class="filter col-xs-2">
+                    {{filter.facet}}
+                    <span class="removeFilter" (click)="removeFilter(filter)"><img src="assets/img/closeX2.png" alt="remove selected filter" />&nbsp;</span>
+                </div>
+
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
