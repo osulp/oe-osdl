@@ -31,14 +31,14 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     console.log('checked?', input);
   }
 
-  updateFacet(facet){
-    this.facet_groups.forEach(group => group.solrFields.forEach((sf:any) => { 
+  updateFacet(facet) {
+    this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
       sf.selected = sf.facet === facet.facet ? facet.selected : sf.selected;
     }));
   }
 
   setSelectedFacets(facet: any) {
-    console.log('set selected facets/filters',facet);
+    console.log('set selected facets/filters', facet, facet.selected, this.selected_facets);
     this.updateFacet(facet);
     // check selected_facets for value, if there remove, else add    
     if (!facet.selected) {
@@ -47,20 +47,40 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
           facet.facet + ':"' + facet.query + '"'
           : facet.query);
       });
+    } else if (facet.type === 'sort') {
+      const sortFacet = this.selected_facets.filter(sf => sf.type === 'sort');
+      if (sortFacet.length === 0) {
+        this.selected_facets.push(
+          {
+            key: facet.key,
+            value: facet.query,
+            type: facet.type
+          }
+        );
+      } else {
+        this.selected_facets.forEach(sf => {
+          if (sf.type === 'sort') {
+            sf.value = facet.query;
+          }
+        });
+      }
     } else {
       this.selected_facets.push(
         {
-          key: 'fq', value: facet.type === 'facet'
+          key: facet.key ? facet.key : 'fq',
+          value: facet.type === 'facet'
             ? (facet.facet + ':"' + facet.query + '"')
-            : facet.query, type: facet.type
+            : facet.query,
+          type: facet.type
         });
     }
 
-    this._osdl_solr_service.get(this.selected_facets, 'facets');
+    console.log('selected facets set', this.selected_facets, facet.type);
+    this._osdl_solr_service.get(this.selected_facets, facet.type);
   }
 
   ngOnChanges(change: any) {
-    console.log('facet cmp seeing changes', change);
+    // console.log('facet cmp seeing changes', change);
     if (change.solrFacets) {
       // tslint:disable-next-line:forin
       for (const ff in change.solrFacets.currentValue.facet_fields) {
@@ -75,7 +95,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
             }
           })
           .filter(f => f !== undefined);
-        //console.log('facet_fields', facet_fields);
+        // console.log('facet_fields', facet_fields);
         const updated_facet_groups = this;
         this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
           if (sf.facet === ff) {
@@ -83,8 +103,8 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
           }
         }));
       }
-      //change.solrFacets.currentValue.
-      console.log('this.facet_groups', this.facet_groups);
+      // change.solrFacets.currentValue.
+      // console.log('this.facet_groups', this.facet_groups);
     }
   }
 

@@ -41,7 +41,7 @@
                 <div id="search-btn" (mousedown)="searchByText($event)" class="col-xs-2">
                     Search
                 </div>
-                <div id="clear-btn" class="col-xs-2" [innerHTML]="isHandheld ? 'Clear' : 'Clear Filters'">
+                <div id="clear-btn" class="col-xs-2" (mousedown)="clearFilters()" [innerHTML]="isHandheld ? 'Clear' : 'Clear Filters'">
                 </div>
             </div>
             <div class="filter-row-wrapper row">

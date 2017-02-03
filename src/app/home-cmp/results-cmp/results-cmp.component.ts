@@ -11,6 +11,7 @@ import { OsdlSolrSrvService, ResultsStoreSrvService } from '../../services/index
 })
 export class ResultsCmpComponent implements OnInit {
   @ViewChild(FacetsCmpComponent) facetsCmp: FacetsCmpComponent;
+  @ViewChild(SortBarCmpComponent) sortCmp: SortBarCmpComponent;
   viewType: any;
   solr_results: any = {};
   constructor(
@@ -23,21 +24,22 @@ export class ResultsCmpComponent implements OnInit {
   }
 
   onSortChange(selectedSort: any) {
-    const sortParam = [{ key: 'sort', value: selectedSort }];
-    this._osdl_solr_service.get(sortParam, 'sort');
+    const sortParam = { key: 'sort', query: selectedSort, type: 'sort', selected: true };
+    this.facetsCmp.setSelectedFacets(sortParam);
   }
 
   onFrameworkOnlyChange(showOnly: boolean) {
-    const frameworkParam = showOnly ? [{ key: 'fq', value: 'keywords_ss:*Framework' }] : [];
-    this._osdl_solr_service.get(frameworkParam, 'framework');
+    const frameworkParam = { key: 'fq', query: 'keywords_ss:*Framework', type: 'framework', selected: showOnly };
+    this.facetsCmp.setSelectedFacets(frameworkParam);
   }
 
   ngOnInit() {
-
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        //console.log('store updated! in results cmp', results);
+        // console.log('store updated! in results cmp', results);
         this.solr_results = results;
+        // check if framework removed from filter bar
+        this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('Framework');
       },
       err => console.error(err),
       () => console.log('done with subscribe event results store selected')

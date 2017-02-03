@@ -32,7 +32,7 @@
 <div id="list-view-wrapper" *ngIf="viewType === 'list'" class="row">
     <div *ngFor="let result of solrResults;let idx = index" [ngClass]="idx > 0 ? 'not-first':''" class="list-result col-sm-12">
         <div class="row">
-            <div class="record-thumbnail col-xs-2"><img [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" /></div>
+            <div class="record-thumbnail col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'" /></div>
             <div class="record-list-title-col col-xs-9">
                 <div class="record-title">{{result.title}}</div>
                 <div class="row list-download-details">

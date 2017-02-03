@@ -11,10 +11,10 @@ declare var $: any;
   styleUrls: ['./search-cmp.component.css']
 })
 
-export class SearchCmpComponent {
-  @Output() onRemoveFilter = new EventEmitter();
+export class SearchCmpComponent implements OnInit {
+  @Output() onTextFilterChange = new EventEmitter();
   isHandheld: boolean = $(window).width() < 768;
-  temp_search_results: any;
+  temp_search_results: any = [];
   searchTerm = new FormControl();
   searchString: string;
   items: Observable<any>;
@@ -22,7 +22,8 @@ export class SearchCmpComponent {
   selectedSearchResult: {};
   filters: any[] = [];
   tempTabIndex: number = -1;
-  explorePushed: boolean = false;
+  searchPushed: boolean = false;
+  initLoad: boolean = true;
 
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
@@ -34,8 +35,19 @@ export class SearchCmpComponent {
     this.searchString = '';
   }
 
-  searchByText(event: any) {
-    this.explorePushed = true;
+  searchByText(event?: any) {
+    this.searchPushed = true;
+    console.log('search pushed', this.searchString);
+    const filterFacet = {
+      key: 'q',
+      query: (this.searchString ? '"*' + this.searchString + '*"' : ''),
+      type: 'textquery',
+      selected: true
+    }
+
+    this.onTextFilterChange.emit(filterFacet);
+
+    // this._osdl_solr_service.get([{ key: 'q', value: (this.searchString ? '"*' + this.searchString + '*"' : '') }, 'textquery']);
     // if (this.searchTerms !== '') {
     //     this._router.navigate(['Explore', { filter: this.searchTerms }]);
     // } else {
@@ -52,26 +64,13 @@ export class SearchCmpComponent {
   inputKeypressHandler(event: any) {
     const code = event.keyCode || event.which;
     if (code === 13) {
-      // get tempResult values
-      if (this.temp_search_results.length > 0) {
-        const searchScope = this;
-        window.setTimeout(function () {
-          const firstItem: any = searchScope.temp_search_results[searchScope.tempTabIndex === -1 ? 0 : searchScope.tempTabIndex];
-          const selected = {
-            Name: firstItem['Name'].replace(/\,/g, '%2C').replace(/\./g, '%2E'),
-            ResID: firstItem['ResID'],
-            Type: firstItem['Type'],
-            TypeCategory: firstItem['TypeCategory'],
-            Desc: firstItem['Desc']
-          };
-          searchScope.selectedSearchResult = selected;
-          // searchScope.selectResult(selected);
-        }, 500);
-      } else {
-        alert('Please select a valid search term.');
-      }
-      this.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
-      this.searchString = '';
+      const scope = this;
+      window.setTimeout(function () {
+        scope.searchByText();
+        // scope.searchTerm.setValue('', { emitEvent: false, emitModelToViewChange: false });
+        scope.searchString = '';
+      }, 200);
+
     } else if (code === 40 || code === 9) {
       // tab or down arro
       if (this.tempTabIndex !== this.temp_search_results.length) {
@@ -108,43 +107,45 @@ export class SearchCmpComponent {
 
   blurHandler(event: any) {
     const searchScope = this;
-    // console.log('blur', event);
-    if (!this.explorePushed) {
+    console.log('blur', event);
+    if (!this.searchPushed) {
       setTimeout(function () {
+        searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
+        searchScope.searchString = '';
         // if tabbing on list result set input box to match the Name property, but don't clear.
-        if (document.activeElement.classList.toString() === 'list-group-item') {
-          const attr: any = 'data-search-item';
-          const listItem: any = JSON.parse(document.activeElement.attributes[attr].value);
-          const selected = {
-            Name: listItem.Name.replace(/\,/g, '%2C').replace(/\./g, '%2E'),
-            ResID: listItem.ResID,
-            Type: listItem.Type,
-            TypeCategory: listItem.TypeCategory,
-            Desc: listItem.Desc
-          };
-          searchScope.selectedSearchResult = selected;
-          // if the Explore button then select the top result and go else put focus on the input
-        } else if (document.activeElement.id === 'explore-btn') {
-          // get tempResult values
-          if (searchScope.temp_search_results.length > 0) {
-            const firstItem: any = searchScope.temp_search_results[searchScope.tempTabIndex];
-            const selected = {
-              Name: firstItem['Name'].replace(/\,/g, '%2C').replace(/\./g, '%2E'),
-              ResID: firstItem['ResID'],
-              Type: firstItem['Type'],
-              TypeCategory: firstItem['TypeCategory'],
-              Desc: firstItem['Desc']
-            };
-            searchScope.selectedSearchResult = selected;
-            searchScope.selectResult(selected);
-            alert(firstItem['Name']);
-          } else {
-            alert('Please select a valid search term.');
-          }
-        } else {
-          searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
-          searchScope.searchString = '';
-        }
+        // if (document.activeElement.classList.toString() === 'list-group-item') {
+        //   const attr: any = 'data-search-item';
+        //   const listItem: any = JSON.parse(document.activeElement.attributes[attr].value);
+        //   const selected = {
+        //     Name: listItem.Name.replace(/\,/g, '%2C').replace(/\./g, '%2E'),
+        //     ResID: listItem.ResID,
+        //     Type: listItem.Type,
+        //     TypeCategory: listItem.TypeCategory,
+        //     Desc: listItem.Desc
+        //   };
+        //   searchScope.selectedSearchResult = selected;
+        //   // if the Explore button then select the top result and go else put focus on the input
+        // } else if (document.activeElement.id === 'search-btn') {
+        //   // get tempResult values
+        //   if (searchScope.temp_search_results.length > 0) {
+        //     const firstItem: any = searchScope.temp_search_results[searchScope.tempTabIndex];
+        //     const selected = {
+        //       Name: firstItem['Name'].replace(/\,/g, '%2C').replace(/\./g, '%2E'),
+        //       ResID: firstItem['ResID'],
+        //       Type: firstItem['Type'],
+        //       TypeCategory: firstItem['TypeCategory'],
+        //       Desc: firstItem['Desc']
+        //     };
+        //     searchScope.selectedSearchResult = selected;
+        //     searchScope.selectResult(selected);
+        //     alert(firstItem['Name']);
+        //   } else {
+        //     alert('Please select a valid search term.');
+        //   }
+        // } else {
+        //   searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
+        //   searchScope.searchString = '';
+        // }
       }, 1);
     }
     // event.preventDefault();
@@ -159,16 +160,16 @@ export class SearchCmpComponent {
     this.filters = [];
     // process faceted additions, skipping first for all docs
     if (params.fq.constructor === Array) {
-      params.fq.forEach((f: any, idx: number) => {
+      params.fq.forEach((f: string, idx: number) => {
         if (idx !== 0) {
-          console.log('filter', f);
+          //console.log('filter', f);
           const filter: any = {};
-          if (f.indexOf(':') !== -1) {
+          if (f.includes(':')) {
             filter.facet = f.split(':')[1].replace(/"/g, '').replace(/\*/g, '');
             filter.query = f;
-            filter.type = 'facets';
+            filter.type = f.includes('Framework') ? 'framework' : 'facets';
           } else {
-            filter.facet = f;
+            filter.facet = f.replace(/"/g, '').replace(/\*/g, '');
             filter.query = f;
             filter.type = 'query';
           }
@@ -178,7 +179,7 @@ export class SearchCmpComponent {
     }
     if (params.q !== '*:*') {
       const textFilter: any = {};
-      textFilter.facet = params.q;
+      textFilter.facet = params.q.replace(/"/g, '').replace(/\*/g, '');
       textFilter.query = params.q;
       textFilter.type = 'textquery';
       this.filters.push(textFilter);
@@ -187,7 +188,15 @@ export class SearchCmpComponent {
 
   removeFilter(filter: any) {
     console.log('remove filter called', filter);
-    this.onRemoveFilter.emit(filter);
+    filter.selected = false;
+    this.onTextFilterChange.emit(filter);
+  }
+
+  clearFilters() {
+    this.filters.forEach((filter: any) => {
+      filter.selected = false;
+      this.onTextFilterChange.emit(filter);
+    });
   }
 
   ngOnInit() {
@@ -195,10 +204,19 @@ export class SearchCmpComponent {
     this._osdl_solr_service.get();
 
     this.items = this.searchTerm.valueChanges
-      .debounceTime(400)
+      .debounceTime(200)
       .distinctUntilChanged()
       .switchMap((term: any) => {
-        return this._osdl_solr_service.textSearch([{ key: 'q', value: (term ? '"*' + term.toString() + '*"' : '') }, false]);
+        if (!this.initLoad) {
+          return this._osdl_solr_service.textSearch([{
+            key: 'q',
+            value: (term ? '"*' + term.toString() + '*"' : ''),
+            type: 'textquery'
+          }, false]);
+        } else {
+          this.initLoad = false;
+          return [];
+        }
       });
 
     this.items.subscribe(value => this.temp_search_results = value);
@@ -206,7 +224,7 @@ export class SearchCmpComponent {
 
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        console.log('store updated! in search cmp', results);
+        // console.log('store updated! in search cmp', results);
         this.solr_results = results;
         if (results.responseHeader) {
           this.processFilters(results.responseHeader.params);

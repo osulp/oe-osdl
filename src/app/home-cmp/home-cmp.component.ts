@@ -16,8 +16,8 @@ export class HomeCmpComponent implements OnInit {
     public _results_store_service: ResultsStoreSrvService
   ) { }
 
-  onRemoveFilterHandler(filter: any) {
-    filter.selected = false;   
+  onTextFilterChangeHandler(filter: any) {
+    // filter.selected = false;   
     this.resultsCmp.facetsCmp.setSelectedFacets(filter);
   }
 
