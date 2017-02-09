@@ -7,7 +7,7 @@ import { SearchStateSrvService } from './search-state-srv.service';
 
 @Injectable()
 export class OsdlSolrSrvService {
-    //SOLRURL: string = 'http://lib-solr1.library.oregonstate.edu:8984/solr/geoportal/select';
+    // SOLRURL: string = 'http://lib-solr1.library.oregonstate.edu:8984/solr/geoportal/select';
     SOLRURL: string = 'http://solr1.library.oregonstate.edu/solr/geoportal/select';
 
     constructor(
@@ -141,6 +141,35 @@ export class OsdlSolrSrvService {
         this.search(params).subscribe((results: any) => {
             this._resultStore.updateResults(results);
         });
+    }
+
+    getRecord(recordID: string): Observable<any[]> {
+        const params = new URLSearchParams();
+        params.set('q', 'id:' + recordID);
+        params.set('facet', 'true');
+        params.set('facet.query', 'Admin Boundaries');
+        params.append('facet.query', 'Bioscience');
+        params.append('facet.query', 'Cadastral');
+        params.append('facet.query', 'Climate');
+        params.append('facet.query', 'Coastal and Marine');
+        params.append('facet.query', 'Elevation');
+        params.append('facet.query', 'Geodetic Control');
+        params.append('facet.query', 'Geoscience');
+        params.append('facet.query', 'Hazards');
+        params.append('facet.query', 'Preparedness');
+        params.append('facet.query', 'Hydrography');
+        params.append('facet.query', 'Imagery');
+        params.append('facet.query', 'Land Use/Land Cover');
+        params.append('facet.query', 'Transportation');
+        params.append('facet.query', 'Utilities');
+        params.append('facet.query', 'Reference');
+        params.set('wt', 'json');
+        params.set('json.wrf', 'JSONP_CALLBACK');
+        return this.jsonp
+            .get(this.SOLRURL, { search: params })
+            .map(function (res: Response) {
+                return res.json() || {};
+            });
     }
 
 

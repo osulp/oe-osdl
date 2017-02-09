@@ -11,12 +11,17 @@
                 <div id="sort-by-wrapper" class="col-xs-5">
                     <label for="sortBy">Sort by:</label>
                     <span class="osdl-select">      
-            <select class="selectpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event, sortBy)">
+            <!--<select class="selectpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event, sortBy)">
               <option *ngFor="let item of sortByArr" [ngValue]="item.solrVal" [value]="item.solrVal" [selected]="item.val === selectedSortBy.val ? 'selected' : ''" >
                   {{item.val}}
               </option>
-            </select>
-          </span>
+            </select>-->
+            <select class="selectpicker" name="sortpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event)" >
+              <option *ngFor="let item of sortByArr" [ngValue]="item.val"   >
+                  {{item.name}}
+              </option>
+            </select>             
+                    </span>
                 </div>
                 <div id="view-type-wrapper" class="col-xs-2" (click)="toggleViewType()">
                     <div id="tile-view" title="View results in a tile view" [ngClass]="viewType === 'tile' ? 'active' : ''">&nbsp;</div>

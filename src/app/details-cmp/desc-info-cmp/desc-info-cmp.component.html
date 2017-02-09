@@ -1,15 +1,27 @@
 <div class="row" id="metadata-wrapper">
-  <div id="metadata-info" [ngClass]="metaInfo" class="col-lg-8 col-md-8 col-xs-12 arrow_box">
-    <div class="row">
-      <span class="col-xs-1" [ngClass]="{'selected':metaInfo === 'all'}" (click)="metaInfo = 'all';">All</span>
-      <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'ident'}" (click)="metaInfo = 'ident';">Identification Information</span>
-      <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'topics'}" (click)="metaInfo = 'topics';">ISO Topic Categories</span>
-      <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'reference'}" (click)="metaInfo = 'reference';">Metadata Referenence</span>
-      <span class="col-xs-2" [ngClass]="{'selected':metaInfo === 'constraints'}" (click)="metaInfo = 'constraints';">Constraints</span>
+    <div id="metadata-info" [ngClass]="metaInfo" class="col-lg-8 col-md-8 col-xs-12 arrow_box">
+        <div class="row">
+            <span class="col-xs-1" [ngClass]="{'selected':metaInfo === 'all'}" (click)="metaInfo = 'all';">All</span>
+            <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'ident'}" (click)="metaInfo = 'ident';">Identification Information</span>
+            <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'topics'}" (click)="metaInfo = 'topics';">ISO Topic Categories</span>
+            <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'reference'}" (click)="metaInfo = 'reference';">Metadata Referenence</span>
+            <span class="col-xs-2" [ngClass]="{'selected':metaInfo === 'constraints'}" (click)="metaInfo = 'constraints';">Constraints</span>
+        </div>
     </div>
-  </div>
-  <div class="col-xs-12">
-    <div class="metadata-info-content">
-    Metadata content goes here!
-  </div>
-</div>
+    <div class="col-xs-12">
+        <div class="metadata-info-content">
+            <div id="metadata-originator">
+                <h4>Originator</h4>
+                <p>{{record['contact.organizations_ss'] ? record['contact.organizations_ss'].toString() : ''}}</p>
+            </div>
+            <div id="metadata-desciption">
+                <h4>Description</h4>
+                <p>{{record.description}}</p>
+            </div>
+            <div id="metadata-keywords">
+                <h4>Keywords</h4>
+                <p>{{record.keywords_ss ? record.keywords_ss.toString() : ''}}</p>
+            </div>
+
+        </div>
+    </div>

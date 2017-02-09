@@ -24,7 +24,7 @@
                 <!--Check if download data or map service-->
                 <div class="record-download col-xs-6" (click)="download(result)">
                     <span class="glyphicon glyphicon-download-alt"></span>Download</div>
-                <div class="record-details col-xs-6">Details</div>
+                <div class="record-details col-xs-6" (click)="gotoDetails(result)">Details</div>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
                 <div class="row list-download-details">
                     <!--Check if download data or map service-->
                     <div class="record-download col-xs-6" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
-                    <div class="record-details col-xs-6">Details</div>
+                    <div class="record-details col-xs-6" (click)="gotoDetails(result)">Details</div>
                 </div>
             </div>
             <div class="col-xs-1">

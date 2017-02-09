@@ -1,39 +1,40 @@
 <div id="details-title-bar-wrapper">
-  <div id="dataset-title">Dataset title
-  </div>
-  <!--Add ngif framework check for display-->
-  <div id="framework-dataset">
-    <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
-  </div>
-  <div id="dataset-tags">
-    <span>Topics:</span>
-  </div>
-  <div id="dataset-thumbnail-row" class="row">
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <span>thumbnail</span>
+    <div id="dataset-title">{{record.title}}
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <span>map</span>
+    <!--Add ngif framework check for display-->
+    <div *ngIf="record['keywords'] ? record['keywords'].indexOf('Framework') !== -1 : false" id="framework-dataset">
+        <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="row">
-        <div id="links-wrapper">
-          <div class="col-md-12 col-sm-4">
-            <div id="download-btn">
-              <span class="glyphicon glyphicon-download-alt"></span>Download</div>
-          </div>
-          <div class="col-md-12 col-sm-4">
-            <div class="link">
-              Metadata <span class="glyphicon glyphicon-menu-right"></span>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-4">
-            <div class="link">
-              Source site <span class="glyphicon glyphicon-menu-right"></span>
-            </div>
-          </div>
+    <div id="dataset-tags">
+        <span>Topics:</span>
+        <span *ngFor="let topic of topics; let idx = index">{{topic + (idx < topics.length -1 ? ', ': '')}}</span>
+    </div>
+    <div id="dataset-thumbnail-row" class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <img #thumbnail [src]="record['url.thumbnail_s'] !== undefined ? record['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'" />
         </div>
-      </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <img [src]="map_box_url" height="150px" />
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="row">
+                <div id="links-wrapper">
+                    <div class="col-md-12 col-sm-4">
+                        <div id="download-btn" (click)="download(record)">
+                            <span class="glyphicon glyphicon-download-alt"></span>Download</div>
+                    </div>
+                    <div class="col-md-12 col-sm-4">
+                        <div class="link" (click)="gotoMetadata(record)">
+                            Metadata <span class="glyphicon glyphicon-menu-right"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-4">
+                        <div class="link" (click)="gotoSource(record)">
+                            Source site <span class="glyphicon glyphicon-menu-right"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

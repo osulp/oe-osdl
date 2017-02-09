@@ -25,12 +25,12 @@ export class ResultsCmpComponent implements OnInit {
 
   onSortChange(selectedSort: any) {
     const sortParam = { key: 'sort', query: selectedSort, type: 'sort', selected: true };
-    this.facetsCmp.setSelectedFacets(sortParam);
+    this.facetsCmp.setSelectedFacets([sortParam], 'sort', true);
   }
 
   onFrameworkOnlyChange(showOnly: boolean) {
     const frameworkParam = { key: 'fq', query: 'keywords_ss:*Framework', type: 'framework', selected: showOnly };
-    this.facetsCmp.setSelectedFacets(frameworkParam);
+    this.facetsCmp.setSelectedFacets([frameworkParam], 'framework', true);
   }
 
   ngOnInit() {

@@ -6,6 +6,8 @@ import { OsdlSolrSrvService, FacetsStoreSrvService } from '../../../services/ind
   templateUrl: './facets-cmp.component.html',
   styleUrls: ['./facets-cmp.component.css']
 })
+
+
 export class FacetsCmpComponent implements OnInit, OnChanges {
   @Input() solrFacets: any;
   @Input() searchParams: any;
@@ -32,52 +34,114 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   }
 
   updateFacet(facet) {
+    console.log('facet_groups', this.facet_groups);
     this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
       sf.selected = sf.facet === facet.facet ? facet.selected : sf.selected;
     }));
   }
 
-  setSelectedFacets(facet: any) {
-    console.log('set selected facets/filters', facet, facet.selected, this.selected_facets);
-    this.updateFacet(facet);
-    // check selected_facets for value, if there remove, else add    
-    if (!facet.selected) {
-      this.selected_facets = this.selected_facets.filter((f: any) => {
-        return f.value !== (facet.type === 'facet' ?
-          facet.facet + ':"' + facet.query + '"'
-          : facet.query);
-      });
-    } else if (facet.type === 'sort') {
-      const sortFacet = this.selected_facets.filter(sf => sf.type === 'sort');
-      if (sortFacet.length === 0) {
+  setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
+    facets.forEach((facet: any) => {
+      // coming from url so need to wait to sync with facet_group get response
+      const scope = this;
+      window.setTimeout(() => {
+        scope.updateFacet(facet);
+      }, !updateState ? 100 : 0);
+      // check selected_facets for value, if there remove, else add    
+      if (!facet.selected) {
+        this.selected_facets = this.selected_facets.filter((f: any) => {
+          return f.value !== (facet.type === 'facet' ?
+            facet.facet + ':"' + facet.query + '"'
+            : facet.query);
+        });
+      } else if (facet.type === 'sort') {
+        const sortFacet = this.selected_facets.filter(sf => sf.type === 'sort');
+        if (sortFacet.length === 0) {
+          this.selected_facets.push(
+            {
+              key: facet.key,
+              value: facet.query,
+              type: facet.type
+            }
+          );
+        } else {
+          this.selected_facets.forEach(sf => {
+            if (sf.type === 'sort') {
+              sf.value = facet.query;
+            }
+          });
+        }
+      } else {
         this.selected_facets.push(
           {
-            key: facet.key,
-            value: facet.query,
+            key: facet.key ? facet.key : 'fq',
+            value: facet.type === 'facet'
+              ? (facet.facet + ':"' + facet.query + '"')
+              : facet.query,
             type: facet.type
-          }
-        );
-      } else {
-        this.selected_facets.forEach(sf => {
-          if (sf.type === 'sort') {
-            sf.value = facet.query;
-          }
-        });
+          });
       }
-    } else {
-      this.selected_facets.push(
-        {
-          key: facet.key ? facet.key : 'fq',
-          value: facet.type === 'facet'
-            ? (facet.facet + ':"' + facet.query + '"')
-            : facet.query,
-          type: facet.type
-        });
+    });
+
+    const qsParams = [];
+    const facetQueries = this.selected_facets.filter(sf => ['query', 'facet', 'framework'].indexOf(sf.type) !== -1)
+      .map(qf => qf.value).toString();
+    if (facetQueries !== '') {
+      qsParams.push({ key: 'fq', value: facetQueries });
+    }
+    const sortParams = this.selected_facets.filter(sf => sf.type === 'sort').map(qf => qf.value).toString();
+    if (sortParams !== '') {
+      qsParams.push({ key: 'sort', value: sortParams });
+    }
+    const textParams = this.selected_facets.filter(sf => sf.type === 'textquery').map(qf => qf.value).toString();
+    if (textParams !== '') {
+      qsParams.push({ key: 'q', value: textParams });
     }
 
-    console.log('selected facets set', this.selected_facets, facet.type);
-    this._osdl_solr_service.get(this.selected_facets, facet.type);
+    console.log('selected facets set', this.selected_facets, searchType);
+    this._osdl_solr_service.get(this.selected_facets, searchType);
+
+    if (updateState) {
+      const newState = this.updateQueryStringParam(qsParams);
+      console.log('NEW STATE TOPICs!!!!!!!!!!!', newState);
+      window.history.pushState({}, '', newState);
+    }
   }
+
+  updateQueryStringParam(qsParams: any[]) {
+    let baseUrl = [location.protocol, '//', location.host, location.pathname.split(';')[0]].join('');
+    baseUrl += baseUrl.includes('search') ? '' : 'search';
+    console.log('baseUrl', baseUrl, qsParams);
+    let urlQueryString = decodeURI(location.pathname.replace(location.pathname.split(';')[0], '').replace('/search', ''));
+    console.log('url query string', urlQueryString);
+    let allParams = '';
+
+    for (let x = 0; x < qsParams.length; x++) {
+      const newParam = qsParams[x].value === '' ? '' : qsParams[x].key + '=' + qsParams[x].value;
+      // If the 'search' string exists, then build params from it
+      if (urlQueryString) {
+        const keyRegex = new RegExp('([\;])' + qsParams[x].key + '([^;]*|[^,]*)');
+        // If param exists already, update it
+        if (urlQueryString.match(keyRegex) !== null) {
+          allParams = urlQueryString.replace(keyRegex, '$1' + newParam);
+        } else { // Otherwise, add it to end of query string
+          allParams = urlQueryString + (qsParams[x].value !== '' ? ';' : '') + newParam;
+        }
+      } else {
+        const pathname = document.location.pathname;
+        const keyRegex = new RegExp('([\;])' + qsParams[x].key + '([^;]*|[^,]*)');
+        if (pathname.match(keyRegex) !== null) {
+          allParams = pathname.replace(keyRegex, '$1' + newParam);
+        } else {
+          allParams = (qsParams[x].value !== '' ? ';' : '') + newParam;
+        }
+      }
+      urlQueryString = allParams;
+    }
+    const returnVal = (baseUrl + allParams).replace('?&', '?');
+    // returnVal = '<%= ENV %>' !== 'prod' ? returnVal.replace(new RegExp('\\.', 'g'), '%2E') : returnVal;;
+    return returnVal;
+  };
 
   ngOnChanges(change: any) {
     // console.log('facet cmp seeing changes', change);

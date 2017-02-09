@@ -17,11 +17,19 @@ import { FacetsCmpComponent } from './home-cmp/results-cmp/facets-cmp/facets-cmp
 import { SortBarCmpComponent } from './home-cmp/results-cmp/sort-bar-cmp/sort-bar-cmp.component';
 import { TitleBarCmpComponent } from './details-cmp/title-bar-cmp/title-bar-cmp.component';
 import { DescInfoCmpComponent } from './details-cmp/desc-info-cmp/desc-info-cmp.component';
-import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, FacetsStoreSrvService } from './services/index';
+import {
+  OsdlSolrSrvService,
+  ResultsStoreSrvService,
+  SearchStateSrvService,
+  FacetsStoreSrvService,
+  GetMapSrvService
+} from './services/index';
 import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeCmpComponent },
+  { path: 'home', component: HomeCmpComponent},
+  { path: 'search', component: HomeCmpComponent},
   { path: 'about', component: AboutCmpComponent },
   { path: 'details', component: DetailsCmpComponent },
   { path: 'help', component: HelpCmpComponent },
@@ -44,7 +52,7 @@ const appRoutes: Routes = [
     SortBarCmpComponent,
     TitleBarCmpComponent,
     DescInfoCmpComponent,
-    ResourcesCmpComponent    
+    ResourcesCmpComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +62,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, FacetsStoreSrvService],
+  providers: [OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, FacetsStoreSrvService, GetMapSrvService],
   bootstrap: [AppComponent]
 
 })

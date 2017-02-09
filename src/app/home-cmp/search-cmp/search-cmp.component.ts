@@ -162,7 +162,7 @@ export class SearchCmpComponent implements OnInit {
     if (params.fq.constructor === Array) {
       params.fq.forEach((f: string, idx: number) => {
         if (idx !== 0) {
-          //console.log('filter', f);
+          // console.log('filter', f);
           const filter: any = {};
           if (f.includes(':')) {
             filter.facet = f.split(':')[1].replace(/"/g, '').replace(/\*/g, '');
@@ -200,9 +200,6 @@ export class SearchCmpComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._osdl_solr_service.setBaseSearchState();
-    this._osdl_solr_service.get();
-
     this.items = this.searchTerm.valueChanges
       .debounceTime(200)
       .distinctUntilChanged()

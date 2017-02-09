@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-sort-bar-cmp',
@@ -7,20 +8,39 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SortBarCmpComponent implements OnInit {
   @Input() numRecords: any;
+  @Input() sort: any;
   @Output() onViewTypeChange = new EventEmitter();
   @Output() onFrameworkOnlyChange = new EventEmitter();
   @Output() onSortChange = new EventEmitter();
-  sortByArr: any = [];
-  selectedSortBy: any = {};
+
+  sortByArr = [
+    { name: 'Newest first', val: 'sys.src.item.lastmodified_tdt desc' },
+    { name: 'Oldest first', val: 'sys.src.item.lastmodified_tdt asc' },
+    { name: 'Title A-Z', val: 'title asc' },
+    { name: 'Title Z-A', val: 'title desc' }
+  ];
+  selectedSortBy = undefined;
   viewType: any = 'tile';
   showFrameworkOnly: boolean = false;
 
   constructor() { }
 
   onSortByChange(selectedSort: any) {
-    //console.log('selected sort is: ', selectedSort);    
+    console.log('selected sort is: ', selectedSort, this.sortByArr);
     this.selectedSortBy = selectedSort;
     this.onSortChange.emit(selectedSort);
+  }
+
+  refreshSort(selectedSort) {
+    $('select[name=sortpicker]').val(this.sortByArr.filter(s => s.val === this.selectedSortBy)[0].name);    
+    const scope = this;
+    window.setTimeout(() => {
+      // console.log('selectdisplay', $('.bootstrap-select').css('display'));
+      if ($('.bootstrap-select').css('display') === undefined) {
+        $('select[name=sortpicker]').selectpicker('refresh');
+      }
+    }, 100);
+
   }
 
   toggleFrameworkOnly(chkShowFramework) {
@@ -34,12 +54,7 @@ export class SortBarCmpComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sortByArr = [
-      { val: 'Newest first', solrVal: 'sys.src.item.lastmodified_tdt desc' },
-      { val: 'Oldest first', solrVal: 'sys.src.item.lastmodified_tdt asc' },
-      { val: 'Title A-Z', solrVal: 'title asc' },
-      { val: 'Title Z-A', solrVal: 'title desc' }
-    ];
+    this.selectedSortBy = 'sys.src.item.lastmodified_tdt desc';
     this.onViewTypeChange.emit(this.viewType);
   }
 
