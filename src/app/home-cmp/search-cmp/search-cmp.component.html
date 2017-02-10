@@ -45,8 +45,9 @@
                 </div>
             </div>
             <div class="filter-row-wrapper row">
-                <div *ngFor="let filter of filters" class="filter col-xs-2">
-                    {{filter.facet}}
+                <div *ngFor="let filter of filters" [ngClass]="filter.facet === 'Framework' ? 'framework-filter' : ''" class="filter col-xs-2">
+                    {{filter.category}}
+                    <br *ngIf="filter.category !== ''" /> {{filter.facet === 'Framework' ? 'Framework Data' : filter.facet}}
                     <span class="removeFilter" (click)="removeFilter(filter)"><img src="assets/img/closeX2.png" alt="remove selected filter" />&nbsp;</span>
                 </div>
 

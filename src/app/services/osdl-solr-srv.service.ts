@@ -64,7 +64,7 @@ export class OsdlSolrSrvService {
                                     params.delete('fq');
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
-                                params.append(p.key, p.value);
+                                params.append(p.key, p.value + ' OR ' + p.value.replace(/\ /g, '') + '*');
                                 fqCounter++;
                                 break;
                             case 'sort':
@@ -105,6 +105,9 @@ export class OsdlSolrSrvService {
                             params.append('fq', frameworkQuery);
                         }
                     }
+                }
+                if (new_framework_param.length === 1 && params.getAll('fq').filter(fq => fq === frameworkQuery).length === 0) {
+                    params.append('fq', frameworkQuery);
                 }
             } else {
                 if (searchType === 'framework') {

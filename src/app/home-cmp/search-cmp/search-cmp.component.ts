@@ -155,6 +155,31 @@ export class SearchCmpComponent implements OnInit {
     console.log('term selected', searchItem);
   }
 
+  filterLookup(filter: string) {
+    let returnCategory = '';
+    switch (true) {
+      case filter.includes('collections'):
+        returnCategory = 'Collection: ';
+        break;
+      case filter.includes('dataAccessType'):
+        returnCategory = 'Format: ';
+        break;
+      case filter.includes('organizations'):
+        returnCategory = 'Source: ';
+        break;
+      case filter.includes('Framework'):
+        returnCategory = '';
+        break;
+      case filter.includes('keywords'):
+        returnCategory = 'Keyword: ';
+        break;
+      default:
+        returnCategory = 'Topic: ';
+        break;
+    }
+    return returnCategory.toUpperCase();
+  }
+
   processFilters(params: any) {
     console.log('processing filters', params);
     this.filters = [];
@@ -167,10 +192,12 @@ export class SearchCmpComponent implements OnInit {
           if (f.includes(':')) {
             filter.facet = f.split(':')[1].replace(/"/g, '').replace(/\*/g, '');
             filter.query = f;
+            filter.category = this.filterLookup(f);
             filter.type = f.includes('Framework') ? 'framework' : 'facets';
           } else {
-            filter.facet = f.replace(/"/g, '').replace(/\*/g, '');
+            filter.facet = f.split(' OR')[0].replace(/"/g, '').replace(/\*/g, '');
             filter.query = f;
+            filter.category = this.filterLookup(f);
             filter.type = 'query';
           }
           this.filters.push(filter);
@@ -181,6 +208,7 @@ export class SearchCmpComponent implements OnInit {
       const textFilter: any = {};
       textFilter.facet = params.q.replace(/"/g, '').replace(/\*/g, '');
       textFilter.query = params.q;
+       textFilter.category = 'search keyword: ';
       textFilter.type = 'textquery';
       this.filters.push(textFilter);
     }

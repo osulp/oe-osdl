@@ -29,15 +29,21 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     });
   }
 
+  getTopicQuery(topic) {
+    return topic + ' OR ' + topic.replace(/\ /g, '') + '*';
+  }
+
   checkSelected(input: any) {
     console.log('checked?', input);
   }
 
   updateFacet(facet) {
     console.log('facet_groups', this.facet_groups);
-    this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
-      sf.selected = sf.facet === facet.facet ? facet.selected : sf.selected;
-    }));
+    if (facet) {
+      this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
+        sf.selected = facet.facet ? facet.facet.includes(sf.facet) ? facet.selected : sf.selected : sf.selected;
+      }));
+    }
   }
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
@@ -48,6 +54,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
         scope.updateFacet(facet);
       }, !updateState ? 100 : 0);
       // check selected_facets for value, if there remove, else add    
+      facet.query = facet.query.split(' OR')[0];
       if (!facet.selected) {
         this.selected_facets = this.selected_facets.filter((f: any) => {
           return f.value !== (facet.type === 'facet' ?
@@ -164,6 +171,8 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
         this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
           if (sf.facet === ff) {
             sf.fields = facet_fields;
+          } else {
+            sf.facet_no_space = sf.facet.replace(/\ /g, '');
           }
         }));
       }

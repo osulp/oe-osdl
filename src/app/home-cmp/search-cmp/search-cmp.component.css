@@ -249,6 +249,10 @@
     cursor: pointer;
 }
 
+.framework-filter {
+    background-color: #98BD85;
+}
+
 .filter span {
     position: absolute;
     right: 8px;
