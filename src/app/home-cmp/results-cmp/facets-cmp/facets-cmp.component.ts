@@ -49,16 +49,18 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
               : sf.selected
             : sf.selected;
           if (sf.fields) {
-            sf.fields.forEach(sff => {
-              const cleanFacet = facet.facet.split(':').length > 1
-                ? facet.facet.toString().split(':')[1].replace(/"/g, '').toLowerCase()
-                : facet.facet;
-              sff.selected = (facet.facet
-                ? sff.field === cleanFacet
-                  ? true
-                  : false
-                : false);
-            });
+            if (facet.facet) {
+              sf.fields.forEach(sff => {
+                const cleanFacet = facet.facet.split(':').length > 1
+                  ? facet.facet.toString().split(':')[1].replace(/"/g, '').toLowerCase()
+                  : facet.facet;
+                sff.selected = (facet.facet
+                  ? sff.field === cleanFacet
+                    ? true
+                    : false
+                  : false);
+              });
+            }
           }
         })
       });
