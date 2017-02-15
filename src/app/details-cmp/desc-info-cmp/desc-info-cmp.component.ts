@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-desc-info-cmp',
@@ -9,7 +10,7 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
   @Input() solrResponse: any;
   metaInfo: any = 'all';
   record: any = {};
-  facet_counts: any = {};
+  facet_counts: any = {};  
 
   constructor() { }
 

@@ -32,10 +32,11 @@ export class SortBarCmpComponent implements OnInit {
   }
 
   refreshSort(selectedSort) {
-    $('select[name=sortpicker]').val(this.sortByArr.filter(s => s.val === this.selectedSortBy)[0].name);    
+    $('select[name=sortpicker]').val(this.sortByArr.filter(s => s.val === this.selectedSortBy)[0].name);
     const scope = this;
     window.setTimeout(() => {
-      // console.log('selectdisplay', $('.bootstrap-select').css('display'));
+      //console.log('selectdisplay', $('.bootstrap-select').css('display'));
+      $('select[name=sortpicker]').selectpicker('refresh');
       if ($('.bootstrap-select').css('display') === undefined) {
         $('select[name=sortpicker]').selectpicker('refresh');
       }

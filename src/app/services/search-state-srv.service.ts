@@ -16,9 +16,9 @@ export class SearchStateSrvService {
   }
 
   updateState(params): void {
-    console.log('search state updated',params);
+    // console.log('search state updated',params);
     this._searchState = params;
-    //this.stateChanged$.next(params);
+    // this.stateChanged$.next(params);
   }
 
   setBaseSearchState() {
@@ -51,7 +51,7 @@ export class SearchStateSrvService {
     this._searchState.append('facet.query', 'Preparedness OR Preparedness*');
     this._searchState.append('facet.query', 'Hydrography OR Hydrography*');
     this._searchState.append('facet.query', 'Imagery OR Imagery*');
-    this._searchState.append('facet.query', 'Land Use/Land Cover OR LandUseLandCover*');
+    this._searchState.append('facet.query', 'Land Use Land Cover OR LandUseLandCover*');
     this._searchState.append('facet.query', 'Transportation OR Transportation*');
     this._searchState.append('facet.query', 'Utilities OR Utilities*');
     this._searchState.append('facet.query', 'Reference OR Reference*');

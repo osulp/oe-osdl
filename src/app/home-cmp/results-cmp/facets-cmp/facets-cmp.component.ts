@@ -37,16 +37,37 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     console.log('checked?', input);
   }
 
-  updateFacet(facet) {
+  updateFacet(facet: any) {
     console.log('facet_groups', this.facet_groups);
     if (facet) {
-      this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
-        sf.selected = facet.facet ? facet.facet.includes(sf.facet) ? facet.selected : sf.selected : sf.selected;
-      }));
+      this.facet_groups.forEach(group => {
+        group.solrFields.forEach((sf: any) => {
+          console.log('select facets based on input:', facet.facet, sf);
+          sf.selected = facet.facet
+            ? facet.facet.includes(sf.facet)
+              ? facet.selected
+              : sf.selected
+            : sf.selected;
+          if (sf.fields) {
+            sf.fields.forEach(sff => {
+              const cleanFacet = facet.facet.split(':').length > 1
+                ? facet.facet.toString().split(':')[1].replace(/"/g, '').toLowerCase()
+                : facet.facet;
+              sff.selected = (facet.facet
+                ? sff.field === cleanFacet
+                  ? true
+                  : false
+                : false);
+            });
+          }
+        })
+      });
     }
   }
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
+    console.log('set FACETS', facets, searchType, updateState);
+    // this.selected_facets = [];
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
       const scope = this;
@@ -57,9 +78,9 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       facet.query = facet.query.split(' OR')[0];
       if (!facet.selected) {
         this.selected_facets = this.selected_facets.filter((f: any) => {
-          return f.value !== (facet.type === 'facet' ?
-            facet.facet + ':"' + facet.query + '"'
-            : facet.query);
+          return f.value.toLowerCase() !== (facet.type === 'facet' ?
+            (facet.facet + ':"' + facet.query + '"').toLowerCase()
+            : facet.query.toLowerCase());
         });
       } else if (facet.type === 'sort') {
         const sortFacet = this.selected_facets.filter(sf => sf.type === 'sort');
@@ -79,14 +100,19 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
           });
         }
       } else {
-        this.selected_facets.push(
-          {
-            key: facet.key ? facet.key : 'fq',
-            value: facet.type === 'facet'
-              ? (facet.facet + ':"' + facet.query + '"')
-              : facet.query,
-            type: facet.type
-          });
+        // check if not already selected for pop state "back button" situations.
+        if (this.selected_facets.filter(sf => sf.value === (facet.type === 'facet'
+          ? (facet.facet + ':"' + facet.query + '"')
+          : facet.query)).length === 0) {
+          this.selected_facets.push(
+            {
+              key: facet.key ? facet.key : 'fq',
+              value: facet.type === 'facet'
+                ? (facet.facet + ':"' + facet.query + '"')
+                : facet.query,
+              type: facet.type
+            });
+        }
       }
     });
 

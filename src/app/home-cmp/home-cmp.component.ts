@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { PlatformLocation } from '@angular/common';
 import { SearchCmpComponent } from './search-cmp/search-cmp.component';
 import { ResultsCmpComponent } from './results-cmp/results-cmp.component';
 import { OsdlSolrSrvService, ResultsStoreSrvService } from '../services/index';
+
+declare var $: any;
 
 @Component({
   selector: 'app-home-cmp',
@@ -17,15 +20,21 @@ export class HomeCmpComponent implements OnInit {
     public _results_store_service: ResultsStoreSrvService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+    private location: PlatformLocation
+  ) {
+    location.onPopState((test:any) => {
+      console.log('popping',test,this.route.snapshot.params);
+      this.checkQueryStingParams();
+    });
+  }
 
   onTextFilterChangeHandler(filter: any) {
-    // filter.selected = false;   
+    // filter.selected = false;
     this.resultsCmp.facetsCmp.setSelectedFacets([filter], 'textquery', true);
   }
 
   checkQueryStingParams() {
-    console.log('checking params', this.route.snapshot.params);
+    console.log('checking params', this.route.snapshot.params, this.location);
 
     const params = [];
     let sortParam = '';
@@ -71,15 +80,25 @@ export class HomeCmpComponent implements OnInit {
 
     if (params.length > 0) {
       this.resultsCmp.facetsCmp.setSelectedFacets(params, 'framework', false);
-      if (sortParam !== '') {
-        const scope = this;
-        window.setTimeout(() => {
-          scope.resultsCmp.sortCmp.selectedSortBy = sortParam;
-          scope.resultsCmp.sortCmp.refreshSort(sortParam);
-        }, 300);
-      }
+      const scope = this;
+      window.setTimeout(() => {
+        scope.resultsCmp.sortCmp.selectedSortBy = sortParam === '' ? 'sys.src.item.lastmodified_tdt desc' : sortParam;
+        scope.resultsCmp.sortCmp.refreshSort(sortParam);
+      }, 300);
     } else {
+      // clear all facets
+      this.resultsCmp.facetsCmp.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
+        sf.selected = false;
+      }));
+      this.resultsCmp.facetsCmp.selected_facets = [];
       this._osdl_solr_service.get();
+      window.setTimeout(() => {
+        // console.log('selectdisplay', $('.bootstrap-select').css('display'));
+        $('select[name=sortpicker]').selectpicker('refresh');
+        if ($('.bootstrap-select').css('display') === undefined) {
+          $('select[name=sortpicker]').selectpicker('refresh');
+        }
+      }, 300);
     }
   }
 
@@ -91,7 +110,7 @@ export class HomeCmpComponent implements OnInit {
     this.checkQueryStingParams();
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        console.log('store updated! in home cmp', results);
+        // console.log('store updated! in home cmp', results);
         this.solr_results = results;
       },
       err => console.error(err),

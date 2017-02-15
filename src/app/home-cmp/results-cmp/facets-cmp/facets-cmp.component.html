@@ -7,7 +7,7 @@
         <div *ngFor="let solr_facet of facet_group.solrFields">
             <div *ngIf="facet_group.name !== 'Topics'">
                 <div *ngFor="let sf of solr_facet.fields">
-                    <div class="facet">
+                    <div *ngIf="!sf.field.includes('REQUIRED:')" class="facet">
                         <input [id]="'sf'+sf.field" #facetChkBox type="checkbox" [(ngModel)]="sf.selected" (ngModelChange)="setSelectedFacets([{facet:solr_facet.facet,query:sf.field,selected:facetChkBox.checked,type:'facet'}],'facet', true)" />
                         <label [for]="'sf'+sf.field"><span></span>{{sf.field}} <b>({{sf.count}})</b></label>
                     </div>

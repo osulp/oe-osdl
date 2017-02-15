@@ -36,7 +36,7 @@
                 { "facet": "Preparedness" },
                 { "facet": "Hydrography" },
                 { "facet": "Imagery" },
-                { "facet": "Land Use/Land Cover" },
+                { "facet": "Land Use Land Cover" },
                 { "facet": "Transportation" },
                 { "facet": "Utilities" },
                 { "facet": "Reference" }

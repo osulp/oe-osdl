@@ -35,10 +35,7 @@ export class OsdlSolrSrvService {
         // get state param types to catch remove
         const fqParams = params.getAll('fq').filter(p => p !== frameworkQuery);
         const qParams = params.getAll('q');
-        // const frameworkParam = params.getAll('fq').filter(p => p === frameworkQuery);
-        // console.log('fqparams', fqParams);
-        // console.log('qparams', qParams);        
-        // console.log('get check', params, searchType, newParams);
+
         if (newParams) {
             if (newParams.length > 0) {
                 const new_q_params = newParams.filter(np => np.type === 'textquery');
@@ -52,6 +49,9 @@ export class OsdlSolrSrvService {
                 newParams.forEach((p: any, idx: number) => {
                     // console.log('processing param', p);
                     if (p.type) {
+                        p.value = p.value.includes('keywords:') && !p.value.includes('"')
+                            ? p.value.split(':')[0] + ':"' + p.value.split(':')[1] + '"'
+                            : p.value;
                         switch (p.type) {
                             case 'textquery':
                                 params.delete('q');
@@ -64,7 +64,9 @@ export class OsdlSolrSrvService {
                                     params.delete('fq');
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
-                                params.append(p.key, p.value + ' OR ' + p.value.replace(/\ /g, '') + '*');
+                                params.append(p.key, p.value + (p.type === 'query' && !p.value.includes('keywords')
+                                    ? ' OR ' + p.value.replace(/\ /g, '') + '*'
+                                    : ''));
                                 fqCounter++;
                                 break;
                             case 'sort':
@@ -91,12 +93,12 @@ export class OsdlSolrSrvService {
                     }
                 });
                 if (remove_q) {
-                    console.log('remove q');
+                    // console.log('remove q');
                     params.delete('q');
                     params.set('q', '*:*');
                 }
                 if (remove_fq) {
-                    console.log('remove fq');
+                    // console.log('remove fq');
                     // check framework
                     if (new_fq_params.length === 0) {
                         params.delete('fq');
@@ -140,7 +142,7 @@ export class OsdlSolrSrvService {
 
     get(newParams?: any[], searchType?: any) {
         const params = this.setParams(newParams, searchType, true);
-        console.log('after set params', params);
+        // console.log('after set params', params);
         this.search(params).subscribe((results: any) => {
             this._resultStore.updateResults(results);
         });

@@ -1,27 +1,92 @@
 <div class="row" id="metadata-wrapper">
     <div id="metadata-info" [ngClass]="metaInfo" class="col-lg-8 col-md-8 col-xs-12 arrow_box">
         <div class="row">
-            <span class="col-xs-1" [ngClass]="{'selected':metaInfo === 'all'}" (click)="metaInfo = 'all';">All</span>
-            <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'ident'}" (click)="metaInfo = 'ident';">Identification Information</span>
-            <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'topics'}" (click)="metaInfo = 'topics';">ISO Topic Categories</span>
-            <span class="col-xs-3" [ngClass]="{'selected':metaInfo === 'reference'}" (click)="metaInfo = 'reference';">Metadata Referenence</span>
-            <span class="col-xs-2" [ngClass]="{'selected':metaInfo === 'constraints'}" (click)="metaInfo = 'constraints';">Constraints</span>
+            <div class="col-xs-1 meta-tab" [ngClass]="{'selected':metaInfo === 'all'}" (click)="metaInfo = 'all';">All</div>
+            <div class="col-xs-3 meta-tab" [ngClass]="{'selected':metaInfo === 'ident'}" (click)="metaInfo = 'ident';">Identification Information</div>
+            <div class="col-xs-3 meta-tab" *ngIf="record['keywords_ss']" [ngClass]="{'selected':metaInfo === 'topics'}" (click)="metaInfo = 'topics';">Keywords</div>
+            <div class="col-xs-3 meta-tab" [ngClass]="{'selected':metaInfo === 'reference'}" (click)="metaInfo = 'reference';">Metadata Reference</div>
+            <div class="col-xs-2 meta-tab" [ngClass]="{'selected':metaInfo === 'constraints'}" (click)="metaInfo = 'constraints';">Constraints</div>
         </div>
     </div>
     <div class="col-xs-12">
         <div class="metadata-info-content">
-            <div id="metadata-originator">
-                <h4>Originator</h4>
-                <p>{{record['contact.organizations_ss'] ? record['contact.organizations_ss'].toString() : ''}}</p>
+            <div id="metadata-info-wrapper-ident" *ngIf="metaInfo === 'all' || metaInfo === 'ident'">
+                <div id="metadata-originator">
+                    <h4>Originator</h4>
+                    <p>{{record['contact.organizations_ss'] ? record['contact.organizations_ss'].toString() : ''}}</p>
+                </div>
+                <div id="metadata-description">
+                    <h4>Description</h4>
+                    <p>{{record.description}}</p>
+                    <p *ngIf="record.supplinf_t">
+                        {{record.supplinf_t}}
+                    </p>
+                </div>
+                <div id="metadata-purpose">
+                    <h4>Purpose</h4>
+                    <p>{{record.purpose_t}}</p>
+                </div>
             </div>
-            <div id="metadata-desciption">
-                <h4>Description</h4>
-                <p>{{record.description}}</p>
+            <div id="metadata-info-wrapper-topics" *ngIf="metaInfo === 'all' || metaInfo === 'topics'">
+                <div>
+                    <!--<div id="metadata-keywords">
+                        <h4>Keywords</h4>
+                        <p>{{record.keywords_ss ? record.keywords_ss.toString().split(',').join(', ') : ''}}</p>
+                    </div>-->
+                    <h4>Keywords</h4>
+                    <span *ngFor="let keyword of record['keywords_ss'];let idx = index">                       
+                        <a [routerLink]="['/search', {fq:'keywords:' + keyword}]" > {{keyword}}</a>
+                        {{idx !== record['keywords_ss'].length -1 ? '|   ' : ''}}           
+                    </span>
+                    <div *ngIf="record['iso.keywords_ss']">
+                        <h4>ISO Topic Categories</h4>
+                        <span *ngFor="let keyword of record['iso.keywords_ss']; let sidx = index"> 
+                        <a [routerLink]="['/search', {fq:'keywords:' + keyword}]" > {{keyword}} </a>
+                        {{sidx !== record['keywords_ss'].length -1 ? '|   ' : ''}}  
+                    </span>
+                    </div>
+                </div>
             </div>
-            <div id="metadata-keywords">
-                <h4>Keywords</h4>
-                <p>{{record.keywords_ss ? record.keywords_ss.toString() : ''}}</p>
+            <div id="metadata-info-wrapper-contraints" *ngIf="metaInfo === 'all' || metaInfo === 'constraints'">
+                <div *ngIf="record.acconst_t || record.useconst_t" id="metadata-contraints">
+                    <h4>Contraints</h4>
+                    <p>{{record.useconst_t}}</p>
+                    <p>{{record.acconst_t}}</p>
+                </div>
             </div>
-
+            <div id="metadata-info-wrapper-reference" *ngIf="metaInfo === 'all' || metaInfo === 'reference'">
+                <h4>Metadata Reference Information</h4>
+                <blockquote>
+                    <div *ngIf="record['metadata.ref.org_t'] ? !record['metadata.ref.org_t'].includes('REQUIRED') : false">
+                        <span>Organization:</span>
+                        <span>{{record['metadata.ref.org_t']}}</span>
+                    </div>
+                    <div *ngIf="record['metadata.ref.address_t'] ? !record['metadata.ref.address_t'].includes('REQUIRED') : false">
+                        <span>Address:</span>
+                        <span>{{record['metadata.ref.address_t']}}</span>
+                    </div>
+                    <div *ngIf="record['metadata.ref.city_t'] ? !record['metadata.ref.city_t'].includes('REQUIRED') : false">
+                        <span>City:</span>
+                        <span>{{record['metadata.ref.city_t']}}</span>
+                    </div>
+                    <div *ngIf="record['metadata.ref.state_t'] ? !record['metadata.ref.state_t'].includes('REQUIRED') : false">
+                        <span>State:</span>
+                        <span>{{record['metadata.ref.state_t']}}</span>
+                    </div>
+                    <div *ngIf="record['metadata.ref.postal_t'] ? !record['metadata.ref.postal_t'].includes('REQUIRED') : false">
+                        <span>Postal Code:</span>
+                        <span>{{record['metadata.ref.postal_t']}}</span>
+                    </div>
+                    <div *ngIf="record['metadata.ref.phone_t'] ? !record['metadata.ref.phone_t'].includes('REQUIRED') : false">
+                        <span>Phone:</span>
+                        <span>{{record['metadata.ref.phone_t']}}</span>
+                    </div>
+                    <div *ngIf="record['metadata.ref.email_t'] ? !record['metadata.ref.email_t'].includes('REQUIRED') : false">
+                        <span>Email:</span>
+                        <span><a [href]="'mailto:'+ record['metadata.ref.email_t']"> {{record['metadata.ref.email_t']}}</a></span>
+                    </div>
+                </blockquote>
+            </div>
         </div>
     </div>
+</div>
