@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OsdlSolrSrvService, ResultsStoreSrvService } from '../../services/index';
 import { Observable } from 'rxjs/Observable';
 
@@ -26,6 +27,7 @@ export class SearchCmpComponent implements OnInit {
   initLoad: boolean = true;
 
   constructor(
+    private router: Router,
     public _osdl_solr_service: OsdlSolrSrvService,
     public _results_store_service: ResultsStoreSrvService
   ) { }
@@ -107,52 +109,24 @@ export class SearchCmpComponent implements OnInit {
 
   blurHandler(event: any) {
     const searchScope = this;
-    console.log('blur', event);
+    // console.log('blur', event, document.activeElement.classList);
     if (!this.searchPushed) {
       setTimeout(function () {
-        searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
-        searchScope.searchString = '';
+        // searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
+        // searchScope.searchString = '';
         // if tabbing on list result set input box to match the Name property, but don't clear.
-        // if (document.activeElement.classList.toString() === 'list-group-item') {
-        //   const attr: any = 'data-search-item';
-        //   const listItem: any = JSON.parse(document.activeElement.attributes[attr].value);
-        //   const selected = {
-        //     Name: listItem.Name.replace(/\,/g, '%2C').replace(/\./g, '%2E'),
-        //     ResID: listItem.ResID,
-        //     Type: listItem.Type,
-        //     TypeCategory: listItem.TypeCategory,
-        //     Desc: listItem.Desc
-        //   };
-        //   searchScope.selectedSearchResult = selected;
-        //   // if the Explore button then select the top result and go else put focus on the input
-        // } else if (document.activeElement.id === 'search-btn') {
-        //   // get tempResult values
-        //   if (searchScope.temp_search_results.length > 0) {
-        //     const firstItem: any = searchScope.temp_search_results[searchScope.tempTabIndex];
-        //     const selected = {
-        //       Name: firstItem['Name'].replace(/\,/g, '%2C').replace(/\./g, '%2E'),
-        //       ResID: firstItem['ResID'],
-        //       Type: firstItem['Type'],
-        //       TypeCategory: firstItem['TypeCategory'],
-        //       Desc: firstItem['Desc']
-        //     };
-        //     searchScope.selectedSearchResult = selected;
-        //     searchScope.selectResult(selected);
-        //     alert(firstItem['Name']);
-        //   } else {
-        //     alert('Please select a valid search term.');
-        //   }
-        // } else {
-        //   searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
-        //   searchScope.searchString = '';
-        // }
+        if (['list-group-item', 'search-btn','download-link-a'].indexOf(document.activeElement.classList.toString()) === -1) {
+          searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
+          searchScope.searchString = '';
+        }
       }, 1);
     }
-    // event.preventDefault();
+    event.preventDefault();
   }
   eventHandler(event: any, searchItem: any) {
     // this.selectResult(searchItem);
     console.log('term selected', searchItem);
+    this.router.navigate(['/details', { id: searchItem.id }]);
   }
 
   filterLookup(filter: string) {
@@ -181,7 +155,7 @@ export class SearchCmpComponent implements OnInit {
   }
 
   processFilters(params: any) {
-    console.log('processing filters', params);
+    // console.log('processing filters', params);
     this.filters = [];
     // process faceted additions, skipping first for all docs
     if (params.fq.constructor === Array) {
@@ -208,7 +182,7 @@ export class SearchCmpComponent implements OnInit {
       const textFilter: any = {};
       textFilter.facet = params.q.replace(/"/g, '').replace(/\*/g, '');
       textFilter.query = params.q;
-       textFilter.category = 'search keyword: ';
+      textFilter.category = 'search keyword: ';
       textFilter.type = 'textquery';
       this.filters.push(textFilter);
     }

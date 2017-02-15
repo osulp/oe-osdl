@@ -62,6 +62,10 @@
     text-align: center;
 }
 
+#map {
+    height: 150px;
+}
+
 #download-btn:hover {
     cursor: pointer;
     background-color: #802E01;

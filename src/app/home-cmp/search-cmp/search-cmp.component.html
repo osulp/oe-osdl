@@ -9,12 +9,8 @@
                     <span class="glyphicon glyphicon-search"></span>
                     <input #searchInput type="text" [(ngModel)]="searchString" [formControl]="searchTerm" placeholder="Enter keyword here" (click)="inputSearchClickHandler($event);" (keydown)="inputKeypressHandler($event);" (blur)="blurHandler($event);" />
                     <div *ngIf="searchString" class="list-group">
-                        <!--<a *ngFor="let item of temp_search_results" href="javascript:void(0);" class="list-group-item" [attr.data-search-item]="item | json" (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''">-->
-                        <a *ngFor="let item of temp_search_results" href="javascript:void(0);" class="list-group-item" (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''">
+                        <a *ngFor="let item of temp_search_results" href="javascript:void(0);" class="list-group-item" (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''" [attr.data-search-item]="item.id">
                             <div class="search-result-wrapper container">
-                                <!--<div [ngClass]="{isPlace: item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 ? 'Indicator' : 'Place' : 'Place' }" class="search-result-type">
-                                    {{item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 ? 'Download' : 'Map Service' : 'Download'}}
-                                </div>-->
                                 <div class="search-result-content row">
                                     <div class="search-result-name col-xs-12">
                                         <span>{{item.title}}</span>
@@ -31,7 +27,7 @@
                                     </div>
                                     <div *ngIf="item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 : false" class="download-link col-xs-2">
                                         <span class="glyphicon glyphicon-download-alt"></span>
-                                        <a [href]="item.links[1]" download>Download</a>
+                                        <a [href]="item.links[1]" class="download-link-a" download>Download</a>
                                     </div>
                                 </div>
                             </div>

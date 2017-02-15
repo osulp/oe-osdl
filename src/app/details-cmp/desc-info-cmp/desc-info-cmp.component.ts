@@ -10,7 +10,7 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
   @Input() solrResponse: any;
   metaInfo: any = 'all';
   record: any = {};
-  facet_counts: any = {};  
+  facet_counts: any = {};
 
   constructor() { }
 
@@ -20,10 +20,10 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
   ngOnChanges(change: any) {
     console.log('desc-info got solr response change', change);
     if (change.solrResponse.currentValue.response) {
-        this.record = change.solrResponse.currentValue.response.docs[0];
-        console.log('details',this.record);
-        this.facet_counts = change.solrResponse.currentValue.facet_counts;
-      }
+      this.record = change.solrResponse.currentValue.response.docs[0];
+      console.log('details', this.record);
+      this.facet_counts = change.solrResponse.currentValue.facet_counts;
+    }
   }
 
 }

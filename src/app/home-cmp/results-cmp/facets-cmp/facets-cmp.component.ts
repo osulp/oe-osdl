@@ -38,11 +38,11 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   }
 
   updateFacet(facet: any) {
-    console.log('facet_groups', this.facet_groups);
+    // console.log('facet_groups', this.facet_groups);
     if (facet) {
       this.facet_groups.forEach(group => {
         group.solrFields.forEach((sf: any) => {
-          console.log('select facets based on input:', facet.facet, sf);
+          // console.log('select facets based on input:', facet.facet, sf);
           sf.selected = facet.facet
             ? facet.facet.includes(sf.facet)
               ? facet.selected
@@ -66,7 +66,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   }
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
-    console.log('set FACETS', facets, searchType, updateState);
+    // console.log('set FACETS', facets, searchType, updateState);
     // this.selected_facets = [];
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
@@ -131,12 +131,12 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       qsParams.push({ key: 'q', value: textParams });
     }
 
-    console.log('selected facets set', this.selected_facets, searchType);
+    // console.log('selected facets set', this.selected_facets, searchType);
     this._osdl_solr_service.get(this.selected_facets, searchType);
 
     if (updateState) {
       const newState = this.updateQueryStringParam(qsParams);
-      console.log('NEW STATE TOPICs!!!!!!!!!!!', newState);
+      // console.log('NEW STATE TOPICs!!!!!!!!!!!', newState);
       window.history.pushState({}, '', newState);
     }
   }
@@ -144,9 +144,9 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   updateQueryStringParam(qsParams: any[]) {
     let baseUrl = [location.protocol, '//', location.host, location.pathname.split(';')[0]].join('');
     baseUrl += baseUrl.includes('search') ? '' : 'search';
-    console.log('baseUrl', baseUrl, qsParams);
+    // console.log('baseUrl', baseUrl, qsParams);
     let urlQueryString = decodeURI(location.pathname.replace(location.pathname.split(';')[0], '').replace('/search', ''));
-    console.log('url query string', urlQueryString);
+    // console.log('url query string', urlQueryString);
     let allParams = '';
 
     for (let x = 0; x < qsParams.length; x++) {

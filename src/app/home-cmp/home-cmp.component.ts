@@ -34,7 +34,7 @@ export class HomeCmpComponent implements OnInit {
   }
 
   checkQueryStingParams() {
-    console.log('checking params', this.route.snapshot.params, this.location);
+    // console.log('checking params', this.route.snapshot.params, this.location);
 
     const params = [];
     let sortParam = '';
@@ -74,7 +74,7 @@ export class HomeCmpComponent implements OnInit {
                     ? 'sort' : 'facet'
           });
       }
-      console.log('param', params);
+      // console.log('param', params);
     }
     this._osdl_solr_service.setBaseSearchState();
 
