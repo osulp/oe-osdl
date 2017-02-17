@@ -1,78 +1,83 @@
-#sort-bar-wrapper{
-    max-width:1168px;
-    margin:33px auto;
+#sort-bar-wrapper {
+    max-width: 1168px;
+    margin: 33px auto;
     /*height: 40px;*/
-    color:#D1CDC7;
+    color: #D1CDC7;
     border-bottom: 1px solid #D1CDC7;
     padding-bottom: 10px;
 }
 
-#data-set-num{
-    color:black;    
+#data-set-num {
+    color: black;
 }
 
-#sort-bar-right .row{
-    margin-right:0;
+#sort-bar-right .row {
+    margin-right: 0;
 }
 
-.no-padding{
-    padding-left:0;
-    padding-right:0;
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
 }
 
-#show-framework-wrapper{
+#show-framework-wrapper {
     color: #D1CDC7;
     border-right: 1px solid #D1CDC7;
     text-align: right;
-    padding-right:10px;
-    height:100%;    
+    padding-right: 10px;
+    height: 100%;
 }
 
-#show-framework-wrapper label{
-    color: #C34500;    
-    font-size:13.5px;
+#show-framework-wrapper label {
+    color: #C34500;
+    font-size: 13.5px;
     font-weight: lighter;
-    margin-top:10px;
+    margin-top: 10px;
 }
 
-#sort-by-wrapper{
-    padding:2px 15px;    
+#sort-by-wrapper {
+    padding: 2px 15px;
 }
 
-#sort-by-wrapper label{
-    margin-right:10px;
+#show-num-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#sort-by-wrapper label {
+    margin-right: 10px;
 }
 
 .selectpicker {
-    width:125px !important;
+    width: 125px !important;
 }
 
-#view-type-wrapper{    
-    padding:2px 0;
+#view-type-wrapper {
+    padding: 2px 0;
     text-align: right;
 }
 
-#view-type-wrapper div{
-    display:inline-block;    
-    margin-right:3px;
+#view-type-wrapper div {
+    display: inline-block;
+    margin-right: 3px;
 }
 
-#tile-view{
-    width:32px;
-    height:32px;
+#tile-view {
+    width: 32px;
+    height: 32px;
     background-image: url('assets/img/tile-view.png');
 }
 
-#tile-view.active{
+#tile-view.active {
     background-image: url('assets/img/tile-view-active.png');
 }
 
-#list-view{
-    width:32px;
-    height:32px;
+#list-view {
+    width: 32px;
+    height: 32px;
     background-image: url('assets/img/list-view.png')
 }
 
-#list-view.active{
+#list-view.active {
     background-image: url('assets/img/list-view-active.png');
 }

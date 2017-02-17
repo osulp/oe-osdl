@@ -25,6 +25,8 @@ import {
   GetMapSrvService
 } from './services/index';
 import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
+import { PaginationDirective } from './directives/pagination.directive';
+import { PagerCmpComponent } from './home-cmp/results-cmp/pager-cmp/pager-cmp.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeCmpComponent },
@@ -52,7 +54,9 @@ const appRoutes: Routes = [
     SortBarCmpComponent,
     TitleBarCmpComponent,
     DescInfoCmpComponent,
-    ResourcesCmpComponent
+    ResourcesCmpComponent,
+    PaginationDirective,
+    PagerCmpComponent
   ],
   imports: [
     BrowserModule,

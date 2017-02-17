@@ -1,9 +1,13 @@
-#results-bottom-wrapper{
-    max-width:1168px;
-    margin:38px auto;
+#results-bottom-wrapper {
+    max-width: 1168px;
+    margin: 38px auto;
 }
 
-.no-padding{
-    padding-left:0;
-    padding-right:0;
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.results-col {
+    margin-top: -35px;
 }

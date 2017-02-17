@@ -12,6 +12,7 @@ export class SortBarCmpComponent implements OnInit {
   @Output() onViewTypeChange = new EventEmitter();
   @Output() onFrameworkOnlyChange = new EventEmitter();
   @Output() onSortChange = new EventEmitter();
+  @Output() onShowNumChangeEvt = new EventEmitter();
 
   sortByArr = [
     { name: 'Newest first', val: 'sys.src.item.lastmodified_tdt desc' },
@@ -20,6 +21,8 @@ export class SortBarCmpComponent implements OnInit {
     { name: 'Title Z-A', val: 'title desc' }
   ];
   selectedSortBy = undefined;
+  showNumberOpts = [{ val: '10' }, { val: '25' }, { val: '50' }, { val: '100' } ];
+  selectedShowNum: any;
   viewType: any = 'tile';
   showFrameworkOnly: boolean = false;
 
@@ -29,6 +32,10 @@ export class SortBarCmpComponent implements OnInit {
     console.log('selected sort is: ', selectedSort, this.sortByArr);
     this.selectedSortBy = selectedSort;
     this.onSortChange.emit(selectedSort);
+  }
+
+  onShowNumChange(showNum: any) {
+    this.onShowNumChangeEvt.emit(showNum);
   }
 
   refreshSort(selectedSort) {

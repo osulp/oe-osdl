@@ -1,26 +1,31 @@
 <div id="sort-bar-wrapper">
     <div id="sort-bar" class="row no-padding">
-        <div id="data-set-num" class="col-lg-5 col-md-5 col-xs-3">
+        <div id="data-set-num" class="col-lg-4 col-md-4 col-xs-3">
             <h2>{{numRecords}} data sets</h2>
         </div>
-        <div id="sort-bar-right" class="col-lg-7 col-md-7 col-xs-9">
+        <div id="sort-bar-right" class="col-lg-8 col-md-8 col-xs-9">
             <div class="row no-padding">
-                <div id="show-framework-wrapper" class="col-xs-5">
+                <div id="show-framework-wrapper" class="col-xs-4">
                     <input #showFramework type="checkbox" id="showFramework" [checked]="showFrameworkOnly" (click)="toggleFrameworkOnly(showFramework.checked)">
                     <label for="showFramework"><span></span>Show only Framework data</label></div>
-                <div id="sort-by-wrapper" class="col-xs-5">
+                <div id="sort-by-wrapper" class="col-xs-4">
                     <label for="sortBy">Sort by:</label>
-                    <span class="osdl-select">      
-            <!--<select class="selectpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event, sortBy)">
-              <option *ngFor="let item of sortByArr" [ngValue]="item.solrVal" [value]="item.solrVal" [selected]="item.val === selectedSortBy.val ? 'selected' : ''" >
-                  {{item.val}}
-              </option>
-            </select>-->
-            <select class="selectpicker" name="sortpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event)" >
-              <option *ngFor="let item of sortByArr" [ngValue]="item.val"   >
-                  {{item.name}}
-              </option>
-            </select>             
+                    <span class="osdl-select">                  
+                        <select class="selectpicker" name="sortpicker" #sortBy id="sortBy" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onSortByChange($event)" >
+                        <option *ngFor="let item of sortByArr" [ngValue]="item.val"   >
+                            {{item.name}}
+                        </option>
+                        </select>             
+                    </span>
+                </div>
+                <div id="show-num-wrapper" class="col-xs-2">
+                    <label for="showNumpicker">Show:</label>
+                    <span class="osdl-select">   
+                        <select class="selectpicker" name="showNumpicker" #showNumpicker id="showNumpicker" [(ngModel)]="selectedSortBy" data-width="fit" (ngModelChange)="onShowNumChange($event)" >
+                            <option *ngFor="let item of showNumberOpts" [ngValue]="item.val"   >
+                                        {{item.val}}
+                            </option>
+                        </select>   
                     </span>
                 </div>
                 <div id="view-type-wrapper" class="col-xs-2" (click)="toggleViewType()">

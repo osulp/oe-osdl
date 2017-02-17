@@ -95,8 +95,10 @@ export class HomeCmpComponent implements OnInit {
       window.setTimeout(() => {
         // console.log('selectdisplay', $('.bootstrap-select').css('display'));
         $('select[name=sortpicker]').selectpicker('refresh');
+        $('select[name=showNumpicker]').selectpicker('refresh');
         if ($('.bootstrap-select').css('display') === undefined) {
           $('select[name=sortpicker]').selectpicker('refresh');
+          $('select[name=showNumpicker]').selectpicker('refresh');
         }
       }, 300);
     }

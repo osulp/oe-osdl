@@ -1,0 +1,4 @@
+<div class="osdl-pager" *ngIf="totalItems > showNumber">
+    <ng-pagination [totalItems]="totalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" (pageChanged)="pageChanged($event)" [itemsPerPage]="showNumber" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="First" last-text="Last">
+    </ng-pagination>
+</div>
