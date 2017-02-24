@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { GetMapSrvService } from '../../services/index';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { MapPreviewCmpComponent } from '../../map-preview-cmp/map-preview-cmp.component';
 declare var L: any;
 
 @Component({
@@ -9,6 +9,7 @@ declare var L: any;
 })
 export class TitleBarCmpComponent implements OnInit, OnChanges {
   @Input() solrResponse: any = {};
+  @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
   record: any = {};
   facet_counts: any = {};
   topics: any[] = [];
@@ -16,9 +17,7 @@ export class TitleBarCmpComponent implements OnInit, OnChanges {
   map: any;
 
 
-  constructor(
-    private _get_map_srv: GetMapSrvService
-  ) { }
+  constructor( ) { }
 
   ngOnInit() {
     // this.loadMap();
@@ -28,8 +27,22 @@ export class TitleBarCmpComponent implements OnInit, OnChanges {
     // });
   }
 
+  preview(record: any) {
+    this.modal.mapserviceUrl = record['url.mapserver_ss']
+      ? record['url.mapserver_ss'][0]
+      : record['url.wms_ss']
+        ? record['url.wms_ss'][0]
+        : record['url.wfs_ss']
+          ? record['url.wfs_ss'][0]
+          : record['url.kml_ss']
+            ? record['url.kml_ss'][0]
+            : '';
+    this.modal.serviceName = record['title'];
+    this.modal.show();
+  }
+
   loadMap() {
-    this.map = L.map('map', {
+    this.map = L.map('static-map', {
       zoomControl: false,
       scrollWheelZoom: false
     });

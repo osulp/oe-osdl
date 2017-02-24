@@ -43,7 +43,7 @@ export class SearchStateSrvService {
     this._searchState.append('facet.query', 'Bioscience OR Bioscience*');
     this._searchState.append('facet.query', 'Cadastral OR Cadastral*');
     this._searchState.append('facet.query', 'Climate OR Climate*');
-    this._searchState.append('facet.query', 'Coastal and Marine OR CoastalandMarine*');
+    this._searchState.append('facet.query', 'Coastal OR Marine OR CoastalandMarine*');
     this._searchState.append('facet.query', 'Elevation OR Elevation*');
     this._searchState.append('facet.query', 'Geodetic Control OR GeodeticControl*');
     this._searchState.append('facet.query', 'Geoscience OR Geoscience*');

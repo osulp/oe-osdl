@@ -92,6 +92,11 @@
     font-size: .8em;
 }
 
+.record-preview img {
+    margin-right: 5px;
+    margin-bottom: 2px;
+}
+
 .bottom-row {
     max-height: 40px;
     /*width:100%;*/

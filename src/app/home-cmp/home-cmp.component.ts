@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
 import { SearchCmpComponent } from './search-cmp/search-cmp.component';
 import { ResultsCmpComponent } from './results-cmp/results-cmp.component';
-import { OsdlSolrSrvService, ResultsStoreSrvService } from '../services/index';
+import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService } from '../services/index';
 
 declare var $: any;
 
@@ -15,15 +15,17 @@ declare var $: any;
 export class HomeCmpComponent implements OnInit {
   solr_results: any;
   @ViewChild(ResultsCmpComponent) resultsCmp: ResultsCmpComponent;
+
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     public _results_store_service: ResultsStoreSrvService,
+    public _search_state_service: SearchStateSrvService,
     private route: ActivatedRoute,
     private router: Router,
     private location: PlatformLocation
   ) {
-    location.onPopState((test:any) => {
-      console.log('popping',test,this.route.snapshot.params);
+    location.onPopState((test: any) => {
+      console.log('popping', test, this.route.snapshot.params);
       this.checkQueryStingParams();
     });
   }
@@ -74,16 +76,22 @@ export class HomeCmpComponent implements OnInit {
                     ? 'sort' : 'facet'
           });
       }
-      // console.log('param', params);
     }
-    this._osdl_solr_service.setBaseSearchState();
 
+    if (this._search_state_service.getState() === undefined) {
+      this._osdl_solr_service.setBaseSearchState();
+    }
+
+    console.log('querystring check',params);
+
+    const scope = this;
     if (params.length > 0) {
       this.resultsCmp.facetsCmp.setSelectedFacets(params, 'framework', false);
-      const scope = this;
+
       window.setTimeout(() => {
         scope.resultsCmp.sortCmp.selectedSortBy = sortParam === '' ? 'sys.src.item.lastmodified_tdt desc' : sortParam;
         scope.resultsCmp.sortCmp.refreshSort(sortParam);
+        scope.refreshSelectPickers();
       }, 300);
     } else {
       // clear all facets
@@ -94,13 +102,17 @@ export class HomeCmpComponent implements OnInit {
       this._osdl_solr_service.get();
       window.setTimeout(() => {
         // console.log('selectdisplay', $('.bootstrap-select').css('display'));
-        $('select[name=sortpicker]').selectpicker('refresh');
-        $('select[name=showNumpicker]').selectpicker('refresh');
-        if ($('.bootstrap-select').css('display') === undefined) {
-          $('select[name=sortpicker]').selectpicker('refresh');
-          $('select[name=showNumpicker]').selectpicker('refresh');
-        }
+        scope.refreshSelectPickers();
       }, 300);
+    }
+  }
+
+  refreshSelectPickers() {
+    $('select[name=sortpicker]').selectpicker('refresh');
+    $('select[name=showNumpicker]').selectpicker('refresh');
+    if ($('.bootstrap-select').css('display') === undefined) {
+      $('select[name=sortpicker]').selectpicker('refresh');
+      $('select[name=showNumpicker]').selectpicker('refresh');
     }
   }
 

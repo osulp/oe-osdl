@@ -42,7 +42,7 @@ export class SearchCmpComponent implements OnInit {
     console.log('search pushed', this.searchString);
     const filterFacet = {
       key: 'q',
-      query: (this.searchString ? '"*' + this.searchString + '*"' : ''),
+      query: (this.searchString ? '*' + this.searchString + '*' : ''),
       type: 'textquery',
       selected: true
     }
@@ -155,7 +155,7 @@ export class SearchCmpComponent implements OnInit {
   }
 
   processFilters(params: any) {
-    // console.log('processing filters', params);
+    console.log('processing filters', params);
     this.filters = [];
     // process faceted additions, skipping first for all docs
     if (params.fq.constructor === Array) {
@@ -169,7 +169,7 @@ export class SearchCmpComponent implements OnInit {
             filter.category = this.filterLookup(f);
             filter.type = f.includes('Framework') ? 'framework' : 'facets';
           } else {
-            filter.facet = f.split(' OR')[0].replace(/"/g, '').replace(/\*/g, '');
+            filter.facet = f.split(' OR')[0].replace(/"/g, '').replace(/\*/g, '').replace('Coastal Marine','Coastal and Marine');
             filter.query = f;
             filter.category = this.filterLookup(f);
             filter.type = 'query';
@@ -209,7 +209,7 @@ export class SearchCmpComponent implements OnInit {
         if (!this.initLoad) {
           return this._osdl_solr_service.textSearch([{
             key: 'q',
-            value: (term ? '"*' + term.toString() + '*"' : ''),
+            value: (term ? '*' + term.toString() + '*' : ''),
             type: 'textquery'
           }, false]);
         } else {

@@ -7,7 +7,8 @@
                 <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
             </div>
             <div class="record-thumbnail">
-                <img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'" />
+                <img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
+                />
             </div>
             <div class="record-abstract ellipsis">
                 <div>
@@ -22,7 +23,9 @@
             </div>
             <div class="bottom-row row">
                 <!--Check if download data or map service-->
-                <div class="record-download col-xs-6" (click)="download(result)">
+                <div *ngIf="result['url.mapserver_ss'] || result['url.wms_ss'] || result['url.wfs_ss'] || result[ 'url.klm_ss']" class="record-preview col-xs-6" (click)="preview(result)">
+                    <img src="./assets/img/preview-icn.png" alt="preview map service" />Preview</div>
+                <div *ngIf="!result['url.mapserver_ss'] && !result['url.wms_ss']" class="record-download col-xs-6" (click)="download(result)">
                     <span class="glyphicon glyphicon-download-alt"></span>Download</div>
                 <div class="record-details col-xs-6" (click)="gotoDetails(result)">Details</div>
             </div>
@@ -32,12 +35,16 @@
 <div id="list-view-wrapper" *ngIf="viewType === 'list'" class="row">
     <div *ngFor="let result of solrResults;let idx = index" [ngClass]="idx > 0 ? 'not-first':''" class="list-result col-sm-12">
         <div class="row">
-            <div class="record-thumbnail col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'" /></div>
+            <div class="record-thumbnail col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
+                /></div>
             <div class="record-list-title-col col-xs-9">
                 <div class="record-title">{{result.title}}</div>
                 <div class="row list-download-details">
                     <!--Check if download data or map service-->
-                    <div class="record-download col-xs-6" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
+                    <div *ngIf="result['links'] ? result['links'].length > 1 ? result['links'][1].includes('.zip') : false : false" class="record-download col-xs-6" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
+                    <div *ngIf="result['url.mapserver_ss'] || result['url.wms_ss'] || result['url.wfs_ss'] || result[ 'url.klm_ss']" class="record-preview col-xs-6" (click)="preview(result)">
+                        <img src="./assets/img/icn-view.svg" alt="preview map service" />Preview</div>
+
                     <div class="record-details col-xs-6" (click)="gotoDetails(result)">Details</div>
                 </div>
             </div>
@@ -49,3 +56,4 @@
         </div>
     </div>
 </div>
+<app-map-preview-cmp></app-map-preview-cmp>

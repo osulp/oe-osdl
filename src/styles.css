@@ -43,8 +43,10 @@ input[type="checkbox"]:checked+label span {
 .btn.dropdown-toggle.btn-default:hover {
     box-shadow: none;
     background-color: #F3F2ED;
-    color: #D1CDC7;
-    border-color: #D1CDC7;
+    /*color: #D1CDC7;
+    border-color: #D1CDC7;*/
+    color: #a7a7a7;
+    border-color: #a7a7a7;
 }
 
 .dropdown-menu {
@@ -76,6 +78,7 @@ input[type="checkbox"]:checked+label span {
 .pagination>li>a,
 .pagination>li>span {
     color: #C34500;
+    background-color: #F3F2ED;
 }
 
 .pagination>li>a:hover,

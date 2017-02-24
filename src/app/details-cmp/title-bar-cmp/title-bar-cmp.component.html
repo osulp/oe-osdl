@@ -13,16 +13,22 @@
     </div>
     <div id="dataset-thumbnail-row" class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <img #thumbnail [src]="record['url.thumbnail_s'] !== undefined ? record['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'" />
+            <img #thumbnail [src]="record['url.thumbnail_s'] !== undefined ? record['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
+            />
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div id="map"></div>
+            <div id="static-map"></div>
             <!--<img [src]="map_box_url" height="150px" />-->
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="row">
                 <div id="links-wrapper">
                     <div class="col-md-12 col-sm-4">
+                        <div *ngIf="record['url.mapserver_ss'] || record['url.wms_ss'] || record['url.wfs_ss'] || record[ 'url.klm_ss']" id="preview-btn" class="record-preview col-xs-6" (click)="preview(record)">
+                            <span><img src="./assets/img/icn-view.svg" alt="preview map service" /></span> Preview
+                        </div>
+                    </div>
+                    <div *ngIf="record['links'] ? record['links'].length > 1  ? record['links'][1].includes('.zip') : false : false" class="col-md-12 col-sm-4">
                         <div id="download-btn" (click)="download(record)">
                             <span class="glyphicon glyphicon-download-alt"></span>Download</div>
                     </div>
@@ -41,3 +47,4 @@
         </div>
     </div>
 </div>
+<app-map-preview-cmp></app-map-preview-cmp>

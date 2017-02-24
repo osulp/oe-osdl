@@ -27,6 +27,7 @@ import {
 import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
 import { PaginationDirective } from './directives/pagination.directive';
 import { PagerCmpComponent } from './home-cmp/results-cmp/pager-cmp/pager-cmp.component';
+import { MapPreviewCmpComponent } from './map-preview-cmp/map-preview-cmp.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeCmpComponent },
@@ -56,7 +57,8 @@ const appRoutes: Routes = [
     DescInfoCmpComponent,
     ResourcesCmpComponent,
     PaginationDirective,
-    PagerCmpComponent
+    PagerCmpComponent,
+    MapPreviewCmpComponent
   ],
   imports: [
     BrowserModule,

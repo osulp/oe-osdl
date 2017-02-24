@@ -1,0 +1,11 @@
+.modal {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#map {
+    height: 500px;
+}
+
+.modal-footer {
+    text-align: left;
+}

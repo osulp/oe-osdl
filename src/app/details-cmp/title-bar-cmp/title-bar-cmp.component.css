@@ -51,7 +51,8 @@
     padding-right: 25%;
 }
 
-#dataset-thumbnail-row #download-btn {
+#dataset-thumbnail-row #download-btn,
+#dataset-thumbnail-row #preview-btn {
     width: 185px;
     height: 50px;
     background-color: #C34500;
@@ -62,17 +63,19 @@
     text-align: center;
 }
 
-#map {
+#static-map {
     height: 150px;
 }
 
-#download-btn:hover {
+#download-btn:hover,
+#preview-btn:hover {
     cursor: pointer;
     background-color: #802E01;
     text-decoration: underline;
 }
 
-#download-btn span {
+#download-btn span,
+#preview-btn span {
     padding-right: 10px;
 }
 

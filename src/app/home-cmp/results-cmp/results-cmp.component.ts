@@ -1,18 +1,22 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { ResultCmpComponent } from './result-cmp/result-cmp.component';
 import { SortBarCmpComponent } from './sort-bar-cmp/sort-bar-cmp.component';
 import { FacetsCmpComponent } from './facets-cmp/facets-cmp.component';
-import { OsdlSolrSrvService, ResultsStoreSrvService } from '../../services/index';
+import { PagerCmpComponent } from './pager-cmp/pager-cmp.component';
+import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService } from '../../services/index';
+
+declare var $: any;
 
 @Component({
   selector: 'app-results-cmp',
   templateUrl: './results-cmp.component.html',
   styleUrls: ['./results-cmp.component.css']
 })
-export class ResultsCmpComponent implements OnInit {
+export class ResultsCmpComponent implements OnInit, AfterViewInit {
   @ViewChild(FacetsCmpComponent) facetsCmp: FacetsCmpComponent;
   @ViewChild(SortBarCmpComponent) sortCmp: SortBarCmpComponent;
-  @ViewChild(ResultCmpComponent)
+  @ViewChildren(PagerCmpComponent) pagers: QueryList<PagerCmpComponent>;
   viewType: any;
   solr_results: any = {};
   pagerStartNumber: number = 1;
@@ -20,7 +24,8 @@ export class ResultsCmpComponent implements OnInit {
 
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
-    public _results_store_service: ResultsStoreSrvService
+    public _results_store_service: ResultsStoreSrvService,
+    public _search_state_service: SearchStateSrvService
   ) { }
 
   onViewTypeChangeHandler(view: any) {
@@ -49,10 +54,28 @@ export class ResultsCmpComponent implements OnInit {
     this._osdl_solr_service.pager(solr_start_row * this.pagerNumberRows, this.pagerNumberRows);
   }
 
+
+  ngAfterViewInit() {
+    const search_state = this._search_state_service.getState();
+    if (search_state) {
+      if (this.pagers) {
+        const currentPage = +search_state.get('start') / +search_state.get('rows') + 1;
+        console.log('start row', search_state.paramsMap.get('start'), currentPage);
+        this.pagers.forEach(pager => {
+          console.log('current page?', currentPage);
+          pager.currentPage = currentPage -1;
+          this.onPagerChange(currentPage);
+        });
+      }
+      this.sortCmp.selectedShowNum = search_state.get('rows');
+      this.sortCmp.onShowNumChangeEvt.emit(+search_state.get('rows'));
+    }
+  }
+
   ngOnInit() {
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        console.log('store updated! in results cmp', results);
+        //console.log('store updated! in results cmp', results);
         this.solr_results = results;
         // check if framework removed from filter bar
         this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('Framework');

@@ -20,7 +20,8 @@
 
                                     </div>
                                     <div class="search-result-thumb col-xs-1">
-                                        <img *ngIf="item['url.thumbnail_s'] !== undefined" [src]="item['url.thumbnail_s'] !== undefined ? item['url.thumbnail_s'] : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" />
+                                        <img *ngIf="item['url.thumbnail_s'] !== undefined" #thumbnail [src]="item['url.thumbnail_s'] !== undefined ? item['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset"
+                                            (error)="thumbnail.src = 'assets/img/oe_no_image.png'" title="thumbnail of dataset" />
                                     </div>
                                     <div [title]="item.description" class="search-result-desc col-xs-5">
                                         {{item.description}}

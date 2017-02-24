@@ -3,7 +3,7 @@
         <a [innerHTML]="firstText">First</a>
     </li>
     <li>
-        <a *ngIf="previousItemValid" (click)="previousPage(nextItem)" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
+        <a *ngIf="previousItemValid" (click)="previousPage(previousItem)" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
     </li>
     <li *ngFor="let pageNo of pageList" [ngClass]="{'active':seletedPage === pageNo}">
         <a (click)="setCurrentPage(pageNo)">{{pageNo}}</a>
