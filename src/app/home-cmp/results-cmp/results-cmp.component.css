@@ -11,3 +11,10 @@
 .results-col {
     margin-top: -35px;
 }
+
+@media only screen and (max-width: 500px) {
+    .results-col {
+        margin-left: -10px;
+        padding-right: 0;
+    }
+}

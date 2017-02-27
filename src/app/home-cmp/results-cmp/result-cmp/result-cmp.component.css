@@ -20,6 +20,7 @@
     margin-left: 25px;
     margin-right: 25px;
     margin-bottom: 40px;
+    position: relative;
 }
 
 .list-result {
@@ -45,7 +46,7 @@
 .framework-record {
     position: absolute;
     top: 10px;
-    right: 50px;
+    right: 10px;
 }
 
 #list-view-wrapper .framework-record {
@@ -99,14 +100,16 @@
 
 .bottom-row {
     max-height: 40px;
-    /*width:100%;*/
-    position: relative;
-    bottom: -21px;
+    width: 100%;
+    /*position: relative;
+    bottom: -21px;*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
     /*left:15px;*/
     padding-left: 0;
     padding-right: 0;
-    margin-left: -30px;
-    margin-right: -30px;
+    margin-left: 0;
 }
 
 .bottom-row div {
@@ -198,4 +201,33 @@
     background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
     background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
     background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+}
+
+@media only screen and (max-width: 500px) {
+    .tile-wrapper {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    #list-view-wrapper {
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+    #list-view-wrapper .record-thumbnail img {
+        height: 30px;
+    }
+    #list-view-wrapper .framework-record img {
+        height: 20px;
+    }
+    .record-list-title-col {
+        padding-left: 15px;
+        padding-right: 0;
+    }
+    #list-view-wrapper .record-title {
+        font-size: 1em;
+    }
+    .list-framework {
+        padding-left: 0;
+    }
 }

@@ -11,8 +11,10 @@ import { OsdlSolrSrvService, FacetsStoreSrvService } from '../../../services/ind
 export class FacetsCmpComponent implements OnInit, OnChanges {
   @Input() solrFacets: any;
   @Input() searchParams: any;
+  @Input() isMobile:boolean;
   facet_groups: any[] = [];
   selected_facets: any[] = [];
+  collapseFilterExpanded = false;
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     private _facet_store_service: FacetsStoreSrvService
@@ -42,7 +44,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     if (facet) {
       this.facet_groups.forEach(group => {
         group.solrFields.forEach((sf: any) => {
-          console.log('select facets based on input:', facet.facet, sf);
+          //console.log('select facets based on input:', facet.facet, sf);
           sf.selected = facet.facet
             ? facet.facet.includes(sf.facet.replace(' and ', ' OR '))
               ? facet.selected
@@ -68,7 +70,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   }
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
-    console.log('set FACETS', facets, searchType, updateState);
+    //console.log('set FACETS', facets, searchType, updateState);
     // this.selected_facets = [];
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
@@ -78,10 +80,10 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       }, !updateState ? 100 : 0);
       // check selected_facets for value, if there remove, else add    
       facet.query = facet.query.split(' OR')[0];
-      console.log('facet selected', facet);
+      //console.log('facet selected', facet);
       if (!facet.selected) {
         this.selected_facets = this.selected_facets.filter((f: any) => {
-          console.log('facet selected check', f, facet);
+          //console.log('facet selected check', f, facet);
           return f.value.toLowerCase() !== (facet.type === 'facet' ?
             (facet.facet + ':"' + facet.query + '"').toLowerCase()
             : facet.query.replace('Coastal Marine', 'Coastal and Marine').toLowerCase());
@@ -137,7 +139,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       qsParams.push({ key: 'q', value: textParams });
     }
 
-    console.log('selected facets set', this.selected_facets, searchType);
+    //console.log('selected facets set', this.selected_facets, searchType);
     this._osdl_solr_service.get(this.selected_facets, searchType, updateState);
 
     if (updateState) {
@@ -183,7 +185,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges(change: any) {
-    // console.log('facet cmp seeing changes', change);
+    console.log('facet cmp seeing changes', change);
     if (change.solrFacets) {
       // tslint:disable-next-line:forin
       for (const ff in change.solrFacets.currentValue.facet_fields) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
 import { SearchCmpComponent } from './search-cmp/search-cmp.component';
@@ -13,7 +13,9 @@ declare var $: any;
   styleUrls: ['./home-cmp.component.css']
 })
 export class HomeCmpComponent implements OnInit {
+  @Input() isMobile: boolean;
   solr_results: any;
+
   @ViewChild(ResultsCmpComponent) resultsCmp: ResultsCmpComponent;
 
   constructor(
@@ -82,7 +84,7 @@ export class HomeCmpComponent implements OnInit {
       this._osdl_solr_service.setBaseSearchState();
     }
 
-    console.log('querystring check',params);
+    console.log('querystring check', params);
 
     const scope = this;
     if (params.length > 0) {

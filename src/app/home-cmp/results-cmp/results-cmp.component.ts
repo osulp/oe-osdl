@@ -14,6 +14,7 @@ declare var $: any;
   styleUrls: ['./results-cmp.component.css']
 })
 export class ResultsCmpComponent implements OnInit, AfterViewInit {
+  @Input() isMobile:boolean;
   @ViewChild(FacetsCmpComponent) facetsCmp: FacetsCmpComponent;
   @ViewChild(SortBarCmpComponent) sortCmp: SortBarCmpComponent;
   @ViewChildren(PagerCmpComponent) pagers: QueryList<PagerCmpComponent>;
@@ -21,6 +22,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   solr_results: any = {};
   pagerStartNumber: number = 1;
   pagerNumberRows: number = 10;
+  showMobileFacets:boolean = false;
 
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,

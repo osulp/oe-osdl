@@ -5,9 +5,10 @@
     <div class="row search-wrapper" [ngClass]="viewType">
         <div class="col-md-12">
             <div class="search row">
-                <div class="col-xs-8">
+                <div id="search-box" class="col-xs-8">
                     <span class="glyphicon glyphicon-search"></span>
-                    <input #searchInput type="text" [(ngModel)]="searchString" [formControl]="searchTerm" placeholder="Enter keyword here" (click)="inputSearchClickHandler($event);" (keydown)="inputKeypressHandler($event);" (blur)="blurHandler($event);" />
+                    <input #searchInput type="text" [(ngModel)]="searchString" [formControl]="searchTerm" [placeholder]="isHandheld ? '' : 'Enter keyword here'" (click)="inputSearchClickHandler($event);" (keydown)="inputKeypressHandler($event);" (blur)="blurHandler($event);"
+                    />
                     <div *ngIf="searchString" class="list-group">
                         <a *ngFor="let item of temp_search_results" href="javascript:void(0);" class="list-group-item" (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''" [attr.data-search-item]="item.id">
                             <div class="search-result-wrapper container">
@@ -42,7 +43,7 @@
                 </div>
             </div>
             <div class="filter-row-wrapper row">
-                <div *ngFor="let filter of filters" [ngClass]="filter.facet === 'Framework' ? 'framework-filter' : ''" class="filter col-xs-2">
+                <div *ngFor="let filter of filters" [ngClass]="filter.facet === 'Framework' ? 'framework-filter' : ''" class="filter col-md-2 col-xs-12">
                     {{filter.category}}
                     <br *ngIf="filter.category !== ''" /> {{filter.facet === 'Framework' ? 'Framework Data' : filter.facet}}
                     <span class="removeFilter" (click)="removeFilter(filter)"><img src="assets/img/closeX2.png" alt="remove selected filter" />&nbsp;</span>

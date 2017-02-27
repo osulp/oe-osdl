@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+declare var $:any;
 
 @Component({
   selector: 'app-pager-cmp',
@@ -10,7 +11,7 @@ export class PagerCmpComponent implements OnChanges {
   @Input() currentPage: number;
   @Input() showNumber: number;
   @Output() onPagerChange = new EventEmitter();
-  maxSize: number = 5;
+  maxSize: number = $(window).width() > 400 ? 5 : 3;
 
   constructor() {
   }

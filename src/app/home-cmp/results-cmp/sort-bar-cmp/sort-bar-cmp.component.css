@@ -58,7 +58,7 @@
     text-align: right;
 }
 
-#view-type-wrapper div {
+#view-type-wrapper div.viewtype {
     display: inline-block;
     margin-right: 3px;
 }
@@ -81,4 +81,20 @@
 
 #list-view.active {
     background-image: url('assets/img/list-view-active.png');
+}
+
+@media only screen and (max-width: 767px) {
+    #view-type-wrapper {
+        text-align: left;
+    }
+    #view-type-wrapper div.viewtype {
+        margin-right: 1px;
+    }
+    #show-framework-wrapper {
+        text-align: left;
+        border-right: none;
+        position: absolute;
+        top: 75px;
+        left: 0px;
+    }
 }

@@ -295,4 +295,28 @@
         /*max-height:400px;
     overflow:scroll;*/
     }
+    .search-wrapper .glyphicon-search {
+        font-size: unset;
+    }
+    .filter-row-wrapper {
+        margin: 5px 0;
+    }
+    .filter {
+        margin: 2px 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #clear-btn {
+        display: none;
+    }
+    #search-btn {
+        width: 25%;
+    }
+    #search-box {
+        width: 75%;
+    }
+    .search {
+        padding: 0 12px;
+    }
 }

@@ -1,24 +1,42 @@
-<div class="facet-group-wrapper" *ngFor="let facet_group of facet_groups">
-    <div class="facet-group" (click)="facet_group.expanded = !facet_group.expanded;">
-        <span class="facet-chevron glyphicon" [ngClass]="facet_group.expanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
-        <span class="facet-group-name">{{facet_group.name}}</span>
-    </div>
-    <div class="facet-list-wrapper" *ngIf="facet_group.expanded">
-        <div *ngFor="let solr_facet of facet_group.solrFields">
-            <div *ngIf="facet_group.name !== 'Topics'">
-                <div *ngFor="let sf of solr_facet.fields">
-                    <div *ngIf="!sf.field.includes('REQUIRED:')" class="facet">
-                        <input [id]="'sf'+sf.field" #facetChkBox type="checkbox" [(ngModel)]="sf.selected" (ngModelChange)="setSelectedFacets([{facet:solr_facet.facet,query:sf.field,selected:facetChkBox.checked,type:'facet'}],'facet', true)" />
-                        <label [for]="'sf'+sf.field"><span></span>{{sf.field}} <b *ngIf="sf.count">({{sf.count}})</b></label>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="facet_group.name === 'Topics' && solrFacets.facet_queries">
-                <div class="facet">
-                    <input #facetChkBox [id]="'sf'+solr_facet.facet" [(ngModel)]="solr_facet.selected" (ngModelChange)="setSelectedFacets([{facet:solr_facet.facet,query:solr_facet.facet,selected:facetChkBox.checked,type:'query'}],'query',true)" type="checkbox">
-                    <label [for]="'sf'+solr_facet.facet"><span></span>{{solr_facet.facet}}<b *ngIf="solrFacets.facet_queries[solr_facet.facet.replace(' and ', ' OR ') + ' OR ' + solr_facet.facet_no_space + '*']">({{solrFacets.facet_queries[solr_facet.facet.replace(' and ',' OR ') + ' OR ' + solr_facet.facet_no_space + '*']}}) </b></label>
-                </div>
-            </div>
+<div class="sidebar-nav">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="filter-collapse-btn navbar-header visible-xs" data-toggle="collapse" (click)="collapseFilterExpanded = !collapseFilterExpanded" data-target=".sidebar-navbar-collapse">
+            <span class="glyphicon glyphicon-filter"></span>
+            <span class="">Filters</span>
+            <span class="facet-chevron glyphicon" [ngClass]="collapseFilterExpanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
         </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="facet-group-wrapper" *ngFor="let facet_group of facet_groups">
+                    <div class="facet-group" (click)="facet_group.expanded = !facet_group.expanded;">
+                        <span class="facet-chevron glyphicon" [ngClass]="facet_group.expanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
+                        <span class="facet-group-name">{{facet_group.name}}</span>
+                    </div>
+                    <div class="facet-list-wrapper" *ngIf="facet_group.expanded">
+                        <div *ngFor="let solr_facet of facet_group.solrFields">
+                            <div *ngIf="facet_group.name !== 'Topics'">
+                                <div *ngFor="let sf of solr_facet.fields">
+                                    <div *ngIf="!sf.field.includes('REQUIRED:')" class="facet">
+                                        <input [id]="'sf'+sf.field" #facetChkBox type="checkbox" [(ngModel)]="sf.selected" (ngModelChange)="setSelectedFacets([{facet:solr_facet.facet,query:sf.field,selected:facetChkBox.checked,type:'facet'}],'facet', true)" />
+                                        <label [for]="'sf'+sf.field"><span></span>{{sf.field}} <b *ngIf="sf.count">({{sf.count}})</b></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="facet_group.name === 'Topics' && solrFacets.facet_queries">
+                                <div class="facet">
+                                    <input #facetChkBox [id]="'sf'+solr_facet.facet" [(ngModel)]="solr_facet.selected" (ngModelChange)="setSelectedFacets([{facet:solr_facet.facet,query:solr_facet.facet,selected:facetChkBox.checked,type:'query'}],'query',true)" type="checkbox">
+                                    <label [for]="'sf'+solr_facet.facet"><span></span>{{solr_facet.facet}}<b *ngIf="solrFacets.facet_queries[solr_facet.facet.replace(' and ', ' OR ') + ' OR ' + solr_facet.facet_no_space + '*']">({{solrFacets.facet_queries[solr_facet.facet.replace(' and ',' OR ') + ' OR ' + solr_facet.facet_no_space + '*']}}) </b></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--<div *ngIf="collapseFilterExpanded" class="filter-collapse-btn fcb2 navbar-header visible-xs" data-toggle="collapse" (click)="collapseFilterExpanded = !collapseFilterExpanded" data-target=".sidebar-navbar-collapse">
+            <span class="glyphicon glyphicon-filter"></span>
+            <span class="">Filters</span>
+            <span class="facet-chevron glyphicon" [ngClass]="collapseFilterExpanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
+        </div>-->
     </div>
 </div>

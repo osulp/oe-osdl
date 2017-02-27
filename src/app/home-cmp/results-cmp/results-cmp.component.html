@@ -3,12 +3,12 @@
         <app-sort-bar-cmp [numRecords]="solr_results.response ? solr_results.response.numFound : '0'" (onViewTypeChange)="onViewTypeChangeHandler($event)" (onFrameworkOnlyChange)="onFrameworkOnlyChange($event)" (onSortChange)="onSortChange($event)" (onShowNumChangeEvt)="onShowNumChange($event)">
         </app-sort-bar-cmp>
     </div>
-    <div id="results-bottom-wrapper">
+    <div id="results-bottom-wrapper" class="container">
         <div class="row no-padding">
-            <div class="col-xs-3">
-                <app-facets-cmp [solrFacets]="solr_results.facet_counts  ? solr_results.facet_counts : {}" [searchParams]="solr_results.responseHeader ? solr_results.responseHeader.params : {}"></app-facets-cmp>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <app-facets-cmp [solrFacets]="solr_results.facet_counts  ? solr_results.facet_counts : {}" [searchParams]="solr_results.responseHeader ? solr_results.responseHeader.params : {}" [isMobile]="isMobile"></app-facets-cmp>
             </div>
-            <div class="col-xs-9" [ngClass]="solr_results.response ? +solr_results.response.numFound > pagerNumberRows ? 'results-col' : '' : ''">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12" [ngClass]="solr_results.response ? +solr_results.response.numFound > pagerNumberRows ? 'results-col' : '' : ''">
                 <app-pager-cmp [totalItems]="solr_results.response ? +solr_results.response.numFound : 0" [(currentPage)]="pagerStartNumber" [showNumber]="pagerNumberRows" (onPagerChange)="onPagerChange($event)"></app-pager-cmp>
                 <app-result-cmp [viewType]="viewType" [solrResults]="solr_results.response ? solr_results.response.docs : []"></app-result-cmp>
                 <app-pager-cmp [totalItems]="solr_results.response ? +solr_results.response.numFound : 0" [(currentPage)]="pagerStartNumber" [showNumber]="pagerNumberRows" (onPagerChange)="onPagerChange($event)"></app-pager-cmp>

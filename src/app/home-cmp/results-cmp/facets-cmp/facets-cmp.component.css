@@ -23,6 +23,18 @@
     border-color: #244068;
 }
 
+.filter-collapse-btn .facet-chevron {
+    margin-left: 10px;
+    font-size: .8em;
+    color: #ddd;
+    border-color: #ddd;
+}
+
+.filter-collapse-btn .facet-chevron.expanded {
+    color: #ddd;
+    border-color: #ddd;
+}
+
 .facet-group-name {
     font-weight: bold;
     padding-left: 13px;
@@ -46,4 +58,25 @@
 .facet label b {
     padding-left: 3px;
     color: #244068;
+}
+
+.sidebar-nav .navbar-default {
+    background-color: unset;
+    border-color: unset;
+    border-width: 0;
+}
+
+.filter-collapse-btn {
+    /*background-color: #98BD85;*/
+    background-color: #244068;
+    color: #ddd;
+    font-size: 1.2em;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+}
+
+.fcb2 {
+    margin-bottom: 10px;
 }
