@@ -9,6 +9,7 @@
                     <span class="glyphicon glyphicon-search"></span>
                     <input #searchInput type="text" [(ngModel)]="searchString" [formControl]="searchTerm" [placeholder]="isHandheld ? '' : 'Enter keyword here'" (click)="inputSearchClickHandler($event);" (keydown)="inputKeypressHandler($event);" (blur)="blurHandler($event);"
                     />
+                    <!--<input #searchInput type="text" [(ngModel)]="searchString" [formControl]="searchTerm" [placeholder]="isHandheld ? '' : 'Enter keyword here'" (click)="inputSearchClickHandler($event);" (keydown)="inputKeypressHandler($event);" />-->
                     <div *ngIf="searchString" class="list-group">
                         <a *ngFor="let item of temp_search_results" href="javascript:void(0);" class="list-group-item" (keydown)="eventHandler($event, item)" (click)="eventHandler($event, item)" [ngClass]="item.hovered ? 'tabHover' : ''" [attr.data-search-item]="item.id">
                             <div class="search-result-wrapper container">

@@ -24,12 +24,17 @@
 }
 
 .list-result {
-    padding-bottom: 10px;
+    padding-bottom: 8px;
+    padding-top: 10px;
 }
 
 .list-result.not-first {
-    padding-top: 10px;
     border-top: 1px solid #D1CDC7;
+}
+
+.list-result.hover {
+    background-color: #D1CDC7;
+    cursor: pointer;
 }
 
 .record-title {
@@ -50,7 +55,7 @@
 }
 
 #list-view-wrapper .framework-record {
-    right: 0;
+    right: 5px;
     top: 0;
 }
 
@@ -229,5 +234,8 @@
     }
     .list-framework {
         padding-left: 0;
+    }
+    .bottom-row span {
+        font-size: .8em;
     }
 }

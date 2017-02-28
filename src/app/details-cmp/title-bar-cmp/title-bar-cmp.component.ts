@@ -15,16 +15,19 @@ export class TitleBarCmpComponent implements OnInit, OnChanges {
   topics: any[] = [];
   map_box_url: any = '';
   map: any;
+  hasPreview: boolean = false;
+  hasDownload: boolean = true;
 
 
-  constructor( ) { }
+  constructor() { }
 
   ngOnInit() {
     // this.loadMap();
     // this._get_map_srv.getMap('').subscribe((res: any) => {
     //   this.map_box_url = res.href;
     //   console.log('map response', res);
-    // });
+    // });   
+
   }
 
   preview(record: any) {
@@ -71,10 +74,10 @@ export class TitleBarCmpComponent implements OnInit, OnChanges {
           fillColor: '#C34500',
           fillOpacity: 0.2
         }).addTo(this.map);
-        this.map.fitBounds(polygon.getBounds().pad(.1));
+      this.map.fitBounds(polygon.getBounds().pad(.1));
     }
     this.map.dragging.disable();
-    
+
   }
 
   goto(href: any, type: any) {
@@ -108,7 +111,15 @@ export class TitleBarCmpComponent implements OnInit, OnChanges {
     if (change.solrResponse.currentValue.response) {
       this.record = change.solrResponse.currentValue.response.docs[0];
       this.loadMap();
-      // console.log('details', this.record);
+      this.hasPreview = this.record['url.mapserver_ss']
+        || this.record['url.wms_ss']
+        || this.record['url.wfs_ss']
+        || this.record['url.klm_ss'] ? true : false;
+      this.hasDownload = this.record['links']
+        ? this.record['links'].length > 1
+          ? this.record['links'][1].includes('.zip')
+          : false
+        : false;
       for (const topic in change.solrResponse.currentValue.facet_counts.facet_queries) {
         if (change.solrResponse.currentValue.facet_counts.facet_queries[topic] > 0) {
           this.topics.push(topic);

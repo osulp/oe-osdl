@@ -153,10 +153,7 @@ a.a-nav:hover {
     }*/
 }
 
-@media only screen and (max-width:350px) {
-    .osdl-logo img {
-        height: 34px;
-    }
+@media only screen and (max-width:750px) {
     #footer {
         margin-left: -15px;
         margin-right: -15px;
@@ -170,5 +167,17 @@ a.a-nav:hover {
     }
     .copyright {
         font-size: .8em !important;
+    }
+    .sponsor-row img {
+        height: 35px;
+    }
+    /*.col-xs-1.rss {
+        padding-left: 0 !important;
+    }*/
+}
+
+@media only screen and (max-width:400px) {
+    .osdl-logo img {
+        height: 34px;
     }
 }

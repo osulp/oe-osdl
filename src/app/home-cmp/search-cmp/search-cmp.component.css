@@ -319,4 +319,20 @@
     .search {
         padding: 0 12px;
     }
+    .search .list-group {
+        margin-left: 0;
+        width: 125%;
+    }
+    .search .list-group .search-result-name {
+        font-size: .8em;
+    }
+    .search-result-thumb,
+    .search-result-desc,
+    .download-link {
+        display: none;
+    }
+    .search .list-group-item {
+        min-height: 40px;
+        height: unset;
+    }
 }

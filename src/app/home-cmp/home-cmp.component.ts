@@ -12,8 +12,7 @@ declare var $: any;
   templateUrl: './home-cmp.component.html',
   styleUrls: ['./home-cmp.component.css']
 })
-export class HomeCmpComponent implements OnInit {
-  @Input() isMobile: boolean;
+export class HomeCmpComponent implements OnInit {  
   solr_results: any;
 
   @ViewChild(ResultsCmpComponent) resultsCmp: ResultsCmpComponent;
@@ -132,6 +131,7 @@ export class HomeCmpComponent implements OnInit {
       err => console.error(err),
       () => console.log('done with subscribe event results store selected')
     );
+    //throw new Error('My ffen error');
   }
 
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -28,11 +28,12 @@ import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
 import { PaginationDirective } from './directives/pagination.directive';
 import { PagerCmpComponent } from './home-cmp/results-cmp/pager-cmp/pager-cmp.component';
 import { MapPreviewCmpComponent } from './map-preview-cmp/map-preview-cmp.component';
+import {OsdlErrorHandler} from './osdl-error-handler';
 
 const appRoutes: Routes = [
   { path: '', component: HomeCmpComponent },
-  { path: 'home', component: HomeCmpComponent},
-  { path: 'search', component: HomeCmpComponent},
+  { path: 'home', component: HomeCmpComponent },
+  { path: 'search', component: HomeCmpComponent },
   { path: 'about', component: AboutCmpComponent },
   { path: 'details', component: DetailsCmpComponent },
   { path: 'help', component: HelpCmpComponent },
@@ -68,8 +69,15 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, FacetsStoreSrvService, GetMapSrvService],
+  providers: [
+    OsdlSolrSrvService,
+    ResultsStoreSrvService,
+    SearchStateSrvService,
+    FacetsStoreSrvService,
+    GetMapSrvService,
+    { provide: ErrorHandler, useClass: OsdlErrorHandler }],
   bootstrap: [AppComponent]
 
 })
+
 export class AppModule { }

@@ -19,6 +19,7 @@
             </div>
             <div class="middle-row row">
                 <div class="record-date col-xs-6"><b>Updated:</b> {{result['sys.src.item.lastmodified_tdt'] | date:'MMMM, yyyy' }}</div>
+                <!--<div class="record-date col-xs-6"><b>Updated:</b> {{result['sys.src.item.lastmodified_tdt'] }}</div>-->
                 <div class="record-misc col-xs-6"><b>Source:</b></div>
             </div>
             <div class="bottom-row row">
@@ -33,11 +34,11 @@
     </div>
 </div>
 <div id="list-view-wrapper" *ngIf="viewType === 'list'" class="row">
-    <div *ngFor="let result of solrResults;let idx = index" [ngClass]="idx > 0 ? 'not-first':''" class="list-result col-sm-12">
+    <div *ngFor="let result of solrResults;let idx = index" (mouseover)="result.hover = true" (mouseout)="result.hover = false" [ngClass]="{'hover': result.hover, 'not-first': idx > 0}" class="list-result col-sm-12" (click)="gotoDetails(result)" [title]="result.description">
         <div class="row">
-            <div class="record-thumbnail col-lg-2 col-md-2 col-sm-2 col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
+            <div class="record-thumbnail col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
                 /></div>
-            <div class="record-list-title-col col-lg-2 col-md-2 col-sm-2 col-xs-9">
+            <div class="record-list-title-col col-xs-9">
                 <div class="record-title">{{result.title}}</div>
                 <div class="row list-download-details">
                     <!--Check if download data or map service-->
@@ -48,7 +49,7 @@
                     <div class="record-details col-xs-6" (click)="gotoDetails(result)">Details</div>
                 </div>
             </div>
-            <div class="list-framework col-lg-2 col-md-2 col-sm-2 col-xs-1">
+            <div class="list-framework col-xs-1">
                 <div *ngIf="result['keywords'].indexOf('Framework') !== -1" class="framework-record">
                     <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
                 </div>
