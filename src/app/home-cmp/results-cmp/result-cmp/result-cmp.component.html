@@ -22,13 +22,14 @@
                 <!--<div class="record-date col-xs-6"><b>Updated:</b> {{result['sys.src.item.lastmodified_tdt'] }}</div>-->
                 <div class="record-misc col-xs-6"><b>Source:</b></div>
             </div>
-            <div class="bottom-row row">
+            <div #tileRecordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" class="bottom-row row">
                 <!--Check if download data or map service-->
-                <div *ngIf="result['url.mapserver_ss'] || result['url.wms_ss'] || result['url.wfs_ss'] || result[ 'url.klm_ss']" class="record-preview col-xs-6" (click)="preview(result)">
-                    <img src="./assets/img/preview-icn.png" alt="preview map service" />Preview</div>
-                <div *ngIf="!result['url.mapserver_ss'] && !result['url.wms_ss']" class="record-download col-xs-6" (click)="download(result)">
+                <div *ngIf="tileRecordListing.getAttribute('hasPreview') === 'true'" [ngClass]="tileRecordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-preview" (click)="preview(result)">
+                    <span><img src="./assets/img/preview-icn.png" alt="preview map service" /></span>Preview</div>
+                <div *ngIf="tileRecordListing.getAttribute('hasDownload') === 'true'" [ngClass]="tileRecordListing.getAttribute('hasPreview') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-download" (click)="download(result)">
                     <span class="glyphicon glyphicon-download-alt"></span>Download</div>
-                <div class="record-details col-xs-6" (click)="gotoDetails(result)">Details</div>
+                <div [ngClass]="tileRecordListing.getAttribute('hasPreview') === 'true' && tileRecordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : tileRecordListing.getAttribute('hasPreview') !== 'true' && tileRecordListing.getAttribute('hasDownload') !== 'true'  ? 'col-xs-12' : 'col-xs-6'"
+                    class="record-details" (click)="gotoDetails(result)">Details</div>
             </div>
         </div>
     </div>
@@ -40,13 +41,13 @@
                 /></div>
             <div class="record-list-title-col col-xs-9">
                 <div class="record-title">{{result.title}}</div>
-                <div class="row list-download-details">
+                <div #recordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" class="row list-download-details">
                     <!--Check if download data or map service-->
-                    <div *ngIf="result['links'] ? result['links'].length > 1 ? result['links'][1].includes('.zip') : false : false" class="record-download col-xs-6" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
-                    <div *ngIf="result['url.mapserver_ss'] || result['url.wms_ss'] || result['url.wfs_ss'] || result[ 'url.klm_ss']" class="record-preview col-xs-6" (click)="preview(result)">
-                        <img src="./assets/img/icn-view.svg" alt="preview map service" />Preview</div>
+                    <div *ngIf="recordListing.getAttribute('hasDownload') === 'true'" [ngClass]="recordListing.getAttribute('hasPreview') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-download" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
+                    <div *ngIf="recordListing.getAttribute('hasPreview') === 'true'" [ngClass]="recordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-preview" (click)="preview(result)">
+                        <span><img src="./assets/img/preview-icn.png" alt="preview map service" /></span>Preview</div>
 
-                    <div class="record-details col-xs-6" (click)="gotoDetails(result)">Details</div>
+                    <div [ngClass]="recordListing.getAttribute('hasPreview') === 'true' && recordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-details" (click)="gotoDetails(result)">Details</div>
                 </div>
             </div>
             <div class="list-framework col-xs-1">

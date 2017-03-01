@@ -5,3 +5,9 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule . index.html [NC,L]
+
+<FilesMatch "\.(ttf|otf|woff)$">
+<IfModule mod_headers.c>
+        Header set Access-Control-Allow-Origin "*"
+</IfModule>
+</FilesMatch>

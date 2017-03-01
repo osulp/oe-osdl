@@ -12,7 +12,7 @@ declare var $: any;
   templateUrl: './home-cmp.component.html',
   styleUrls: ['./home-cmp.component.css']
 })
-export class HomeCmpComponent implements OnInit {  
+export class HomeCmpComponent implements OnInit {
   solr_results: any;
 
   @ViewChild(ResultsCmpComponent) resultsCmp: ResultsCmpComponent;
@@ -121,8 +121,11 @@ export class HomeCmpComponent implements OnInit {
     // this._osdl_solr_service.get().subscribe((results: any) => {
     //   this._results_store_service.updateResults([results]);
     //   console.log('results from solr search', results);
-    // });
+    // });    
     this.checkQueryStingParams();
+    this.resultsCmp.pagerNumberRows = this._search_state_service.getState()
+      ? +this._search_state_service.getState().get('rows')
+      : this.resultsCmp.pagerNumberRows;
     this._results_store_service.selectionChanged$.subscribe(
       results => {
         // console.log('store updated! in home cmp', results);

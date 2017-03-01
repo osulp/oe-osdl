@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../../map-preview-cmp/map-preview-cmp.component';
 import { Router } from '@angular/router';
 
@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
   templateUrl: './result-cmp.component.html',
   styleUrls: ['./result-cmp.component.css']
 })
-export class ResultCmpComponent implements OnInit {
+export class ResultCmpComponent implements OnInit, AfterViewChecked {
   @Input() viewType: any;
   @Input() solrResults: any[];
-  @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;  
+  @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private _changeDetectionRef: ChangeDetectorRef
   ) { }
 
   gotoDetails(record: any) {
@@ -34,6 +35,12 @@ export class ResultCmpComponent implements OnInit {
     this.modal.show();
   }
 
+  hasPreview(result: any) {
+    return result['url.mapserver_ss'] || result['url.wms_ss'] || result['url.wfs_ss'] || result['url.klm_ss'] ? true : false;
+  }
+  hasDownload(result: any) {
+    return result['links'] ? result['links'].filter(l => l.includes('.zip')).length > 0 : false;
+  }
   download(record: any) {
     console.log('download requested', record);
     // let record = domElem.getAttribute('record');
@@ -49,7 +56,11 @@ export class ResultCmpComponent implements OnInit {
     document.body.removeChild(a);
   }
 
-  ngOnInit() {    
-   }
+  ngAfterViewChecked() {
+    this._changeDetectionRef.detectChanges();
+  }
+
+  ngOnInit() {
+  }
 
 }

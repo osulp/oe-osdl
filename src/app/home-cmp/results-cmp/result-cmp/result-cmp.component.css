@@ -41,6 +41,7 @@
     font-weight: bold;
     min-height: 40px;
     padding-right: 15px;
+    word-wrap: break-word;
 }
 
 #list-view-wrapper .record-title {
@@ -120,14 +121,18 @@
 .bottom-row div {
     text-align: center;
     background-color: #F3F3F5;
-    border-radius: 0 0 4px 0;
     padding: 10px;
     color: #6F7C82;
+    border-left: solid 2px #FFF;
 }
 
 .bottom-row div:first-child {
-    border-right: solid 2px #FFF;
+    border-left: none;
     border-radius: 0 0 0 4px;
+}
+
+.bottom-row div:last-child {
+    border-radius: 0 0 4px 0;
 }
 
 .bottom-row div:hover {
@@ -142,13 +147,14 @@
 }
 
 .list-download-details {
-    max-width: 230px;
+    max-width: 350px;
     color: #C34500;
     padding-top: 10px;
 }
 
 .list-download-details div {
-    width: 50%;
+    /*width: 50%;*/
+    text-align: center;
 }
 
 .list-download-details div:hover {
@@ -159,8 +165,12 @@
     text-decoration: underline;
 }
 
+.list-download-details div {
+    border-left: 1px solid #D1CDC7;
+}
+
 .list-download-details div:first-child {
-    border-right: 1px solid #D1CDC7;
+    border-left: none;
 }
 
 .list-download-details span {
@@ -172,14 +182,14 @@
 
 .ellipsis {
     overflow: hidden;
-    height: 125px;
+    height: 130px;
 }
 
 .ellipsis:before {
     content: "";
     float: left;
     width: 5px;
-    height: 135px;
+    height: 130px;
 }
 
 .ellipsis>*:first-child {
@@ -195,7 +205,8 @@
     -moz-box-sizing: content-box;
     float: right;
     position: relative;
-    top: -25px;
+    /*top: -25px;*/
+    top: -15px;
     left: 100%;
     width: 3em;
     margin-left: -3em;
@@ -237,5 +248,17 @@
     }
     .bottom-row span {
         font-size: .8em;
+    }
+    .list-download-details span {
+        display: none;
+    }
+    .list-download-details div {
+        font-size: smaller;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .bottom-row .col-xs-4 span {
+        display: none;
     }
 }

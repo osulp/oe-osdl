@@ -8,4 +8,6 @@
 
 .modal-footer {
     text-align: left;
+    word-wrap: break-word;
+    word-break: keep-all;
 }

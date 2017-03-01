@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 declare var L: any;
+declare var $: any;
 
 @Component({
   selector: 'app-map-preview-cmp',
@@ -59,7 +60,7 @@ export class MapPreviewCmpComponent implements OnInit {
         url: this.mapserviceUrl,
         opacity: 0.7
       }).addTo(this.map);
-
+      $('#map').css('height', $(window).height() < 600 ? $(window).height() * .60 + 'px' : '500px');
     }
 
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
@@ -67,6 +68,7 @@ export class MapPreviewCmpComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
       }).addTo(this.map);
+
     this.refreshMap();
   }
 

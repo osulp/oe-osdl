@@ -35,9 +35,9 @@ export class OsdlSolrSrvService {
         // get state param types to catch remove
         const fqParams = params.getAll('fq').filter(p => p !== frameworkQuery);
         const qParams = params.getAll('q');
-        //if (update){
+        if (update){
         params.set('start', '0');
-        //}
+        }
         //params.set('start', '0');
 
         if (newParams) {
@@ -153,6 +153,7 @@ export class OsdlSolrSrvService {
         // check if rows changed, if so set start back to 0        
         params.delete('start');
         params.set('start', params.get('rows') !== rows.toString() ? '0' : start.toString());
+        console.log('start is from pager',params.get('rows') !== rows.toString() ? '0' : start.toString() ,start, rows);
         params.delete('rows');
         params.set('rows', rows.toString());
         this._searchState.updateState(params);

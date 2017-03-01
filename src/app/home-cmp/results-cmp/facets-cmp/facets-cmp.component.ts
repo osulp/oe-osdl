@@ -14,7 +14,6 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   @Input() isMobile:boolean;
   facet_groups: any[] = [];
   selected_facets: any[] = [];
-  collapseFilterExpanded = false;
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     private _facet_store_service: FacetsStoreSrvService
@@ -185,7 +184,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges(change: any) {
-    console.log('facet cmp seeing changes', change);
+    // console.log('facet cmp seeing changes', change);
     if (change.solrFacets) {
       // tslint:disable-next-line:forin
       for (const ff in change.solrFacets.currentValue.facet_fields) {

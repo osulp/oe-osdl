@@ -14,7 +14,7 @@ declare var $: any;
   styleUrls: ['./results-cmp.component.css']
 })
 export class ResultsCmpComponent implements OnInit, AfterViewInit {
-  @Input() isMobile:boolean;
+  @Input() isMobile: boolean;
   @ViewChild(FacetsCmpComponent) facetsCmp: FacetsCmpComponent;
   @ViewChild(SortBarCmpComponent) sortCmp: SortBarCmpComponent;
   @ViewChildren(PagerCmpComponent) pagers: QueryList<PagerCmpComponent>;
@@ -22,7 +22,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   solr_results: any = {};
   pagerStartNumber: number = 1;
   pagerNumberRows: number = 10;
-  showMobileFacets:boolean = false;
+  showMobileFacets: boolean = false;
 
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
@@ -40,8 +40,14 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   }
 
   onShowNumChange(showNum: any) {
-    this.pagerNumberRows = +showNum;
-    this._osdl_solr_service.pager(this.pagerStartNumber * this.pagerNumberRows, this.pagerNumberRows);
+    console.log('num change check', this.pagerNumberRows, showNum);
+    if (this.pagerNumberRows !== +showNum) {
+      this.pagerNumberRows = +showNum;
+      this._osdl_solr_service.pager(this.pagerStartNumber * this.pagerNumberRows, this.pagerNumberRows);
+      this.pagers.forEach((pager: any) => {
+        pager.currentPage = 1;
+      });
+    }
   }
 
   onFrameworkOnlyChange(showOnly: boolean) {
@@ -49,12 +55,16 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
     this.facetsCmp.setSelectedFacets([frameworkParam], 'framework', true);
   }
 
-  onPagerChange(pageNumber: number) {
+  onPagerChange(pageNumber: number, scroll?: boolean) {
     console.log('emitted page number', pageNumber);
     this.pagerStartNumber = pageNumber;
     const solr_start_row = pageNumber - 1;
     this._osdl_solr_service.pager(solr_start_row * this.pagerNumberRows, this.pagerNumberRows);
+    if (scroll) {
+      document.getElementById('data-set-num').scrollIntoView();
+    }
   }
+
 
 
   ngAfterViewInit() {
@@ -63,10 +73,13 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
       if (this.pagers) {
         const currentPage = +search_state.get('start') / +search_state.get('rows') + 1;
         console.log('start row', search_state.paramsMap.get('start'), currentPage);
-        this.pagers.forEach(pager => {
+        this.pagers.forEach((pager: any, idx: number) => {
           console.log('current page?', currentPage);
-          pager.currentPage = currentPage -1;
-          this.onPagerChange(currentPage);
+          pager.currentPage = currentPage - 1;
+          if (idx === 0) {
+            //console.log('jesus');
+            this.onPagerChange(currentPage);
+          }
         });
       }
       this.sortCmp.selectedShowNum = search_state.get('rows');

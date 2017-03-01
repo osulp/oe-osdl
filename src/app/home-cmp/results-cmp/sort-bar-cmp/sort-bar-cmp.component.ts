@@ -17,8 +17,8 @@ export class SortBarCmpComponent implements OnInit {
   sortByArr = [
     { name: 'Newest first', val: 'sys.src.item.lastmodified_tdt desc' },
     { name: 'Oldest first', val: 'sys.src.item.lastmodified_tdt asc' },
-    { name: 'Title A-Z', val: 'title asc' },
-    { name: 'Title Z-A', val: 'title desc' }
+    { name: 'Title A-Z', val: 'title_s asc' },
+    { name: 'Title Z-A', val: 'title_s desc' }
   ];
   selectedSortBy = undefined;
   showNumberOpts = [{ val: '10' }, { val: '25' }, { val: '50' }, { val: '100' } ];
