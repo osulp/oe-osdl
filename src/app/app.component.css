@@ -102,7 +102,7 @@ a.a-nav:hover {
 
 #footer-wrapper {
     vertical-align: middle;
-    margin: 0 -15px;
+    margin: 0 -15px -15px;
     background-color: #E9E9E6;
     color: #C34500;
     padding: 0;
