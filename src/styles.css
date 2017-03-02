@@ -87,3 +87,15 @@ input[type="checkbox"]:checked+label span {
 .pagination>li>span:focus {
     color: #C34500;
 }
+
+.loading div {
+    width: 200px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+}

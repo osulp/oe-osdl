@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Router, Routes, NavigationStart } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { DetailsCmpComponent } from './details-cmp/details-cmp.component';
@@ -28,7 +28,9 @@ import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
 import { PaginationDirective } from './directives/pagination.directive';
 import { PagerCmpComponent } from './home-cmp/results-cmp/pager-cmp/pager-cmp.component';
 import { MapPreviewCmpComponent } from './map-preview-cmp/map-preview-cmp.component';
-import {OsdlErrorHandler} from './osdl-error-handler';
+import { OsdlErrorHandler } from './osdl-error-handler';
+
+declare var ga: any;
 
 const appRoutes: Routes = [
   { path: '', component: HomeCmpComponent },
@@ -80,4 +82,14 @@ const appRoutes: Routes = [
 
 })
 
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {        
+        if (ga) {
+          ga('send', 'pageview', window.location.href);
+        }
+      }
+    })
+  }
+}
