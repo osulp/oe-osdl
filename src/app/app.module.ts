@@ -85,7 +85,7 @@ const appRoutes: Routes = [
 export class AppModule {
   constructor(router: Router) {
     router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {        
+      if (event instanceof NavigationStart && !window.location.href.includes('localhost')) {
         if (ga) {
           ga('send', 'pageview', window.location.href);
         }
