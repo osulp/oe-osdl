@@ -36,7 +36,7 @@ export class HomeCmpComponent implements OnInit {
     this.resultsCmp.facetsCmp.setSelectedFacets([filter], 'textquery', true);
   }
 
-  checkQueryStingParams() {
+  checkQueryStingParams(updateFromPop?: boolean) {
     // console.log('checking params', this.route.snapshot.params, this.location);
 
     const params = [];
@@ -87,10 +87,12 @@ export class HomeCmpComponent implements OnInit {
 
     const scope = this;
     if (params.length > 0) {
-      this.resultsCmp.facetsCmp.setSelectedFacets(params, 'framework', false);
+      this.resultsCmp.facetsCmp.setSelectedFacets(params, 'framework', updateFromPop);
 
       window.setTimeout(() => {
-        scope.resultsCmp.sortCmp.selectedSortBy = sortParam === '' ? 'sys.src.item.lastmodified_tdt desc' : sortParam;
+        scope.resultsCmp.sortCmp.selectedSortBy = sortParam === ''
+          ? 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc'
+          : sortParam;
         scope.resultsCmp.sortCmp.refreshSort(sortParam);
         scope.refreshSelectPickers();
       }, 300);
@@ -100,7 +102,7 @@ export class HomeCmpComponent implements OnInit {
         sf.selected = false;
       }));
       this.resultsCmp.facetsCmp.selected_facets = [];
-      this._osdl_solr_service.get();
+      this._osdl_solr_service.get([], '', updateFromPop);
       window.setTimeout(() => {
         // console.log('selectdisplay', $('.bootstrap-select').css('display'));
         scope.refreshSelectPickers();
@@ -128,7 +130,7 @@ export class HomeCmpComponent implements OnInit {
       : this.resultsCmp.pagerNumberRows;
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        // console.log('store updated! in home cmp', results);
+        console.log('store updated! in home cmp', results);
         this.solr_results = results;
       },
       err => console.error(err),

@@ -29,7 +29,12 @@ export class SearchStateSrvService {
     this._searchState.set('facet', 'true');
     this._searchState.set('q', '*:*');
     this._searchState.set('fq', 'id.table_s:table.docindex');
-    this._searchState.set('sort', 'sys.src.item.lastmodified_tdt desc');
+    this._searchState.set('fl',
+      'description,title,id,url.thumbnail_s,sys.src.item.lastmodified_tdt,'
+      + 'osdl.pub_date_tdt desc,metadata.ref.org_t,links,url.mapserver_ss,'
+      + 'url.wms_ss,url.wfs_ss,url.kml_ss,keywords_ss,keywords'
+    );
+    this._searchState.set('sort', 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc');
     this._searchState.set('facet.field', 'sys.metadatatype.identifier_s');
     this._searchState.append('facet.field', 'keywords');
     this._searchState.append('facet.field', 'keywords_ss');

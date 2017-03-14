@@ -99,3 +99,18 @@ input[type="checkbox"]:checked+label span {
     margin: auto;
     text-align: center;
 }
+
+.glyphicon.glyphicon-certificate {
+    color: #98BD85;
+    font-size: 2.3em;
+}
+
+.glyphicon.glyphicon-certificate.f:after {
+    content: 'f';
+    position: relative;
+    top: -8px;
+    left: -21px;
+    color: mintcream;
+    font-size: .7em;
+    /*font-family: 'AvenirLTStd-Light', 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
+}

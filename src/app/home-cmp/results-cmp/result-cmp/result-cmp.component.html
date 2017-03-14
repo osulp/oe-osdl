@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="middle-row row">
-                <div class="record-date col-xs-6"><b>Updated:</b> {{result['sys.src.item.lastmodified_tdt'] | date:'MMMM, yyyy' }}</div>
+                <div class="record-date col-xs-6"><b>Updated:</b> {{(result['osdl.pub_date_tdt'] ? result['osdl.pub_date_tdt'] : result['sys.src.item.lastmodified_tdt']) | date:'MMMM, yyyy' }}</div>
                 <!--<div class="record-date col-xs-6"><b>Updated:</b> {{result['sys.src.item.lastmodified_tdt'] }}</div>-->
                 <div class="record-misc col-xs-6"><b>Source:</b></div>
             </div>
