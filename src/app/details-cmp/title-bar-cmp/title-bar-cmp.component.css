@@ -14,12 +14,15 @@
         font-size: 2em;
         font-weight: bold;
         word-wrap: break-word;
+        max-width: 80%;
     }
     
     #framework-dataset {
         position: absolute;
         top: 30px;
         right: 30px;
+        font-size: .8em;
+        color: #78724b;
     }
     
     #dataset-thumbnail-row {
@@ -113,7 +116,7 @@
         }
         #dataset-title {
             font-size: 1.5em;
-            max-width: 90%;
+            max-width: 65%;
         }
         #details-title-bar-wrapper {
             padding: 20px 20px 0 20px;

@@ -250,7 +250,8 @@
 }
 
 .framework-filter {
-    background-color: #98BD85;
+    /*background-color: #98BD85;*/
+    background-color: #78724b
 }
 
 .filter span {

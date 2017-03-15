@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../../map-preview-cmp/map-preview-cmp.component';
 import { Router } from '@angular/router';
+import { UtilitiesCls} from '../../../utilities-cls';
+
+declare var $: any;
 
 @Component({
   selector: 'app-result-cmp',
@@ -14,11 +17,18 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private router: Router,
-    private _changeDetectionRef: ChangeDetectorRef
+    private _changeDetectionRef: ChangeDetectorRef,
+    private _utilities: UtilitiesCls
   ) { }
 
-  gotoDetails(record: any) {
-    this.router.navigate(['/details', { id: record.id }]);
+  gotoDetails(evt: any, record: any) {
+    console.log('evt,record', evt, record);
+    const downloadParent = $(evt.srcElement).closest('.record-download');
+    const previewParent = $(evt.srcElement).closest('.record-preview');
+    console.log('downloadParent', downloadParent, previewParent);
+    if (previewParent.length === 0 && downloadParent.length === 0) {
+      this.router.navigate(['/details', { id: record.id }]);
+    }
   }
 
   preview(record: any) {
@@ -33,6 +43,10 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
             : '';
     this.modal.serviceName = record['title'];
     this.modal.show();
+  }
+
+  sourceLookup(source: any) {
+    return this._utilities.sourceLookup(source);    
   }
 
   hasPreview(result: any) {

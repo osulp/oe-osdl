@@ -109,13 +109,13 @@ export class SearchCmpComponent implements OnInit {
 
   blurHandler(event: any) {
     const searchScope = this;
-    // console.log('blur', event, document.activeElement.classList);
+     console.log('blur', event, document.activeElement.classList);
     if (!this.searchPushed) {
       setTimeout(function () {
         // searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
         // searchScope.searchString = '';
         // if tabbing on list result set input box to match the Name property, but don't clear.
-        if (['list-group-item', 'search-btn','download-link-a'].indexOf(document.activeElement.classList.toString()) === -1) {
+        if (['list-group-item', 'search-btn', 'download-link-a'].indexOf(document.activeElement.classList.toString()) === -1) {
           searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
           searchScope.searchString = '';
         }
@@ -164,12 +164,20 @@ export class SearchCmpComponent implements OnInit {
           // console.log('filter', f);
           const filter: any = {};
           if (f.includes(':')) {
-            filter.facet = f.split(':')[1].replace(/"/g, '').replace(/\*/g, '');
+            filter.facet = f
+              .split(':')[1]
+              .replace(/"/g, '')
+              .replace(/\*/g, '');
             filter.query = f;
             filter.category = this.filterLookup(f);
             filter.type = f.includes('Framework') ? 'framework' : 'facets';
           } else {
-            filter.facet = f.split(' OR')[0].replace(/"/g, '').replace(/\*/g, '').replace('Coastal Marine','Coastal and Marine');
+            filter.facet = f
+              .split(' OR')[0]
+              .replace(/"/g, '')
+              .replace(/\*/g, '')
+              .replace('Coastal Marine', 'Coastal and Marine')
+              .replace('?', ' ');
             filter.query = f;
             filter.category = this.filterLookup(f);
             filter.type = 'query';

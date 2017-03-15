@@ -23,6 +23,11 @@
     position: relative;
 }
 
+.tile-wrapper:hover {
+    cursor: pointer;
+    border: 2px solid #6F7C82;
+}
+
 .list-result {
     padding-bottom: 8px;
     padding-top: 10px;
@@ -33,13 +38,14 @@
 }
 
 .list-result.hover {
-    background-color: #D1CDC7;
+    border: 2px solid #6F7C82;
     cursor: pointer;
 }
 
 .record-title {
     font-weight: bold;
     min-height: 40px;
+    max-height: 40px;
     padding-right: 15px;
     word-wrap: break-word;
 }
@@ -94,9 +100,13 @@
     border-top: 1px solid #D1CDC7;
 }
 
-.record-date,
+.record-date {
+    font-size: .8em;
+}
+
 .record-misc {
     font-size: .8em;
+    margin-left: -10px;
 }
 
 .record-preview img {
@@ -182,14 +192,14 @@
 
 .ellipsis {
     overflow: hidden;
-    height: 130px;
+    height: 113px;
 }
 
 .ellipsis:before {
     content: "";
     float: left;
     width: 5px;
-    height: 130px;
+    height: 113px;
 }
 
 .ellipsis>*:first-child {

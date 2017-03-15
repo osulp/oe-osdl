@@ -51,7 +51,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   }
 
   onFrameworkOnlyChange(showOnly: boolean) {
-    const frameworkParam = { key: 'fq', query: 'keywords_ss:*Framework', type: 'framework', selected: showOnly };
+    const frameworkParam = { key: 'fq', query: 'keywords_ss:*Framework OR title:*ramework*', type: 'framework', selected: showOnly };
     this.facetsCmp.setSelectedFacets([frameworkParam], 'framework', true);
   }
 

@@ -1,9 +1,9 @@
 <div *ngIf="viewType === 'tile'" class="row tile-row-wrapper">
     <!--Put into a for loop for results with the attached metadata record attributes-->
     <div *ngFor="let result of solrResults" class="col-md-6 col-sm-12">
-        <div class="tile-wrapper">
-            <div class="record-title">{{result.title}}</div>
-            <div *ngIf="result['keywords'] ? result['keywords'].indexOf('Framework') !== -1 : false" class="framework-record">
+        <div class="tile-wrapper" (click)="gotoDetails($event, result)">
+            <div class="record-title">{{result.title.split(';')[0]}}</div>
+            <div *ngIf="result['keywords'] ? result['keywords'].indexOf('Framework') !== -1 || result.title.includes('ramework') : result.title.includes('ramework')" class="framework-record">
                 <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
             </div>
             <div class="record-thumbnail">
@@ -20,7 +20,7 @@
             <div class="middle-row row">
                 <div class="record-date col-xs-6"><b>Updated:</b> {{(result['osdl.pub_date_tdt'] ? result['osdl.pub_date_tdt'] : result['sys.src.item.lastmodified_tdt']) | date:'MMMM, yyyy' }}</div>
                 <!--<div class="record-date col-xs-6"><b>Updated:</b> {{result['sys.src.item.lastmodified_tdt'] }}</div>-->
-                <div class="record-misc col-xs-6"><b>Source:</b></div>
+                <div *ngIf="result['metadata.ref.org_t'] ? !result['metadata.ref.org_t'].includes('REQUIRED') : false" class="record-misc col-xs-6"><b>Source:  </b>{{_utilities.sourceLookup(result['metadata.ref.org_t'])}}</div>
             </div>
             <div #tileRecordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" class="bottom-row row">
                 <!--Check if download data or map service-->
@@ -29,13 +29,13 @@
                 <div *ngIf="tileRecordListing.getAttribute('hasDownload') === 'true'" [ngClass]="tileRecordListing.getAttribute('hasPreview') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-download" (click)="download(result)">
                     <span class="glyphicon glyphicon-download-alt"></span>Download</div>
                 <div [ngClass]="tileRecordListing.getAttribute('hasPreview') === 'true' && tileRecordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : tileRecordListing.getAttribute('hasPreview') !== 'true' && tileRecordListing.getAttribute('hasDownload') !== 'true'  ? 'col-xs-12' : 'col-xs-6'"
-                    class="record-details" (click)="gotoDetails(result)">Details</div>
+                    class="record-details" (click)="gotoDetails($event, result)">Details</div>
             </div>
         </div>
     </div>
 </div>
 <div id="list-view-wrapper" *ngIf="viewType === 'list'" class="row">
-    <div *ngFor="let result of solrResults;let idx = index" (mouseover)="result.hover = true" (mouseout)="result.hover = false" [ngClass]="{'hover': result.hover, 'not-first': idx > 0}" class="list-result col-sm-12" (click)="gotoDetails(result)" [title]="result.description">
+    <div *ngFor="let result of solrResults;let idx = index" (mouseover)="result.hover = true" (mouseout)="result.hover = false" [ngClass]="{'hover': result.hover, 'not-first': idx > 0}" class="list-result col-sm-12" (click)="gotoDetails($event, result)" [title]="result.description">
         <div class="row">
             <div class="record-thumbnail col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
                 /></div>
@@ -47,11 +47,11 @@
                     <div *ngIf="recordListing.getAttribute('hasPreview') === 'true'" [ngClass]="recordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-preview" (click)="preview(result)">
                         <span><img src="./assets/img/preview-icn.png" alt="preview map service" /></span>Preview</div>
 
-                    <div [ngClass]="recordListing.getAttribute('hasPreview') === 'true' && recordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-details" (click)="gotoDetails(result)">Details</div>
+                    <div [ngClass]="recordListing.getAttribute('hasPreview') === 'true' && recordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-details" (click)="gotoDetails($event, result)">Details</div>
                 </div>
             </div>
             <div class="list-framework col-xs-1">
-                <div *ngIf="result['keywords'].indexOf('Framework') !== -1" class="framework-record">
+                <div *ngIf="result['keywords'] ? result['keywords'].indexOf('Framework') !== -1 || result.title.includes('ramework') : result.title.includes('ramework')" class="framework-record">
                     <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
                 </div>
             </div>

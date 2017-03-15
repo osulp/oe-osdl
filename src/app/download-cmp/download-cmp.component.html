@@ -1,0 +1,15 @@
+<div id="download-wrapper">
+    <iframe id="frame" src="http://spatialdata.oregonexplorer.info/geoportal/viewer_download/index.html" style="overflow-y: auto; overflow-x: hidden; height: 790px;" width="100%" frameborder="0" marginheight="0" marginwidth="0" height="100%">
+</iframe>
+    <script type="text/javascript">
+        function resizeIframe() {
+            document.getElementById('cmPlPcCaption').style.display = 'none';
+            var height = document.documentElement.clientHeight;
+            height += document.getElementById('frame').offsetTop;
+            height -= 200; /* whatever you set your body bottom margin/padding to be */
+            document.getElementById('frame').style.height = height + "px";
+        };
+        document.getElementById('frame').onload = resizeIframe;
+        window.onresize = resizeIframe;
+    </script>
+</div>

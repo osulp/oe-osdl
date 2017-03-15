@@ -2,10 +2,10 @@
     <div id="main_content" class="container-fluid">
         <div id="top">
             <div id="banner-nav-wrapper" class="row">
-                <div class="osdl-logo col-lg-3 col-md-3 col-xs-3">
+                <div class="osdl-logo col-lg-3 col-md-3 col-xs-6">
                     <a [routerLink]="['/']"><img [src]="isMobile ? './assets/img/osdl-logo-sm.png' : './assets/img/osdl-logo.png'" /></a>
                 </div>
-                <div class="col-lg-9 col-md-9 col-xs-9">
+                <div class="col-lg-9 col-md-9 col-xs-6">
                     <nav class="navbar navbar-static-top osdl-nav" role="navigation">
                         <div class="">
                             <div class="navbar-header">
@@ -19,9 +19,10 @@
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav pull-right">
                                     <li><a class="a-nav" [routerLink]="['/']"><span class="glyphicon glyphicon-home"></span></a></li>
+                                    <li *ngIf="!isMobile"><a class="a-nav" [routerLink]="['/download']">Download</a></li>
                                     <li><a class="a-nav" [routerLink]="['/help']">Help</a></li>
                                     <li><a class="a-nav" [routerLink]="['/about']">About</a></li>
-                                    <li><a class="a-nav" [routerLink]="['/feedback']">Feedback</a></li>
+                                    <li *ngIf="isMobile"><a class="a-nav" [routerLink]="['/feedback']">Feedback</a></li>
                                 </ul>
                             </div>
                         </div>

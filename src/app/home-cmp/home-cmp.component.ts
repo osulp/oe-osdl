@@ -49,7 +49,7 @@ export class HomeCmpComponent implements OnInit {
           params.push(
             {
               key: param,
-              value: p,
+              value: p.includes('Framework') ? p + ' OR title:*ramework' : p,
               facet: p,
               query: p,
               selected: true,

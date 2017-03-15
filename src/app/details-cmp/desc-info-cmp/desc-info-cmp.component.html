@@ -26,6 +26,11 @@
                     <h4>Purpose</h4>
                     <p>{{record.purpose_t}}</p>
                 </div>
+                <div id="metadata-time" *ngIf="record['apiso.TempExtent_begin_tdt']">
+                    <h4>Time Period</h4>
+                    <p>{{record['apiso.TempExtent_begin_tdt'] | date:'MMMM dd, yyyy'}} - {{record['apiso.TempExtent_end_tdt'] | date:'MMMM dd, yyyy' }}</p>
+                    <!--<p>{{(record['apiso.TempExtent_end_tdt']) | date:'MMMM, yyyy'}}</p>-->
+                </div>
             </div>
             <div id="metadata-info-wrapper-topics" *ngIf="metaInfo === 'all' || metaInfo === 'topics'">
                 <div>
@@ -84,6 +89,10 @@
                     <div *ngIf="record['metadata.ref.email_t'] ? !record['metadata.ref.email_t'].includes('REQUIRED') : false">
                         <span>Email:</span>
                         <span><a [href]="'mailto:'+ record['metadata.ref.email_t']"> {{record['metadata.ref.email_t']}}</a></span>
+                    </div>
+                    <div *ngIf="record['metadata.ref.date_tdt']">
+                        <span>Date:</span>
+                        <span>{{record['metadata.ref.date_tdt'] | date:'MMMM, yyyy'}}</span>
                     </div>
                 </blockquote>
             </div>

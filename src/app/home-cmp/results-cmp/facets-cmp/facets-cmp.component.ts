@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges, AfterViewInit } from '@angular/core';
 import { OsdlSolrSrvService, FacetsStoreSrvService } from '../../../services/index';
+import { UtilitiesCls } from '../../../utilities-cls';
 
 @Component({
   selector: 'app-facets-cmp',
@@ -11,12 +12,13 @@ import { OsdlSolrSrvService, FacetsStoreSrvService } from '../../../services/ind
 export class FacetsCmpComponent implements OnInit, OnChanges {
   @Input() solrFacets: any;
   @Input() searchParams: any;
-  @Input() isMobile:boolean;
+  @Input() isMobile: boolean;
   facet_groups: any[] = [];
   selected_facets: any[] = [];
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
-    private _facet_store_service: FacetsStoreSrvService
+    private _facet_store_service: FacetsStoreSrvService,
+    private _utilities: UtilitiesCls
   ) { }
 
   ngOnInit() {
@@ -69,7 +71,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   }
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
-    //console.log('set FACETS', facets, searchType, updateState);
+    console.log('set FACETS', facets, searchType, updateState);
     // this.selected_facets = [];
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
@@ -85,7 +87,10 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
           //console.log('facet selected check', f, facet);
           return f.value.toLowerCase() !== (facet.type === 'facet' ?
             (facet.facet + ':"' + facet.query + '"').toLowerCase()
-            : facet.query.replace('Coastal Marine', 'Coastal and Marine').toLowerCase());
+            : facet.query
+              .replace('Coastal Marine', 'Coastal and Marine')
+              .replace('?', ' ')
+              .toLowerCase());
         });
       } else if (facet.type === 'sort') {
         const sortFacet = this.selected_facets.filter(sf => sf.type === 'sort');
@@ -206,11 +211,12 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
             sf.fields = facet_fields;
           } else {
             sf.facet_no_space = sf.facet.replace(/\ /g, '');
+            sf.service_lookup = this._utilities.getServiceFilterQuery(sf.facet);
           }
         }));
       }
       // change.solrFacets.currentValue.
-      // console.log('this.facet_groups', this.facet_groups);
+      console.log('this.facet_groups', this.facet_groups);
     }
   }
 

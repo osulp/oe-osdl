@@ -44,12 +44,12 @@ export class SearchStateSrvService {
     this._searchState.append('facet.field', 'dataAccessType_ss');
     this._searchState.append('facet.field', 'sys.src.site.name_s');
     this._searchState.append('facet.field', 'sys.src.site.name_s');
-    this._searchState.set('facet.query', 'Admin Boundaries OR AdminBoundaries*');
-    this._searchState.append('facet.query', 'Bioscience OR Bioscience*');
-    this._searchState.append('facet.query', 'Cadastral OR Cadastral*');
+    this._searchState.set('facet.query', 'Admin?Boundaries OR AdminBoundaries* OR *Admin_Bounds*');
+    this._searchState.append('facet.query', 'Bioscience OR Bioscience* OR *Bio*');
+    this._searchState.append('facet.query', 'Cadastral OR Cadastral* OR *Cadastral*');
     this._searchState.append('facet.query', 'Climate OR Climate*');
     this._searchState.append('facet.query', 'Coastal OR Marine OR CoastalandMarine*');
-    this._searchState.append('facet.query', 'Elevation OR Elevation*');
+    this._searchState.append('facet.query', 'Elevation OR Elevation* OR *LiDAR*');
     this._searchState.append('facet.query', 'Geodetic Control OR GeodeticControl*');
     this._searchState.append('facet.query', 'Geoscience OR Geoscience*');
     this._searchState.append('facet.query', 'Hazards OR Hazards*');

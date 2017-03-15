@@ -88,6 +88,22 @@
 }
 
 @media only screen and (max-width: 767px) {
+    #show-framework-wrapper {
+        text-align: left;
+        border-right: none;
+        position: absolute;
+        top: 50px;
+        left: 5px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #show-framework-wrapper {
+        top: 55px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
     #view-type-wrapper {
         text-align: left;
     }
@@ -95,10 +111,6 @@
         margin-right: 1px;
     }
     #show-framework-wrapper {
-        text-align: left;
-        border-right: none;
-        position: absolute;
         top: 75px;
-        left: 0px;
     }
 }

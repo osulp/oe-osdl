@@ -29,6 +29,8 @@ import { PaginationDirective } from './directives/pagination.directive';
 import { PagerCmpComponent } from './home-cmp/results-cmp/pager-cmp/pager-cmp.component';
 import { MapPreviewCmpComponent } from './map-preview-cmp/map-preview-cmp.component';
 import { OsdlErrorHandler } from './osdl-error-handler';
+import { DownloadCmpComponent } from './download-cmp/download-cmp.component';
+import { UtilitiesCls } from './utilities-cls';
 
 declare var ga: any;
 
@@ -40,7 +42,8 @@ const appRoutes: Routes = [
   { path: 'details', component: DetailsCmpComponent },
   { path: 'help', component: HelpCmpComponent },
   { path: 'feedback', component: FeedbackCmpComponent },
-  { path: 'resources', component: ResourcesCmpComponent }
+  { path: 'resources', component: ResourcesCmpComponent },
+  { path: 'download', component: DownloadCmpComponent }
 ];
 
 @NgModule({
@@ -61,7 +64,8 @@ const appRoutes: Routes = [
     ResourcesCmpComponent,
     PaginationDirective,
     PagerCmpComponent,
-    MapPreviewCmpComponent
+    MapPreviewCmpComponent,
+    DownloadCmpComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +81,7 @@ const appRoutes: Routes = [
     SearchStateSrvService,
     FacetsStoreSrvService,
     GetMapSrvService,
+    UtilitiesCls,
     { provide: ErrorHandler, useClass: OsdlErrorHandler }],
   bootstrap: [AppComponent]
 
