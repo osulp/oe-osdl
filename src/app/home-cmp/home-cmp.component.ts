@@ -16,6 +16,7 @@ export class HomeCmpComponent implements OnInit {
   solr_results: any;
 
   @ViewChild(ResultsCmpComponent) resultsCmp: ResultsCmpComponent;
+  @ViewChild(SearchCmpComponent) searchCmp: SearchCmpComponent;
 
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
