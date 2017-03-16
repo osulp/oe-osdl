@@ -67,12 +67,15 @@ export class SearchCmpComponent implements OnInit {
     const code = event.keyCode || event.which;
     if (code === 13) {
       const scope = this;
-      window.setTimeout(function () {
-        scope.searchByText();
-        // scope.searchTerm.setValue('', { emitEvent: false, emitModelToViewChange: false });
-        scope.searchString = '';
-      }, 200);
-
+      if (this.tempTabIndex !== 0) {
+        this.router.navigate(['/details', { id: this.temp_search_results[this.tempTabIndex].id }]);
+      } else {
+        window.setTimeout(function () {
+          scope.searchByText();
+          // scope.searchTerm.setValue('', { emitEvent: false, emitModelToViewChange: false });
+          scope.searchString = '';
+        }, 200);
+      }
     } else if (code === 40 || code === 9) {
       // tab or down arro
       if (this.tempTabIndex !== this.temp_search_results.length) {
@@ -98,18 +101,16 @@ export class SearchCmpComponent implements OnInit {
     }
 
     window.setTimeout(function () {
-      // console.log('scrollintoview?', $('.tabHover'));
       if ($('.tabHover').length > 0) {
-        $('.tabHover')[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
+        // $('.tabHover')[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
+        $('.tabHover')[0].scrollIntoView(false);
       }
     }, 100);
-
-    // window.setTimeout(this.adjustListGroupTags, 500);
   }
 
   blurHandler(event: any) {
     const searchScope = this;
-     console.log('blur', event, document.activeElement.classList);
+    console.log('blur', event, document.activeElement.classList);
     if (!this.searchPushed) {
       setTimeout(function () {
         // searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });

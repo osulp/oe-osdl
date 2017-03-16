@@ -7,12 +7,20 @@ export class SearchStateSrvService {
 
   stateChanged$: ReplaySubject<any> = new ReplaySubject<{}>(1);
   private _searchState: URLSearchParams;
+  private _searchView: string;
 
   constructor() { }
 
   getState(): URLSearchParams {
     return this._searchState;
     // this.stateChanged$.next(this._searchState);
+  }
+  getView() {
+    return this._searchView;
+  }
+  setView(viewType) {
+    console.log('setting view type',viewType);
+    this._searchView = viewType;
   }
 
   updateState(params): void {

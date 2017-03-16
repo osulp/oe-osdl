@@ -19,8 +19,7 @@ export class AppComponent implements OnInit {
     //private router: Router
   ) { }
 
-  goClearHome() {
-    console.log('test');
+  goClearHome() {    
     this.homeCmp.searchCmp.clearFilters();
     //this.router.navigate(['/']);
   }

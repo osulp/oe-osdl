@@ -1,6 +1,7 @@
 <div id="results-wrapper">
     <div id="results-top-bar-wrapper">
-        <app-sort-bar-cmp [numRecords]="solr_results.response ? solr_results.response.numFound : '0'" (onViewTypeChange)="onViewTypeChangeHandler($event)" (onFrameworkOnlyChange)="onFrameworkOnlyChange($event)" (onSortChange)="onSortChange($event)" (onShowNumChangeEvt)="onShowNumChange($event)">
+        <app-sort-bar-cmp [numRecords]="solr_results.response ? solr_results.response.numFound : '0'" [viewType]="viewType" (onViewTypeChange)="onViewTypeChangeHandler($event)" (onFrameworkOnlyChange)="onFrameworkOnlyChange($event)" (onSortChange)="onSortChange($event)"
+            (onShowNumChangeEvt)="onShowNumChange($event)">
         </app-sort-bar-cmp>
     </div>
     <div id="results-bottom-wrapper" class="container">

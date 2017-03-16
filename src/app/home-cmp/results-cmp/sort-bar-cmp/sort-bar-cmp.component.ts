@@ -9,6 +9,7 @@ declare var $: any;
 export class SortBarCmpComponent implements OnInit {
   @Input() numRecords: any;
   @Input() sort: any;
+  @Input() viewType:any;
   @Output() onViewTypeChange = new EventEmitter();
   @Output() onFrameworkOnlyChange = new EventEmitter();
   @Output() onSortChange = new EventEmitter();
@@ -23,7 +24,7 @@ export class SortBarCmpComponent implements OnInit {
   selectedSortBy = undefined;
   showNumberOpts = [{ val: '10' }, { val: '25' }, { val: '50' }, { val: '100' }];
   selectedShowNum: any;
-  viewType: any = 'tile';
+  //viewType: any = 'tile';
   showFrameworkOnly: boolean = false;
 
   constructor() { }
@@ -64,7 +65,7 @@ export class SortBarCmpComponent implements OnInit {
   ngOnInit() {
     // this.selectedSortBy = 'sys.src.item.lastmodified_tdt desc';
     this.selectedSortBy = 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc';
-    this.onViewTypeChange.emit(this.viewType);
+    //this.onViewTypeChange.emit(this.viewType);
   }
 
 }

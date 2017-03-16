@@ -18,7 +18,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   @ViewChild(FacetsCmpComponent) facetsCmp: FacetsCmpComponent;
   @ViewChild(SortBarCmpComponent) sortCmp: SortBarCmpComponent;
   @ViewChildren(PagerCmpComponent) pagers: QueryList<PagerCmpComponent>;
-  viewType: any;
+  viewType: any = 'tile';
   solr_results: any = {};
   pagerStartNumber: number = 1;
   pagerNumberRows: number = 10;
@@ -32,6 +32,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
 
   onViewTypeChangeHandler(view: any) {
     this.viewType = view;
+    this._search_state_service.setView(view);
   }
 
   onSortChange(selectedSort: any) {
@@ -40,7 +41,6 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   }
 
   onShowNumChange(showNum: any) {
-    console.log('num change check', this.pagerNumberRows, showNum);
     if (this.pagerNumberRows !== +showNum) {
       this.pagerNumberRows = +showNum;
       this._osdl_solr_service.pager(this.pagerStartNumber * this.pagerNumberRows, this.pagerNumberRows);
@@ -56,7 +56,6 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   }
 
   onPagerChange(pageNumber: number, scroll?: boolean) {
-    console.log('emitted page number', pageNumber);
     this.pagerStartNumber = pageNumber;
     const solr_start_row = pageNumber - 1;
     this._osdl_solr_service.pager(solr_start_row * this.pagerNumberRows, this.pagerNumberRows);
@@ -69,12 +68,14 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const search_state = this._search_state_service.getState();
+    this.viewType = this._search_state_service.getView() ? this._search_state_service.getView() : this.viewType;
+
     if (search_state) {
       if (this.pagers) {
         const currentPage = +search_state.get('start') / +search_state.get('rows') + 1;
-        console.log('start row', search_state.paramsMap.get('start'), currentPage);
+
         this.pagers.forEach((pager: any, idx: number) => {
-          console.log('current page?', currentPage);
+
           pager.currentPage = currentPage - 1;
           if (idx === 0) {
             //console.log('jesus');
