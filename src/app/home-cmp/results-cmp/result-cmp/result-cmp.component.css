@@ -1,9 +1,17 @@
-#list-view-wrapper {
+#list-view-wrapper,
+#no-results {
     background-color: #fff;
     border-radius: 4px;
     padding: 30px 30px 10px 30px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.30);
     margin: 0 0 0 10px;
+}
+
+#no-results {
+    font-size: 1.2em;
+    text-align: center;
+    color: #244068;
+    padding: 30px;
 }
 
 .tile-row-wrapper {

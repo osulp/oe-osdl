@@ -34,7 +34,7 @@
         </div>
     </div>
 </div>
-<div id="list-view-wrapper" *ngIf="viewType === 'list'" class="row">
+<div id="list-view-wrapper" *ngIf="viewType === 'list' && solrResults.length > 0" class="row">
     <div *ngFor="let result of solrResults;let idx = index" (mouseover)="result.hover = true" (mouseout)="result.hover = false" [ngClass]="{'hover': result.hover, 'not-first': idx > 0}" class="list-result col-sm-12" (click)="gotoDetails($event, result)" [title]="result.description">
         <div class="row">
             <div class="record-thumbnail col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
@@ -58,5 +58,8 @@
             </div>
         </div>
     </div>
+</div>
+<div id="no-results" *ngIf="solrResults.length === 0">
+    Sorry, no results match your selected search and filters. Try again.
 </div>
 <app-map-preview-cmp></app-map-preview-cmp>
