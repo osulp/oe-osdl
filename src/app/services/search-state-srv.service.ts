@@ -70,12 +70,12 @@ export class SearchStateSrvService {
     this._searchState.append('facet.query', 'Reference OR Reference*');
     this._searchState.set('f.sys.metadatatype.identifier_s.facet.mincount', '0');
     this._searchState.set('f.sys.metadatatype.identifier_s.facet.limit', '10');
-    this._searchState.set('f.keywords.facet.mincount', '1');
+    this._searchState.set('f.keywords_ss.facet.mincount', '1');
     this._searchState.set('f.keywords_ss.facet.limit', '10');
     this._searchState.set('f.contact.people_ss.facet.mincount', '1');
     this._searchState.set('f.contact.organizations_ss.facet.limit', '10');
-    this._searchState.set('f.keywords.facet.mincount', '1');
-    this._searchState.set('f.keywords.facet.limit', '10');
+    // this._searchState.set('f.keywords.facet.mincount', '1');
+    // this._searchState.set('f.keywords.facet.limit', '10');
     this._searchState.set('f.contact.organizations_ss.facet.mincount', '1');
     this._searchState.set('f.contact.organizations_ss.facet.limit', '10');
     this._searchState.set('f.contact.people_ss.facet.mincount', '1');

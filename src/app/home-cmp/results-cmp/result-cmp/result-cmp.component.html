@@ -3,7 +3,7 @@
     <div *ngFor="let result of solrResults" class="col-md-6 col-sm-12">
         <div class="tile-wrapper" (click)="gotoDetails($event, result)">
             <div class="record-title">{{result.title.split(';')[0]}}</div>
-            <div *ngIf="result['keywords'] ? result['keywords'].indexOf('Framework') !== -1 || result.title.includes('ramework') : result.title.includes('ramework')" class="framework-record">
+            <div *ngIf="result['keywords'] ? result['keywords'].indexOf('ramework') !== -1 || result.title.includes('ramework') : result.title.includes('ramework')" class="framework-record">
                 <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
             </div>
             <div class="record-thumbnail">
@@ -41,6 +41,7 @@
                 /></div>
             <div class="record-list-title-col col-xs-9">
                 <div class="record-title">{{result.title}}</div>
+                <div class="record-desc">{{result.description.substring(0,100)}}...</div>
                 <div #recordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" class="row list-download-details">
                     <!--Check if download data or map service-->
                     <div *ngIf="recordListing.getAttribute('hasDownload') === 'true'" [ngClass]="recordListing.getAttribute('hasPreview') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-download" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
@@ -51,7 +52,7 @@
                 </div>
             </div>
             <div class="list-framework col-xs-1">
-                <div *ngIf="result['keywords'] ? result['keywords'].indexOf('Framework') !== -1 || result.title.includes('ramework') : result.title.includes('ramework')" class="framework-record">
+                <div *ngIf="result['keywords'] ? result['keywords'].indexOf('ramework') !== -1 || result.title.includes('ramework') : result.title.includes('ramework')" class="framework-record">
                     <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
                 </div>
             </div>

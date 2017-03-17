@@ -80,3 +80,12 @@
 .fcb2 {
     margin-bottom: 10px;
 }
+
+.seemoreless {
+    float: right;
+}
+
+.seemoreless:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

@@ -67,7 +67,7 @@ export class SearchCmpComponent implements OnInit {
     const code = event.keyCode || event.which;
     if (code === 13) {
       const scope = this;
-      if (this.tempTabIndex !== 0) {
+      if (this.tempTabIndex !== -1) {
         this.router.navigate(['/details', { id: this.temp_search_results[this.tempTabIndex].id }]);
       } else {
         window.setTimeout(function () {
@@ -142,7 +142,7 @@ export class SearchCmpComponent implements OnInit {
       case filter.includes('organizations'):
         returnCategory = 'Source: ';
         break;
-      case filter.includes('Framework'):
+      case filter.includes('ramework'):
         returnCategory = '';
         break;
       case filter.includes('keywords'):
@@ -171,7 +171,7 @@ export class SearchCmpComponent implements OnInit {
               .replace(/\*/g, '');
             filter.query = f;
             filter.category = this.filterLookup(f);
-            filter.type = f.includes('Framework') ? 'framework' : 'facets';
+            filter.type = f.includes('ramework') ? 'framework' : 'facets';
           } else {
             filter.facet = f
               .split(' OR')[0]

@@ -18,7 +18,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   @ViewChild(FacetsCmpComponent) facetsCmp: FacetsCmpComponent;
   @ViewChild(SortBarCmpComponent) sortCmp: SortBarCmpComponent;
   @ViewChildren(PagerCmpComponent) pagers: QueryList<PagerCmpComponent>;
-  viewType: any = 'tile';
+  viewType: any = 'list';
   solr_results: any = {};
   pagerStartNumber: number = 1;
   pagerNumberRows: number = 10;
@@ -51,7 +51,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   }
 
   onFrameworkOnlyChange(showOnly: boolean) {
-    const frameworkParam = { key: 'fq', query: 'keywords_ss:*Framework OR title:*ramework*', type: 'framework', selected: showOnly };
+    const frameworkParam = { key: 'fq', query: 'keywords_ss:*ramework OR title:*ramework*', type: 'framework', selected: showOnly };
     this.facetsCmp.setSelectedFacets([frameworkParam], 'framework', true);
   }
 
@@ -94,7 +94,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
         //console.log('store updated! in results cmp', results);
         this.solr_results = results;
         // check if framework removed from filter bar
-        this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('Framework');
+        this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('ramework');
       },
       err => console.error(err),
       () => console.log('done with subscribe event results store selected')

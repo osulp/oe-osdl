@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, AfterViewInit } from '@angular/core';
-import { OsdlSolrSrvService, FacetsStoreSrvService } from '../../../services/index';
+import { OsdlSolrSrvService, FacetsStoreSrvService, SearchStateSrvService } from '../../../services/index';
 import { UtilitiesCls } from '../../../utilities-cls';
 
 @Component({
@@ -18,6 +18,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     private _facet_store_service: FacetsStoreSrvService,
+    private _searchState: SearchStateSrvService,
     private _utilities: UtilitiesCls
   ) { }
 
@@ -70,9 +71,22 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     }
   }
 
+  showMoreLessFacetFields(facet, moreless) {
+    const facetFieldLimit = 'f.' + facet.solrFields[0].facet + '.facet.limit';
+    const searchState = this._searchState.getState();
+    let newLimit = +this._searchState.getState().get(facetFieldLimit);
+    newLimit = moreless === 'more' ? newLimit + 10 : newLimit - 10;
+    searchState.set(facetFieldLimit, newLimit.toString());
+    this._searchState.updateState(searchState);
+    this._osdl_solr_service.get();
+    console.log('newlimit', newLimit);
+  }
+
+
+
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
     console.log('set FACETS', facets, searchType, updateState);
-    // this.selected_facets = [];
+    //this.selected_facets = [];
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
       const scope = this;
@@ -109,13 +123,16 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
             }
           });
         }
-      } else if (facet.type === 'show') {
-
       } else {
         // check if not already selected for pop state "back button" situations.
         if (this.selected_facets.filter(sf => sf.value === (facet.type === 'facet'
           ? (facet.facet + ':"' + facet.query + '"')
           : facet.query)).length === 0) {
+            console.log('jesus',facet);
+            if(facet.key === 'q'){
+              // remove previous
+              this.selected_facets = this.selected_facets.filter(sf => sf.key !== 'q');
+            }
           this.selected_facets.push(
             {
               key: facet.key ? facet.key : 'fq',
@@ -128,6 +145,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       }
     });
 
+    console.log('facets',this.selected_facets);
     const qsParams = [];
     const facetQueries = this.selected_facets.filter(sf => ['query', 'facet', 'framework'].indexOf(sf.type) !== -1)
       .map(qf => qf.value).toString();

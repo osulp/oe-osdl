@@ -48,6 +48,7 @@
     max-height: 40px;
     padding-right: 15px;
     word-wrap: break-word;
+    overflow: hidden;
 }
 
 #list-view-wrapper .record-title {
@@ -112,6 +113,11 @@
 .record-preview img {
     margin-right: 5px;
     margin-bottom: 2px;
+}
+
+.record-desc {
+    font-size: .8em;
+    color: #6F7C82;
 }
 
 .bottom-row {

@@ -21,6 +21,13 @@
                                         <label [for]="'sf'+sf.field"><span></span>{{sf.field}} <b *ngIf="sf.count">({{sf.count}})</b></label>
                                     </div>
                                 </div>
+                                <div class="seemoreless" *ngIf="solr_facet.fields.length === 10" (click)="showMoreLessFacetFields(facet_group, 'more')">
+                                    <span>see more </span><span class="glyphicon glyphicon-menu-down"></span>
+                                </div>
+                                <div class="seemoreless" *ngIf="solr_facet.fields.length > 10" (click)="showMoreLessFacetFields(facet_group, 'less')">
+                                    <span>see less </span><span class="glyphicon glyphicon-menu-up"></span>
+                                </div>
+
                             </div>
                             <div *ngIf="facet_group.name === 'Topics' && solrFacets.facet_queries">
                                 <div class="facet">

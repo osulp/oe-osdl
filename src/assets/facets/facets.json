@@ -46,7 +46,7 @@
             "name": "Keywords",
             "expanded": false,
             "solrFields": [
-                { "facet": "keywords" }
+                { "facet": "keywords_ss" }
             ]
         }
     ]

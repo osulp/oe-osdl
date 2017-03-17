@@ -27,7 +27,7 @@ export class HomeCmpComponent implements OnInit {
     private location: PlatformLocation
   ) {
     location.onPopState((test: any) => {
-      console.log('popping', test, this.route.snapshot.params);
+      // console.log('popping', test, this.route.snapshot.params);
       this.checkQueryStingParams();
     });
   }
@@ -50,11 +50,11 @@ export class HomeCmpComponent implements OnInit {
           params.push(
             {
               key: param,
-              value: p.includes('Framework') ? p + ' OR title:*ramework' : p,
+              value: p.includes('ramework') ? p + ' OR title:*ramework' : p,
               facet: p,
               query: p,
               selected: true,
-              type: p.includes('Framework')
+              type: p.includes('ramework')
                 ? 'framework'
                 : 'query'
             });
@@ -68,7 +68,7 @@ export class HomeCmpComponent implements OnInit {
             facet: paramVal,
             query: paramVal,
             selected: true,
-            type: paramVal.includes('Framework')
+            type: paramVal.includes('ramework')
               ? 'framework'
               : param === 'fq'
                 ? 'query'

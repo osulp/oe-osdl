@@ -33,11 +33,11 @@ export class OsdlSolrSrvService {
 
     setParams(newParams: any[], searchType: any, update?: boolean) {
         console.log('setting params', newParams, searchType);
-        const frameworkQuery = 'keywords_ss:*Framework OR title:*ramework*';
+        const frameworkQuery = 'keywords_ss:*ramework OR title:*ramework*';
         const params: URLSearchParams = this._searchState.getState();
         params.delete('defType');
         // get state param types to catch remove
-        const fqParams = params.getAll('fq').filter(p => p !== frameworkQuery && p !== 'keywords_ss:*Framework');
+        const fqParams = params.getAll('fq').filter(p => p !== frameworkQuery && p !== 'keywords_ss:*ramework');
         console.log('fqParams', fqParams);
         const qParams = params.getAll('q');
         if (update) {
@@ -129,7 +129,7 @@ export class OsdlSolrSrvService {
                         }
                     }
                 }
-                if (new_framework_param.length === 1 && params.getAll('fq').filter(fq => fq === frameworkQuery || fq === 'keywords_ss:*Framework').length === 0) {
+                if (new_framework_param.length === 1 && params.getAll('fq').filter(fq => fq === frameworkQuery || fq === 'keywords_ss:*ramework').length === 0) {
                     params.append('fq', frameworkQuery);
                 }
             } else {
