@@ -42,11 +42,9 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   }
 
   updateFacet(facet: any) {
-    // console.log('facet_groups', this.facet_groups);
     if (facet) {
       this.facet_groups.forEach(group => {
         group.solrFields.forEach((sf: any) => {
-          //console.log('select facets based on input:', facet.facet, sf);
           sf.selected = facet.facet
             ? facet.facet.includes(sf.facet.replace(' and ', ' OR '))
               ? facet.selected
@@ -79,14 +77,12 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     searchState.set(facetFieldLimit, newLimit.toString());
     this._searchState.updateState(searchState);
     this._osdl_solr_service.get();
-    console.log('newlimit', newLimit);
   }
 
 
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
-    console.log('set FACETS', facets, searchType, updateState);
-    //this.selected_facets = [];
+    // console.log('set FACETS', facets, searchType, updateState);   
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
       const scope = this;
@@ -95,10 +91,8 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       }, !updateState ? 100 : 0);
       // check selected_facets for value, if there remove, else add    
       facet.query = facet.query.split(' OR')[0];
-      //console.log('facet selected', facet);
       if (!facet.selected) {
         this.selected_facets = this.selected_facets.filter((f: any) => {
-          //console.log('facet selected check', f, facet);
           return f.value.toLowerCase() !== (facet.type === 'facet' ?
             (facet.facet + ':"' + facet.query + '"').toLowerCase()
             : facet.query
@@ -128,11 +122,10 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
         if (this.selected_facets.filter(sf => sf.value === (facet.type === 'facet'
           ? (facet.facet + ':"' + facet.query + '"')
           : facet.query)).length === 0) {
-            console.log('jesus',facet);
-            if(facet.key === 'q'){
-              // remove previous
-              this.selected_facets = this.selected_facets.filter(sf => sf.key !== 'q');
-            }
+          if (facet.key === 'q') {
+            // remove previous
+            this.selected_facets = this.selected_facets.filter(sf => sf.key !== 'q');
+          }
           this.selected_facets.push(
             {
               key: facet.key ? facet.key : 'fq',
@@ -145,7 +138,6 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       }
     });
 
-    console.log('facets',this.selected_facets);
     const qsParams = [];
     const facetQueries = this.selected_facets.filter(sf => ['query', 'facet', 'framework'].indexOf(sf.type) !== -1)
       .map(qf => qf.value).toString();
@@ -161,12 +153,10 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       qsParams.push({ key: 'q', value: textParams });
     }
 
-    //console.log('selected facets set', this.selected_facets, searchType);
     this._osdl_solr_service.get(this.selected_facets, searchType, updateState);
 
     if (updateState) {
       const newState = this.updateQueryStringParam(qsParams);
-      // console.log('NEW STATE TOPICs!!!!!!!!!!!', newState);
       window.history.pushState({}, '', newState);
     }
   }
@@ -174,9 +164,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   updateQueryStringParam(qsParams: any[]) {
     let baseUrl = [location.protocol, '//', location.host, location.pathname.split(';')[0]].join('');
     baseUrl += baseUrl.includes('search') ? '' : 'search';
-    // console.log('baseUrl', baseUrl, qsParams);
     let urlQueryString = decodeURI(location.pathname.replace(location.pathname.split(';')[0], '').replace('/search', ''));
-    // console.log('url query string', urlQueryString);
     let allParams = '';
 
     for (let x = 0; x < qsParams.length; x++) {
@@ -207,7 +195,6 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   };
 
   ngOnChanges(change: any) {
-    // console.log('facet cmp seeing changes', change);
     if (change.solrFacets) {
       // tslint:disable-next-line:forin
       for (const ff in change.solrFacets.currentValue.facet_fields) {
@@ -222,7 +209,6 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
             }
           })
           .filter(f => f !== undefined);
-        // console.log('facet_fields', facet_fields);
         const updated_facet_groups = this;
         this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
           if (sf.facet === ff) {
@@ -233,9 +219,6 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
           }
         }));
       }
-      // change.solrFacets.currentValue.
-      console.log('this.facet_groups', this.facet_groups);
     }
   }
-
 }

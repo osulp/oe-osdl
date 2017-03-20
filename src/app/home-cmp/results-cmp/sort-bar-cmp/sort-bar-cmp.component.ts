@@ -9,7 +9,7 @@ declare var $: any;
 export class SortBarCmpComponent implements OnInit {
   @Input() numRecords: any;
   @Input() sort: any;
-  @Input() viewType:any;
+  @Input() viewType: any;
   @Output() onViewTypeChange = new EventEmitter();
   @Output() onFrameworkOnlyChange = new EventEmitter();
   @Output() onSortChange = new EventEmitter();
@@ -24,13 +24,11 @@ export class SortBarCmpComponent implements OnInit {
   selectedSortBy = undefined;
   showNumberOpts = [{ val: '10' }, { val: '25' }, { val: '50' }, { val: '100' }];
   selectedShowNum: any;
-  //viewType: any = 'tile';
   showFrameworkOnly: boolean = false;
 
   constructor() { }
 
   onSortByChange(selectedSort: any) {
-    console.log('selected sort is: ', selectedSort, this.sortByArr);
     this.selectedSortBy = selectedSort;
     this.onSortChange.emit(selectedSort);
   }
@@ -43,7 +41,6 @@ export class SortBarCmpComponent implements OnInit {
     $('select[name=sortpicker]').val(this.sortByArr.filter(s => s.val === this.selectedSortBy)[0].name);
     const scope = this;
     window.setTimeout(() => {
-      console.log('selectdisplay', $('.bootstrap-select').css('display'));
       $('select[name=sortpicker]').selectpicker('refresh');
       if ($('.bootstrap-select').css('display') === undefined) {
         $('select[name=sortpicker]').selectpicker('refresh');
@@ -63,9 +60,7 @@ export class SortBarCmpComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.selectedSortBy = 'sys.src.item.lastmodified_tdt desc';
     this.selectedSortBy = 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc';
-    //this.onViewTypeChange.emit(this.viewType);
   }
 
 }

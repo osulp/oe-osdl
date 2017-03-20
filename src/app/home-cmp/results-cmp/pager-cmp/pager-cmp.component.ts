@@ -18,9 +18,9 @@ export class PagerCmpComponent implements OnChanges {
 
   ngOnChanges(changes: any) {
     if (changes.totalItems) {
-      ///this.currentPage = 1;
+      // this.currentPage = 1;
       this.totalItems = changes.totalItems.currentValue;
-      //this.onPagerChange.emit(1);
+      // this.onPagerChange.emit(1);
     }
   }
 

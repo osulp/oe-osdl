@@ -21,8 +21,7 @@ import {
   OsdlSolrSrvService,
   ResultsStoreSrvService,
   SearchStateSrvService,
-  FacetsStoreSrvService,
-  GetMapSrvService
+  FacetsStoreSrvService
 } from './services/index';
 import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
 import { PaginationDirective } from './directives/pagination.directive';
@@ -80,11 +79,9 @@ const appRoutes: Routes = [
     ResultsStoreSrvService,
     SearchStateSrvService,
     FacetsStoreSrvService,
-    GetMapSrvService,
     UtilitiesCls,
     { provide: ErrorHandler, useClass: OsdlErrorHandler }],
   bootstrap: [AppComponent]
-
 })
 
 export class AppModule {

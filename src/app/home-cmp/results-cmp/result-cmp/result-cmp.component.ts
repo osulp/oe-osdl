@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../../map-preview-cmp/map-preview-cmp.component';
 import { Router } from '@angular/router';
-import { UtilitiesCls} from '../../../utilities-cls';
+import { UtilitiesCls } from '../../../utilities-cls';
 
 declare var $: any;
 
@@ -22,10 +22,8 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   ) { }
 
   gotoDetails(evt: any, record: any) {
-    console.log('evt,record', evt, record);
     const downloadParent = $(evt.srcElement).closest('.record-download');
     const previewParent = $(evt.srcElement).closest('.record-preview');
-    console.log('downloadParent', downloadParent, previewParent);
     if (previewParent.length === 0 && downloadParent.length === 0) {
       this.router.navigate(['/details', { id: record.id }]);
     }
@@ -46,7 +44,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   }
 
   sourceLookup(source: any) {
-    return this._utilities.sourceLookup(source);    
+    return this._utilities.sourceLookup(source);
   }
 
   hasPreview(result: any) {
@@ -56,9 +54,6 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     return result['links'] ? result['links'].filter(l => l.includes('.zip')).length > 0 : false;
   }
   download(record: any) {
-    console.log('download requested', record);
-    // let record = domElem.getAttribute('record');
-    // console.log('test',record);
     const a = window.document.createElement('a');
     a.href = record.links.length > 1 ? record.links[1] : '';
     a.download = record.title[0];

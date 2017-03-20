@@ -33,13 +33,10 @@ export class HomeCmpComponent implements OnInit {
   }
 
   onTextFilterChangeHandler(filter: any) {
-    // filter.selected = false;
     this.resultsCmp.facetsCmp.setSelectedFacets([filter], 'textquery', true);
   }
 
   checkQueryStingParams(updateFromPop?: boolean) {
-    // console.log('checking params', this.route.snapshot.params, this.location);
-
     const params = [];
     let sortParam = '';
     // tslint:disable-next-line:forin
@@ -83,13 +80,9 @@ export class HomeCmpComponent implements OnInit {
     if (this._search_state_service.getState() === undefined) {
       this._osdl_solr_service.setBaseSearchState();
     }
-
-    console.log('querystring check', params);
-
     const scope = this;
     if (params.length > 0) {
       this.resultsCmp.facetsCmp.setSelectedFacets(params, 'framework', updateFromPop);
-
       window.setTimeout(() => {
         scope.resultsCmp.sortCmp.selectedSortBy = sortParam === ''
           ? 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc'
@@ -121,23 +114,18 @@ export class HomeCmpComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this._osdl_solr_service.get().subscribe((results: any) => {
-    //   this._results_store_service.updateResults([results]);
-    //   console.log('results from solr search', results);
-    // });    
     this.checkQueryStingParams();
     this.resultsCmp.pagerNumberRows = this._search_state_service.getState()
       ? +this._search_state_service.getState().get('rows')
       : this.resultsCmp.pagerNumberRows;
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        console.log('store updated! in home cmp', results);
+        // console.log('store updated! in home cmp', results);
         this.solr_results = results;
       },
       err => console.error(err),
       () => console.log('done with subscribe event results store selected')
     );
-    //throw new Error('My ffen error');
   }
 
 }

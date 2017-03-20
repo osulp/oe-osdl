@@ -13,20 +13,17 @@ export class SearchStateSrvService {
 
   getState(): URLSearchParams {
     return this._searchState;
-    // this.stateChanged$.next(this._searchState);
   }
   getView() {
     return this._searchView;
   }
   setView(viewType) {
-    console.log('setting view type',viewType);
+    console.log('setting view type', viewType);
     this._searchView = viewType;
   }
 
   updateState(params): void {
-    // console.log('search state updated',params);
     this._searchState = params;
-    // this.stateChanged$.next(params);
   }
 
   setBaseSearchState() {
@@ -74,8 +71,6 @@ export class SearchStateSrvService {
     this._searchState.set('f.keywords_ss.facet.limit', '10');
     this._searchState.set('f.contact.people_ss.facet.mincount', '1');
     this._searchState.set('f.contact.organizations_ss.facet.limit', '10');
-    // this._searchState.set('f.keywords.facet.mincount', '1');
-    // this._searchState.set('f.keywords.facet.limit', '10');
     this._searchState.set('f.contact.organizations_ss.facet.mincount', '1');
     this._searchState.set('f.contact.organizations_ss.facet.limit', '10');
     this._searchState.set('f.contact.people_ss.facet.mincount', '1');

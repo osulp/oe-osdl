@@ -39,7 +39,6 @@ export class SearchCmpComponent implements OnInit {
 
   searchByText(event?: any) {
     this.searchPushed = true;
-    console.log('search pushed', this.searchString);
     const filterFacet = {
       key: 'q',
       query: (this.searchString ? '*' + this.searchString + '*' : ''),
@@ -48,17 +47,9 @@ export class SearchCmpComponent implements OnInit {
     }
 
     this.onTextFilterChange.emit(filterFacet);
-
-    // this._osdl_solr_service.get([{ key: 'q', value: (this.searchString ? '"*' + this.searchString + '*"' : '') }, 'textquery']);
-    // if (this.searchTerms !== '') {
-    //     this._router.navigate(['Explore', { filter: this.searchTerms }]);
-    // } else {
-    //     this._router.navigate(['Explore']);
-    // }        
   }
 
   selectResult(searchItem: any) {
-    // this.selSearchResultEvt.emit(searchItem);
     this.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
     this.searchString = '';
   }
@@ -72,7 +63,6 @@ export class SearchCmpComponent implements OnInit {
       } else {
         window.setTimeout(function () {
           scope.searchByText();
-          // scope.searchTerm.setValue('', { emitEvent: false, emitModelToViewChange: false });
           scope.searchString = '';
         }, 200);
       }
@@ -102,7 +92,6 @@ export class SearchCmpComponent implements OnInit {
 
     window.setTimeout(function () {
       if ($('.tabHover').length > 0) {
-        // $('.tabHover')[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
         $('.tabHover')[0].scrollIntoView(false);
       }
     }, 100);
@@ -110,11 +99,8 @@ export class SearchCmpComponent implements OnInit {
 
   blurHandler(event: any) {
     const searchScope = this;
-    console.log('blur', event, document.activeElement.classList);
     if (!this.searchPushed) {
       setTimeout(function () {
-        // searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
-        // searchScope.searchString = '';
         // if tabbing on list result set input box to match the Name property, but don't clear.
         if (['list-group-item', 'search-btn', 'download-link-a'].indexOf(document.activeElement.classList.toString()) === -1) {
           searchScope.searchTerm.setValue('', { emitEvent: true, emitModelToViewChange: true });
@@ -125,8 +111,6 @@ export class SearchCmpComponent implements OnInit {
     event.preventDefault();
   }
   eventHandler(event: any, searchItem: any) {
-    // this.selectResult(searchItem);
-    console.log('term selected', searchItem);
     this.router.navigate(['/details', { id: searchItem.id }]);
   }
 
@@ -156,13 +140,12 @@ export class SearchCmpComponent implements OnInit {
   }
 
   processFilters(params: any) {
-    console.log('processing filters', params);
+    // console.log('processing filters', params);
     this.filters = [];
     // process faceted additions, skipping first for all docs
     if (params.fq.constructor === Array) {
       params.fq.forEach((f: string, idx: number) => {
         if (idx !== 0) {
-          // console.log('filter', f);
           const filter: any = {};
           if (f.includes(':')) {
             filter.facet = f
@@ -198,7 +181,6 @@ export class SearchCmpComponent implements OnInit {
   }
 
   removeFilter(filter: any) {
-    console.log('remove filter called', filter);
     filter.selected = false;
     this.onTextFilterChange.emit(filter);
   }
@@ -232,7 +214,6 @@ export class SearchCmpComponent implements OnInit {
 
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        // console.log('store updated! in search cmp', results);
         this.solr_results = results;
         if (results.responseHeader) {
           this.processFilters(results.responseHeader.params);

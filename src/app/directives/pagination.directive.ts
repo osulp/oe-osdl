@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { NgModel, ControlValueAccessor } from '@angular/forms';
-// import {NgIf, NgFor, NgClass} from "@angular/common";
 
 @Component({
   selector: 'ng-pagination[ngModel]',
@@ -33,7 +32,6 @@ export class PaginationDirective implements ControlValueAccessor, OnChanges {
   }
 
   ngOnChanges(change: any) {
-    console.log('directive change', change);
     if (change.totalItems) {
       this.currentpage = this.seletedPage = 1;
     }
@@ -41,7 +39,7 @@ export class PaginationDirective implements ControlValueAccessor, OnChanges {
   }
 
   doPaging() {
-    console.log('doing paging', this.seletedPage, this.currentpage);
+
     this.pageList = [];
     let i: number, count: number;
     this.seletedPage = this.currentpage;
@@ -56,10 +54,7 @@ export class PaginationDirective implements ControlValueAccessor, OnChanges {
         ? ((idx) * this.pageSize) + 1
         : firstPageRangeVal;
     }
-    //console.log('doing paging2', this.currentpage, rangeArray, firstPageRangeVal);
-    // for (i = (this.currentpage), count = 0; i <= totalSize && count < this.pageSize; i++ , count++) {
-    //   this.pageList.push(i);
-    // }
+
     for (i = (firstPageRangeVal), count = 0; i <= this.totalSize && count < this.pageSize; i++ , count++) {
       this.pageList.push(i);
     }
@@ -88,9 +83,7 @@ export class PaginationDirective implements ControlValueAccessor, OnChanges {
     this.doPaging();
   }
   lastPage() {
-    // console.log('last page',this.totalItems,this.pageSize, this.pageList);
     const totalPages = Math.floor(this.totalItems / this.itemsPerPage);
-    console.log('last page', this.totalItems, this.pageSize, totalPages);
     const lastPage = (totalPages) - (totalPages % this.pageSize === 0 ? this.pageSize : totalPages % this.pageSize) + 1;
     this.currentpage = lastPage;
     this.pageChangedNgModel.viewToModelUpdate(lastPage);
@@ -98,14 +91,12 @@ export class PaginationDirective implements ControlValueAccessor, OnChanges {
     this.doPaging();
   }
   nextPage(pageNo: number) {
-    console.log('next page', pageNo, this.currentpage);
     this.currentpage = pageNo;
     this.pageChangedNgModel.viewToModelUpdate(pageNo);
     this.pageChageListner();
     this.doPaging();
   }
   previousPage(pageNo: number) {
-    console.log('prev page', pageNo);
     const temp = pageNo - (this.pageSize + 1);
     this.currentpage = temp > 0 ? temp : 1;
     this.currentpage = pageNo;

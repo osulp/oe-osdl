@@ -73,12 +73,9 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
     if (search_state) {
       if (this.pagers) {
         const currentPage = +search_state.get('start') / +search_state.get('rows') + 1;
-
         this.pagers.forEach((pager: any, idx: number) => {
-
           pager.currentPage = currentPage - 1;
           if (idx === 0) {
-            //console.log('jesus');
             this.onPagerChange(currentPage);
           }
         });
@@ -91,7 +88,6 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        //console.log('store updated! in results cmp', results);
         this.solr_results = results;
         // check if framework removed from filter bar
         this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('ramework');

@@ -31,6 +31,10 @@
         position: relative;
     }
     
+    #thumbnail-wrapper img {
+        max-height: 140px;
+    }
+    
     #dataset-thumbnail-row div {
         border-right: 1px solid #D1CDC7;
         vertical-align: middle;

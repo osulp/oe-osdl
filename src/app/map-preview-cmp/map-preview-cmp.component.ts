@@ -74,7 +74,7 @@ export class MapPreviewCmpComponent implements OnInit {
 
   refreshMap() {
     if (this.isIE()) {
-      var evt = document.createEvent('UIEvents');
+      let evt = document.createEvent('UIEvents');
       evt.initUIEvent('resize', true, false, window, 0);
       window.dispatchEvent(evt);
     } else {
@@ -83,8 +83,8 @@ export class MapPreviewCmpComponent implements OnInit {
   }
 
   isIE() {
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf('MSIE ');
+    let ua = window.navigator.userAgent;
+    let msie = ua.indexOf('MSIE ');
     if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
       return true;
     } else {

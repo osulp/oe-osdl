@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FacetAssocPipe implements PipeTransform {
 
   transform(value: any, osdlFacetGroup: any): any {
-    console.log('pipe check',value,osdlFacetGroup);
+    // console.log('pipe check',value,osdlFacetGroup);
     return value;
   }
 

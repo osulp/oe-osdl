@@ -32,18 +32,16 @@ export class OsdlSolrSrvService {
     }
 
     setParams(newParams: any[], searchType: any, update?: boolean) {
-        console.log('setting params', newParams, searchType);
+        // console.log('setting params', newParams, searchType);
         const frameworkQuery = 'keywords_ss:*ramework OR title:*ramework*';
         const params: URLSearchParams = this._searchState.getState();
         params.delete('defType');
         // get state param types to catch remove
         const fqParams = params.getAll('fq').filter(p => p !== frameworkQuery && p !== 'keywords_ss:*ramework');
-        console.log('fqParams', fqParams);
         const qParams = params.getAll('q');
         if (update) {
             params.set('start', '0');
         }
-        //params.set('start', '0');
 
         if (newParams) {
             if (newParams.length > 0) {
@@ -56,7 +54,6 @@ export class OsdlSolrSrvService {
 
                 let fqCounter = 0;
                 newParams.forEach((p: any, idx: number) => {
-                    // console.log('processing param', p);
                     if (p.type) {
                         p.value = p.value.includes('keywords:') && !p.value.includes('"')
                             ? p.value.split(':')[0] + ':"' + p.value.split(':')[1] + '"'
@@ -75,7 +72,6 @@ export class OsdlSolrSrvService {
                                     params.delete('fq');
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
-                                console.log('p.value', p.value);
                                 params.append(p.key, p.value
                                     .replace(' and ', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
@@ -114,12 +110,10 @@ export class OsdlSolrSrvService {
                     }
                 });
                 if (remove_q) {
-                    // console.log('remove q');
                     params.delete('q');
                     params.set('q', '*:*');
                 }
                 if (remove_fq) {
-                    // console.log('remove fq');
                     // check framework
                     if (new_fq_params.length === 0) {
                         params.delete('fq');
@@ -129,7 +123,9 @@ export class OsdlSolrSrvService {
                         }
                     }
                 }
-                if (new_framework_param.length === 1 && params.getAll('fq').filter(fq => fq === frameworkQuery || fq === 'keywords_ss:*ramework').length === 0) {
+                if (new_framework_param.length === 1
+                    && params.getAll('fq').filter(fq => fq === frameworkQuery || fq === 'keywords_ss:*ramework')
+                        .length === 0) {
                     params.append('fq', frameworkQuery);
                 }
             } else {
@@ -164,7 +160,6 @@ export class OsdlSolrSrvService {
         // check if rows changed, if so set start back to 0        
         params.delete('start');
         params.set('start', params.get('rows') !== rows.toString() ? '0' : start.toString());
-        console.log('start is from pager', params.get('rows') !== rows.toString() ? '0' : start.toString(), start, rows);
         params.delete('rows');
         params.set('rows', rows.toString());
         this._searchState.updateState(params);
@@ -175,7 +170,6 @@ export class OsdlSolrSrvService {
 
     get(newParams?: any[], searchType?: any, update?: boolean) {
         const params = this.setParams(newParams, searchType, update);
-        console.log('after set params', params);
         this.search(params).subscribe((results: any) => {
             this._resultStore.updateResults(results);
         });

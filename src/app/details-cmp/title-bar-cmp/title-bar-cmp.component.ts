@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../map-preview-cmp/map-preview-cmp.component';
 declare var L: any;
 
@@ -7,7 +7,7 @@ declare var L: any;
   templateUrl: './title-bar-cmp.component.html',
   styleUrls: ['./title-bar-cmp.component.css']
 })
-export class TitleBarCmpComponent implements OnInit, OnChanges {
+export class TitleBarCmpComponent implements OnChanges {
   @Input() solrResponse: any = {};
   @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
   record: any = {};
@@ -20,15 +20,6 @@ export class TitleBarCmpComponent implements OnInit, OnChanges {
 
 
   constructor() { }
-
-  ngOnInit() {
-    // this.loadMap();
-    // this._get_map_srv.getMap('').subscribe((res: any) => {
-    //   this.map_box_url = res.href;
-    //   console.log('map response', res);
-    // });   
-
-  }
 
   preview(record: any) {
     this.modal.mapserviceUrl = record['url.mapserver_ss']
@@ -107,7 +98,6 @@ export class TitleBarCmpComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: any) {
-    console.log('title bar got solr response change', change);
     if (change.solrResponse.currentValue.response) {
       this.record = change.solrResponse.currentValue.response.docs[0];
       this.loadMap();
