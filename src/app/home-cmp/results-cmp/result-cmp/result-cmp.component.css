@@ -33,7 +33,7 @@
 
 .tile-wrapper:hover {
     cursor: pointer;
-    border: 2px solid #6F7C82;
+    border: 1px solid #D1CDC7;
 }
 
 .list-result {
@@ -46,7 +46,7 @@
 }
 
 .list-result.hover {
-    border: 2px solid #6F7C82;
+    border: 1px solid #D1CDC7;
     cursor: pointer;
 }
 
@@ -116,6 +116,8 @@
 .record-misc {
     font-size: .8em;
     margin-left: -10px;
+    max-height: 43px;
+    overflow: hidden;
 }
 
 .record-preview img {
@@ -145,7 +147,7 @@
 .bottom-row div {
     text-align: center;
     background-color: #F3F3F5;
-    padding: 10px;
+    padding: 7px;
     color: #6F7C82;
     border-left: solid 2px #FFF;
 }
@@ -241,6 +243,12 @@
     background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
     background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
     background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+}
+
+@media only screen and (max-width: 1200px) {
+    .bottom-row div {
+        padding: 7px;
+    }
 }
 
 @media only screen and (max-width: 500px) {

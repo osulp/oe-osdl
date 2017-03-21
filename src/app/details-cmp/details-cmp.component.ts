@@ -11,7 +11,7 @@ import { OsdlSolrSrvService } from '../services/index';
 })
 export class DetailsCmpComponent implements OnInit {
   record: any = {};
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
