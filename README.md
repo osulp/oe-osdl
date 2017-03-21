@@ -1,6 +1,9 @@
 <<<<<<< HEAD
 # Osdl
 
+To build: ng build --prod --bh /osdl/
+Where --bh is base href and specify the folder path to make relative in application.  Requires modifiying the .htaccess or web.config accordingly.
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 
 ## Development server
