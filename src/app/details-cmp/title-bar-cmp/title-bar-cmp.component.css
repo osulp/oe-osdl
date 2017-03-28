@@ -33,6 +33,7 @@
     
     #thumbnail-wrapper img {
         max-height: 140px;
+        min-height: 140px;
     }
     
     #dataset-thumbnail-row div {

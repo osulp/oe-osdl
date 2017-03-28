@@ -51,12 +51,14 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     return result['url.mapserver_ss'] || result['url.wms_ss'] || result['url.wfs_ss'] || result['url.klm_ss'] ? true : false;
   }
   hasDownload(result: any) {
-    return result['links'] ? result['links'].filter(l => l.includes('.zip')).length > 0 : false;
+    return result['links'] ? result['links'].filter(l => l.includes('.zip') || l.includes('ftp:')).length > 0 : false;
   }
   download(record: any) {
     const a = window.document.createElement('a');
     a.href = record.links.length > 1 ? record.links[1] : '';
-    a.download = record.title[0];
+    if (record.links[1].includes('.zip')) {
+      a.download = record.title[0];
+    }
     a.target = '_blank';
     document.body.appendChild(a);
     // IE: "Access is denied"; 

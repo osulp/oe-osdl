@@ -94,7 +94,8 @@ export class TitleBarCmpComponent implements OnChanges {
   }
 
   download(record: any) {
-    this.goto(record.links.length > 1 ? record.links[1] : '', 'download');
+    const linkType = record.links.length > 1 ? record.links[1].includes('.zip') ? 'download' : 'link' : 'link';
+    this.goto(record.links.length > 1 ? record.links[1] : '', linkType);
   }
 
   ngOnChanges(change: any) {
@@ -107,7 +108,7 @@ export class TitleBarCmpComponent implements OnChanges {
         || this.record['url.klm_ss'] ? true : false;
       this.hasDownload = this.record['links']
         ? this.record['links'].length > 1
-          ? this.record['links'][1].includes('.zip')
+          ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')
           : false
         : false;
       for (const topic in change.solrResponse.currentValue.facet_counts.facet_queries) {

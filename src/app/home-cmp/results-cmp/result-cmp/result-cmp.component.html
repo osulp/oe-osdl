@@ -7,14 +7,15 @@
                 <img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" />
             </div>
             <div class="record-thumbnail">
-                <img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
+                <img #thumbnail *ngIf="result['url.thumbnail_s']" [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
                 />
+                <img #thumbnailbinary *ngIf="result['thumbnail_binary_t']" [src]="'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (result.id.substring(0,8) + '-' +result.id.substring(8,12) + '-' + result.id.substring(12,16) + '-' + result.id.substring(16,20) + '-' + result.id.substring(20,result.id.length)).toUpperCase() +'%7D'"
+                    title="thumbnail of dataset" (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
+                <img *ngIf="result['url.thumbnail_s'] === undefined && result['thumbnail_binary_t'] === undefined" src="assets/img/oe_no_image.png">
             </div>
             <div class="record-abstract ellipsis">
                 <div>
-                    <p>
-                        {{result.description}}
-                    </p>
+                    <p [innerHTML]="result.description"></p>
                 </div>
             </div>
             <div class="middle-row row">
@@ -37,11 +38,16 @@
 <div id="list-view-wrapper" *ngIf="viewType === 'list' && solrResults.length > 0" class="row">
     <div *ngFor="let result of solrResults;let idx = index" (mouseover)="result.hover = true" (mouseout)="result.hover = false" [ngClass]="{'hover': result.hover, 'not-first': idx > 0}" class="list-result col-sm-12" (click)="gotoDetails($event, result)" [title]="result.description">
         <div class="row">
-            <div class="record-thumbnail col-xs-2"><img #thumbnail [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
-                /></div>
+            <div class="record-thumbnail col-xs-2">
+                <img #thumbnail *ngIf="result['url.thumbnail_s']" [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
+                />
+                <img #thumbnailbinary *ngIf="result['thumbnail_binary_t']" [src]="'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (result.id.substring(0,8) + '-' +result.id.substring(8,12) + '-' + result.id.substring(12,16) + '-' + result.id.substring(16,20) + '-' + result.id.substring(20,result.id.length)).toUpperCase() +'%7D'"
+                    title="thumbnail of dataset" (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
+                <img *ngIf="result['url.thumbnail_s'] === undefined && result['thumbnail_binary_t'] === undefined" src="assets/img/oe_no_image.png">
+            </div>
             <div class="record-list-title-col col-xs-9">
                 <div class="record-title">{{result.title}}</div>
-                <div class="record-desc">{{result.description.substring(0,100)}}...</div>
+                <div class="record-desc" [innerHTML]="result.description ? result.description.substring(0,100) : ''"></div>
                 <div #recordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" class="row list-download-details">
                     <!--Check if download data or map service-->
                     <div *ngIf="recordListing.getAttribute('hasDownload') === 'true'" [ngClass]="recordListing.getAttribute('hasPreview') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-download" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>

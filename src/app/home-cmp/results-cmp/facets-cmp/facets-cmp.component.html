@@ -33,9 +33,14 @@
                                 <div class="facet">
                                     <input #facetChkBox [id]="'sf'+solr_facet.facet" [(ngModel)]="solr_facet.selected" (ngModelChange)="setSelectedFacets([{facet:solr_facet.facet,query:solr_facet.facet,selected:facetChkBox.checked,type:'query'}],'query',true)" type="checkbox">
                                     <label [for]="'sf'+solr_facet.facet"><span></span>{{solr_facet.facet}}
-                                    <b *ngIf="solrFacets.facet_queries[solr_facet.facet.replace(' and ', ' OR ').replace('Admin Boundaries','Admin?Boundaries') + ' OR ' + solr_facet.facet_no_space + '*' + (solr_facet.service_lookup !== '' ? + ' OR ' + solr_facet.service_lookup : '') ]">({{solrFacets.facet_queries[solr_facet.facet
+                                    <b *ngIf="solrFacets.facet_queries[solr_facet.facet
+                                    .replace(' and ', ' OR ')
+                                    .replace('Admin Boundaries','Admin?Boundaries')
+                                    .replace('Land Use Land Cover','Land*Use Land*Cover')
+                                    + ' OR ' + solr_facet.facet_no_space + '*' + (solr_facet.service_lookup !== '' ? + ' OR ' + solr_facet.service_lookup : '') ]">({{solrFacets.facet_queries[solr_facet.facet
                                         .replace(' and ',' OR ')
-                                        .replace('Admin Boundaries','Admin?Boundaries') 
+                                        .replace('Admin Boundaries','Admin?Boundaries')
+                                        .replace('Land Use Land Cover','Land*Use Land*Cover')
                                         + ' OR ' + solr_facet.facet_no_space + '*' 
                                         + (solr_facet.service_lookup !== '' 
                                             ? + ' OR ' + solr_facet.service_lookup 

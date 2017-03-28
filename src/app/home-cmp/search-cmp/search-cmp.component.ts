@@ -161,6 +161,7 @@ export class SearchCmpComponent implements OnInit {
               .replace(/"/g, '')
               .replace(/\*/g, '')
               .replace('Coastal Marine', 'Coastal and Marine')
+              .replace('LandUse LandCover','Land Use Land Cover')
               .replace('?', ' ');
             filter.query = f;
             filter.category = this.filterLookup(f);
@@ -181,6 +182,7 @@ export class SearchCmpComponent implements OnInit {
   }
 
   removeFilter(filter: any) {
+    console.log('removing filter', filter);
     filter.selected = false;
     this.onTextFilterChange.emit(filter);
   }
@@ -219,7 +221,7 @@ export class SearchCmpComponent implements OnInit {
           this.processFilters(results.responseHeader.params);
         }
       },
-      err => console.error(err),
+      err => console.log(err),
       () => console.log('done with subscribe event results store selected')
     );
   }

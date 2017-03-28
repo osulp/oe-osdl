@@ -33,13 +33,13 @@
                 { "facet": "Geodetic Control" },
                 { "facet": "Geoscience" },
                 { "facet": "Hazards" },
-                { "facet": "Preparedness" },
                 { "facet": "Hydrography" },
                 { "facet": "Imagery" },
                 { "facet": "Land Use Land Cover" },
+                { "facet": "Preparedness" },
+                { "facet": "Reference" },
                 { "facet": "Transportation" },
-                { "facet": "Utilities" },
-                { "facet": "Reference" }
+                { "facet": "Utilities" }
             ]
         },
         {

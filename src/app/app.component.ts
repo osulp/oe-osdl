@@ -16,12 +16,15 @@ export class AppComponent implements OnInit {
   counter: number = 0;
 
   constructor(
-    //private router: Router
+    private router: Router
   ) { }
 
-  goClearHome() {    
-    this.homeCmp.searchCmp.clearFilters();
-    //this.router.navigate(['/']);
+  goClearHome() {
+    if (this.homeCmp.searchCmp) {
+      this.homeCmp.searchCmp.clearFilters();
+    } else {
+      this.router.navigate(['/']);
+    }
   }
   ngOnInit() {
     const windowScope = this;

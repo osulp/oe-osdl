@@ -82,7 +82,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
 
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
-    // console.log('set FACETS', facets, searchType, updateState);   
+     console.log('set FACETS', facets, searchType, updateState);   
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
       const scope = this;
@@ -97,6 +97,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
             (facet.facet + ':"' + facet.query + '"').toLowerCase()
             : facet.query
               .replace('Coastal Marine', 'Coastal and Marine')
+              .replace('Land*Use Land*Cover', 'Land Use Land Cover')
               .replace('?', ' ')
               .toLowerCase());
         });

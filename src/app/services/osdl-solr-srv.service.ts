@@ -32,9 +32,9 @@ export class OsdlSolrSrvService {
     }
 
     setParams(newParams: any[], searchType: any, update?: boolean) {
-        // console.log('setting params', newParams, searchType);
+        console.log('setting params', newParams, searchType);
         const frameworkQuery = 'keywords_ss:*ramework OR title:*ramework*';
-        const params: URLSearchParams = this._searchState.getState();
+        let params: URLSearchParams = this._searchState.getState();
         params.delete('defType');
         // get state param types to catch remove
         const fqParams = params.getAll('fq').filter(p => p !== frameworkQuery && p !== 'keywords_ss:*ramework');
@@ -75,6 +75,7 @@ export class OsdlSolrSrvService {
                                 params.append(p.key, p.value
                                     .replace(' and ', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
+                                    .replace('Land Use Land Cover', 'Land*Use Land*Cover')
                                     + (p.type === 'query'
                                         && !p.value.includes('keywords')
                                         && !p.value.includes('dataAccessType_ss')
@@ -92,7 +93,7 @@ export class OsdlSolrSrvService {
                                 break;
                             case 'framework':
                                 if (params.getAll('fq').length > 0) {
-                                    params.append(p.key, p.value);
+                                    params.append(p.key, frameworkQuery);
                                 } else {
                                     params.delete('fq');
                                     fqParams.forEach((fp: any, fidx: number) => {
@@ -124,8 +125,7 @@ export class OsdlSolrSrvService {
                     }
                 }
                 if (new_framework_param.length === 1
-                    && params.getAll('fq').filter(fq => fq === frameworkQuery || fq === 'keywords_ss:*ramework')
-                        .length === 0) {
+                    && params.getAll('fq').filter(fq => fq === frameworkQuery || fq === 'keywords_ss:*ramework').length === 0) {
                     params.append('fq', frameworkQuery);
                 }
             } else {
@@ -148,10 +148,38 @@ export class OsdlSolrSrvService {
                 }
             }
         }
+        // check if framework then set to specifics queries
+        const isFramework = params.getAll('fq').filter(fq => fq.includes('ramework*')).length > 0;
+        if (isFramework) {
+            params = this.setFrameworkParams(params);
+        }
 
         if (update) {
             this._searchState.updateState(params);
         }
+        console.log('after param set', params);
+        return params;
+    }
+
+    setFrameworkParams(params: URLSearchParams) {
+        // console.log('need to process params', params);
+        // const fqParams = params.getAll('fq');
+        // params.delete('fq');
+        // params.set('fq', 'id.table_s:table.docindex');
+        // fqParams.forEach(fq => {
+        //     if (!fq.includes(':')) {
+        //         params.append('fq', fq);
+        //         const fqQuery = 'keywords_ss:'
+        //             + fq.split(' OR ')[fq.split(' OR ').length - 1]
+        //                 .substring(0, (fq.split(' OR ')[fq.split(' OR ').length - 1]).length - 1)
+        //                 .replace('*', '')
+        //                 .replace('Admin_Bounds', 'AdminBoundaries')
+        //             + '*ramework OR title:*ramework';
+        //         params.append('fq', fqQuery);                
+        //         console.log('fq query', fqQuery);
+        //     }
+        // });
+
         return params;
     }
 
