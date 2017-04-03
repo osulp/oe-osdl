@@ -20,8 +20,12 @@ export class AppComponent implements OnInit {
   ) { }
 
   goClearHome() {
-    if (this.homeCmp.searchCmp) {
-      this.homeCmp.searchCmp.clearFilters();
+    if (this.homeCmp) {
+      if (this.homeCmp.searchCmp) {
+        this.homeCmp.searchCmp.clearFilters();
+      } else {
+        this.router.navigate(['/']);
+      }
     } else {
       this.router.navigate(['/']);
     }
