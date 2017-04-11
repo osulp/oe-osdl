@@ -47,6 +47,7 @@
 .facet {
     display: table;
     padding: 5px 0;
+    max-width: 250px;
 }
 
 .facet label {

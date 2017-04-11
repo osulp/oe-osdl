@@ -32,7 +32,7 @@ export class OsdlSolrSrvService {
     }
 
     setParams(newParams: any[], searchType: any, update?: boolean) {
-        console.log('setting params', newParams, searchType);
+        console.log('setting params', newParams, searchType, update);
         const frameworkQuery = 'keywords_ss:*ramework OR title:*ramework*';
         let params: URLSearchParams = this._searchState.getState();
         params.delete('defType');
@@ -53,8 +53,11 @@ export class OsdlSolrSrvService {
                 const remove_q = qParams.length > new_q_params.length;
 
                 let fqCounter = 0;
+                // console.log('finner',newParams);
                 newParams.forEach((p: any, idx: number) => {
+                    // console.log('fin',p);
                     if (p.type) {
+                        // console.log('p has type');
                         p.value = p.value.includes('keywords:') && !p.value.includes('"')
                             ? p.value.split(':')[0] + ':"' + p.value.split(':')[1] + '"'
                             : p.value;
@@ -63,7 +66,7 @@ export class OsdlSolrSrvService {
                                 params.delete('q');
                                 params.set('q', p.value === '' ? '*:*' : p.value);
                                 params.set('defType', 'dismax');
-                                params.set('qf', 'title_s^4 keywords_ss^2 description^.2 contact.organizations_ss');
+                                // params.set('qf', 'title_s^4 keywords_ss^2 description^.2 contact.organizations_ss');
                                 break;
                             case 'facets':
                             case 'facet':
@@ -72,7 +75,8 @@ export class OsdlSolrSrvService {
                                     params.delete('fq');
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
-                                params.append(p.key, p.value
+                                params.append(p.key, p.value.trim()
+                                    .replace(/\ /g,'+')
                                     .replace(' and ', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
                                     .replace('Land Use Land Cover', 'Land*Use Land*Cover')
@@ -111,6 +115,7 @@ export class OsdlSolrSrvService {
                     }
                 });
                 if (remove_q) {
+                    console.log('removing q');
                     params.delete('q');
                     params.set('q', '*:*');
                 }
@@ -185,12 +190,14 @@ export class OsdlSolrSrvService {
 
     pager(start: any, rows: any) {
         const params: URLSearchParams = this._searchState.getState();
+        console.log('pager check',params);
         // check if rows changed, if so set start back to 0        
         params.delete('start');
         params.set('start', params.get('rows') !== rows.toString() ? '0' : start.toString());
         params.delete('rows');
         params.set('rows', rows.toString());
         this._searchState.updateState(params);
+        console.log('pager check',params);
         this.search(params).subscribe((results: any) => {
             this._resultStore.updateResults(results);
         });

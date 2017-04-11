@@ -44,8 +44,7 @@ export class SearchCmpComponent implements OnInit {
       query: (this.searchString ? '*' + this.searchString + '*' : ''),
       type: 'textquery',
       selected: true
-    }
-
+    };
     this.onTextFilterChange.emit(filterFacet);
   }
 
@@ -161,7 +160,7 @@ export class SearchCmpComponent implements OnInit {
               .replace(/"/g, '')
               .replace(/\*/g, '')
               .replace('Coastal Marine', 'Coastal and Marine')
-              .replace('LandUse LandCover','Land Use Land Cover')
+              .replace('LandUse LandCover', 'Land Use Land Cover')
               .replace('?', ' ');
             filter.query = f;
             filter.category = this.filterLookup(f);
@@ -173,7 +172,9 @@ export class SearchCmpComponent implements OnInit {
     }
     if (params.q !== '*:*') {
       const textFilter: any = {};
-      textFilter.facet = params.q.replace(/"/g, '').replace(/\*/g, '');
+      textFilter.facet = params.q
+        .replace(/"/g, '')
+        .replace(/\*/g, '');
       textFilter.query = params.q;
       textFilter.category = 'search keyword: ';
       textFilter.type = 'textquery';
@@ -199,12 +200,14 @@ export class SearchCmpComponent implements OnInit {
       .debounceTime(200)
       .distinctUntilChanged()
       .switchMap((term: any) => {
-        if (!this.initLoad) {
+        if (!this.initLoad && term !== '') {
           return this._osdl_solr_service.textSearch([{
             key: 'q',
-            value: (term ? '*' + term.toString() + '*' : ''),
+            value: (term
+              ? '"*' + term.toString() + '*"'
+              : '*:*'),
             type: 'textquery'
-          }, false]);
+          }], false);
         } else {
           this.initLoad = false;
           return [];

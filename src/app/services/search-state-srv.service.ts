@@ -23,6 +23,7 @@ export class SearchStateSrvService {
   }
 
   updateState(params): void {
+    console.log('updating state',params);
     this._searchState = params;
   }
 
@@ -33,6 +34,7 @@ export class SearchStateSrvService {
     this._searchState.set('wt', 'json');
     this._searchState.set('facet', 'true');
     this._searchState.set('q', '*:*');
+    this._searchState.set('q.op','AND');
     this._searchState.set('fq', 'id.table_s:table.docindex');
     this._searchState.set('fl',
       'description,title,id,url.thumbnail_s,sys.src.item.lastmodified_tdt,'
@@ -44,6 +46,7 @@ export class SearchStateSrvService {
     this._searchState.append('facet.field', 'keywords');
     this._searchState.append('facet.field', 'keywords_ss');
     this._searchState.append('facet.field', 'contact.organizations_ss');
+    //this._searchState.append('facet.field', 'metadata.ref.org_t');
     this._searchState.append('facet.field', 'sys.src.collections_txt');
     this._searchState.append('facet.field', 'sys.src.collections_ss');
     this._searchState.append('facet.field', 'dataAccessType_ss');
@@ -71,8 +74,7 @@ export class SearchStateSrvService {
     this._searchState.set('f.keywords_ss.facet.limit', '10');
     this._searchState.set('f.contact.people_ss.facet.mincount', '1');
     this._searchState.set('f.contact.organizations_ss.facet.limit', '10');
-    this._searchState.set('f.contact.organizations_ss.facet.mincount', '1');
-    this._searchState.set('f.contact.organizations_ss.facet.limit', '10');
+    this._searchState.set('f.contact.organizations_ss.facet.mincount', '1');    
     this._searchState.set('f.contact.people_ss.facet.mincount', '1');
     this._searchState.set('f.contact.people_ss.facet.limit', '10');
     this._searchState.set('f.sys.src.collections_txt.facet.mincount', '1');
