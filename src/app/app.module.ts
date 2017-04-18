@@ -21,7 +21,8 @@ import {
   OsdlSolrSrvService,
   ResultsStoreSrvService,
   SearchStateSrvService,
-  FacetsStoreSrvService
+  FacetsStoreSrvService,
+  GetMapServicesMetadataSrvService
 } from './services/index';
 import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
 import { PaginationDirective } from './directives/pagination.directive';
@@ -46,8 +47,9 @@ const appRoutes: Routes = [
   { path: 'resources', component: ResourcesCmpComponent },
   { path: 'download', component: DownloadCmpComponent },
   { path: 'catalog/main/home.page', component: HomeCmpComponent },
+  { path: 'GPT9/catalog/main/home.page', component: HomeCmpComponent },
   { path: 'rest/document', component: RestRedirectCmpComponent },
-  { path: 'catalog/search/resource/details.page', component: CatalogResourceRedirectCmpComponent}
+  { path: 'catalog/search/resource/details.page', component: CatalogResourceRedirectCmpComponent }
 ];
 
 @NgModule({
@@ -86,6 +88,7 @@ const appRoutes: Routes = [
     ResultsStoreSrvService,
     SearchStateSrvService,
     FacetsStoreSrvService,
+    GetMapServicesMetadataSrvService,
     UtilitiesCls,
     { provide: ErrorHandler, useClass: OsdlErrorHandler }],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../map-preview-cmp/map-preview-cmp.component';
+import { UtilitiesCls } from '../../utilities-cls';
+
 declare var L: any;
 
 @Component({
@@ -19,18 +21,12 @@ export class TitleBarCmpComponent implements OnChanges {
   hasDownload: boolean = true;
 
 
-  constructor() { }
+  constructor(
+   private _utilities: UtilitiesCls
+  ) { }
 
   preview(record: any) {
-    this.modal.mapserviceUrl = record['url.mapserver_ss']
-      ? record['url.mapserver_ss'][0]
-      : record['url.wms_ss']
-        ? record['url.wms_ss'][0]
-        : record['url.wfs_ss']
-          ? record['url.wfs_ss'][0]
-          : record['url.kml_ss']
-            ? record['url.kml_ss'][0]
-            : '';
+    this.modal.mapserviceUrl = this._utilities.getMapServiceUrl(record);    
     this.modal.serviceName = record['title'];
     this.modal.show();
   }
@@ -105,7 +101,10 @@ export class TitleBarCmpComponent implements OnChanges {
       this.hasPreview = this.record['url.mapserver_ss']
         || this.record['url.wms_ss']
         || this.record['url.wfs_ss']
-        || this.record['url.klm_ss'] ? true : false;
+        || this.record['url.klm_ss']
+        || this.record['sys.src.item.url_s']
+        ? true
+        : false;
       this.hasDownload = this.record['links']
         ? this.record['links'].length > 1
           ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')

@@ -3,7 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
 import { SearchCmpComponent } from './search-cmp/search-cmp.component';
 import { ResultsCmpComponent } from './results-cmp/results-cmp.component';
-import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService } from '../services/index';
+import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, GetMapServicesMetadataSrvService } from '../services/index';
+import { UtilitiesCls } from '../utilities-cls';
 
 declare var $: any;
 
@@ -24,7 +25,9 @@ export class HomeCmpComponent implements OnInit {
     public _search_state_service: SearchStateSrvService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: PlatformLocation
+    private location: PlatformLocation,
+    private _utilities: UtilitiesCls,
+    private getServiceMetadata: GetMapServicesMetadataSrvService
   ) {
     location.onPopState((test: any) => {
       // console.log('popping', test, this.route.snapshot.params);
@@ -113,7 +116,26 @@ export class HomeCmpComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  processResults(results: any) {
+    if (results.response) {
+      results.response.docs.forEach(result => {
+        const serviceUrl = this._utilities.getMapServiceUrl(result);
+        if (serviceUrl !== '') {
+          this.getServiceMetadata.getMetedata(serviceUrl).subscribe((res => {
+            if (!result['description']) {
+              result['description'] = res['description'];
+            }
+            if (!result['url.thumbnail_s']) {
+              result['url.thumbnail_s'] = serviceUrl + '/info/' + res['thumbnail'];
+            }
+          }));
+        }
+      });
+    }
+    return results;
+  }
+
+  ngOnInit() {    
     if (location.href.includes('catalog')) {
       this.router.navigate(['/']);
     }
@@ -123,8 +145,8 @@ export class HomeCmpComponent implements OnInit {
       : this.resultsCmp.pagerNumberRows;
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        // console.log('store updated! in home cmp', results);
-        this.solr_results = results;
+        // console.log('store updated! in home cmp', results);       
+        this.solr_results = this.processResults(results);
       },
       err => console.error(err),
       () => console.log('done with subscribe event results store selected')

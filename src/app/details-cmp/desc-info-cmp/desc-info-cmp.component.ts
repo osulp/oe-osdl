@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { GetMapServicesMetadataSrvService } from '../../services/index';
+import { UtilitiesCls } from '../../utilities-cls';
 
 @Component({
   selector: 'app-desc-info-cmp',
@@ -13,7 +15,10 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
   facet_counts: any = {};
   serviceUrl = '';
 
-  constructor() { }
+  constructor(
+    private getServiceMetadata: GetMapServicesMetadataSrvService,
+    private _utilities: UtilitiesCls
+  ) { }
 
   ngOnInit() {
   }
@@ -24,16 +29,17 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
       this.record = change.solrResponse.currentValue.response.docs[0];
       console.log('details', this.record);
       this.facet_counts = change.solrResponse.currentValue.facet_counts;
-      this.serviceUrl = this.record['url.mapserver_ss']
-        ? this.record['url.mapserver_ss'][0]
-        : this.record['url.wms_ss']
-          ? this.record['url.wms_ss'][0]
-          : this.record['url.wfs_ss']
-            ? this.record['url.wfs_ss'][0]
-            : this.record['url.kml_ss']
-              ? this.record['url.kml_ss'][0]
-              : ''
-                .replace('arcgis/services', 'arcgis/rest/services').split('/WMSServer?')[0];
+      this.serviceUrl = this._utilities.getMapServiceUrl(this.record);
+      if (this.serviceUrl) {
+        this.getServiceMetadata.getMetedata(this.serviceUrl).subscribe((res => {
+          if (!this.record['description']) {
+            this.record['description'] = res['description'];
+          }
+          if (!this.record['url.thumbnail_s']) {
+            this.record['url.thumbnail_s'] = this.serviceUrl + '/info/' + res['thumbnail'];
+          }
+        }));
+      }
     }
   }
 }

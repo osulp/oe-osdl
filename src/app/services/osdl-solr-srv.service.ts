@@ -78,7 +78,7 @@ export class OsdlSolrSrvService {
                                 params.append(p.key, p.value.trim()
                                     .replace(' and ', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
-                                    .replace('Land Use Land Cover', 'Land*Use Land*Cover')
+                                    .replace('Land Use Land Cover', 'Land*Use Land*Cover')                           
                                     + (p.type === 'query'
                                         && !p.value.includes('keywords')
                                         && !p.value.includes('dataAccessType_ss')

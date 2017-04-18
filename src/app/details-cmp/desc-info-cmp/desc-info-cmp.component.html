@@ -4,8 +4,8 @@
             <div class="col-xs-1 meta-tab" [ngClass]="{'selected':metaInfo === 'all'}" (click)="metaInfo = 'all';">All</div>
             <div class="col-xs-3 meta-tab" [ngClass]="{'selected':metaInfo === 'ident'}" (click)="metaInfo = 'ident';">Identification Information</div>
             <div class="col-xs-3 meta-tab" *ngIf="record['keywords_ss']" [ngClass]="{'selected':metaInfo === 'topics'}" (click)="metaInfo = 'topics';">Keywords</div>
-            <div class="col-xs-3 meta-tab" [ngClass]="{'selected':metaInfo === 'reference'}" (click)="metaInfo = 'reference';">Metadata Reference</div>
-            <div class="col-xs-2 meta-tab" [ngClass]="{'selected':metaInfo === 'constraints'}" (click)="metaInfo = 'constraints';">Constraints</div>
+            <div class="col-xs-3 meta-tab" *ngIf="record['metadata.ref.org_t']" [ngClass]="{'selected':metaInfo === 'reference'}" (click)="metaInfo = 'reference';">Metadata Reference</div>
+            <div class="col-xs-2 meta-tab" *ngIf="record.acconst_t || record.useconst_t" [ngClass]="{'selected':metaInfo === 'constraints'}" (click)="metaInfo = 'constraints';">Constraints</div>
         </div>
     </div>
     <div class="col-xs-12">
@@ -17,7 +17,7 @@
                 </div>
                 <div *ngIf="serviceUrl !== ''" id="metadata-serviceurl">
                     <h4>Service URL</h4>
-                    <p><a [href]="serviceURL" target="_blank">{{serviceUrl}}</a></p>
+                    <p><a [href]="serviceUrl" target="_blank">{{serviceUrl}}</a></p>
                 </div>
                 <div *ngIf="record.description" id="metadata-description">
                     <h4>Description</h4>
@@ -63,7 +63,7 @@
                     <p [innerHTML]="record.acconst_t"></p>
                 </div>
             </div>
-            <div id="metadata-info-wrapper-reference" *ngIf="metaInfo === 'all' || metaInfo === 'reference'">
+            <div id="metadata-info-wrapper-reference" *ngIf="(metaInfo === 'all' || metaInfo === 'reference') && record['metadata.ref.org_t'] ">
                 <h4>Metadata Reference Information</h4>
                 <blockquote>
                     <div *ngIf="record['metadata.ref.org_t'] ? !record['metadata.ref.org_t'].includes('REQUIRED') : false">

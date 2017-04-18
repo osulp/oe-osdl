@@ -12,6 +12,9 @@ export class UtilitiesCls {
             case 'Cadastral':
                 returnVal = '*Cadastral*';
                 break;
+            case 'Imagery':
+                returnVal = 'image';
+                break;
             case 'Elevation':
                 returnVal = '*LiDAR*';
                 break;
@@ -19,6 +22,22 @@ export class UtilitiesCls {
                 break;
         }
         return returnVal;
+    }
+
+    getMapServiceUrl(record: any) {
+        return (record['url.mapserver_ss']
+            ? record['url.mapserver_ss'][0]
+            : record['url.wms_ss']
+                ? record['url.wms_ss'][0]
+                : record['url.wfs_ss']
+                    ? record['url.wfs_ss'][0]
+                    : record['url.kml_ss']
+                        ? record['url.kml_ss'][0]
+                        : record['sys.src.item.url_s']
+                            ? record['sys.src.item.url_s']
+                            : '')
+            .replace('arcgis/services', 'arcgis/rest/services')
+            .split('/WMSServer?')[0];
     }
 
     sourceLookup(source: any) {

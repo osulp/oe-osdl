@@ -24,7 +24,7 @@ export class DetailsCmpComponent implements OnInit {
       // (+) converts string 'id' to a number
       .switchMap((params: Params) => this._osdl_search_service.getRecord(params['id']))
       .subscribe((rec: any) => {
-        console.log('rec', rec);
+        // console.log('rec', rec);
         this.record = rec;
       });
   }

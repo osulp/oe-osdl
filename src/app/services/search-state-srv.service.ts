@@ -39,7 +39,7 @@ export class SearchStateSrvService {
     this._searchState.set('fl',
       'description,title,id,url.thumbnail_s,sys.src.item.lastmodified_tdt,'
       + 'osdl.pub_date_tdt desc,metadata.ref.org_t,links,url.mapserver_ss,'
-      + 'url.wms_ss,url.wfs_ss,url.kml_ss,keywords_ss,keywords,thumbnail_binary_t'
+      + 'url.wms_ss,url.wfs_ss,url.kml_ss,keywords_ss,keywords,thumbnail_binary_t,sys.src.item.url_s'
     );
     this._searchState.set('sort', 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc');
     this._searchState.set('facet.field', 'sys.metadatatype.identifier_s');
@@ -63,7 +63,7 @@ export class SearchStateSrvService {
     this._searchState.append('facet.query', 'Hazards OR Hazards*');
     this._searchState.append('facet.query', 'Preparedness OR Preparedness*');
     this._searchState.append('facet.query', 'Hydrography OR Hydrography*');
-    this._searchState.append('facet.query', 'Imagery OR Imagery*');
+    this._searchState.append('facet.query', 'Imagery OR Imagery* OR image');
     this._searchState.append('facet.query', 'Land*Use Land*Cover OR LandUseLandCover*');
     this._searchState.append('facet.query', 'Transportation OR Transportation*');
     this._searchState.append('facet.query', 'Utilities OR Utilities*');

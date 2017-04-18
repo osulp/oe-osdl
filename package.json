@@ -46,6 +46,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
     "leaflet": "^1.0.3",
+    "proj4": "^2.4.3",
     "protractor": "~4.0.13",
     "toastr": "^2.1.2",
     "ts-node": "1.2.1",

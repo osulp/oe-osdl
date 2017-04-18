@@ -14,11 +14,13 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   @Input() viewType: any;
   @Input() solrResults: any[];
   @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
+  serviceUrl: any;
+
 
   constructor(
     private router: Router,
     private _changeDetectionRef: ChangeDetectorRef,
-    private _utilities: UtilitiesCls
+    private _utilities: UtilitiesCls    
   ) { }
 
   gotoDetails(evt: any, record: any) {
@@ -29,16 +31,8 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  preview(record: any) {
-    this.modal.mapserviceUrl = record['url.mapserver_ss']
-      ? record['url.mapserver_ss'][0]
-      : record['url.wms_ss']
-        ? record['url.wms_ss'][0]
-        : record['url.wfs_ss']
-          ? record['url.wfs_ss'][0]
-          : record['url.kml_ss']
-            ? record['url.kml_ss'][0]
-            : '';
+  preview(record: any) {    
+    this.modal.mapserviceUrl = this._utilities.getMapServiceUrl(record);
     this.modal.serviceName = record['title'];
     this.modal.show();
   }
@@ -48,7 +42,13 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   }
 
   hasPreview(result: any) {
-    return result['url.mapserver_ss'] || result['url.wms_ss'] || result['url.wfs_ss'] || result['url.klm_ss'] ? true : false;
+    return result['url.mapserver_ss']
+      || result['url.wms_ss']
+      || result['url.wfs_ss']
+      || result['url.klm_ss']
+      || result['sys.src.item.url_s']
+      ? true
+      : false;
   }
   hasDownload(result: any) {
     return result['links'] ? result['links'].filter(l => l.includes('.zip') || l.includes('ftp:')).length > 0 : false;
@@ -71,7 +71,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     this._changeDetectionRef.detectChanges();
   }
 
-  ngOnInit() {
-  }
+
+  ngOnInit() { }
 
 }
