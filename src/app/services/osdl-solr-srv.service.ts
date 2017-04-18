@@ -75,7 +75,7 @@ export class OsdlSolrSrvService {
                                     params.delete('fq');
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
-                                params.append(p.key, p.value.trim()                                    
+                                params.append(p.key, p.value.trim()
                                     .replace(' and ', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
                                     .replace('Land Use Land Cover', 'Land*Use Land*Cover')
@@ -189,14 +189,14 @@ export class OsdlSolrSrvService {
 
     pager(start: any, rows: any) {
         const params: URLSearchParams = this._searchState.getState();
-        console.log('pager check',params);
+        console.log('pager check', params);
         // check if rows changed, if so set start back to 0        
         params.delete('start');
         params.set('start', params.get('rows') !== rows.toString() ? '0' : start.toString());
         params.delete('rows');
         params.set('rows', rows.toString());
         this._searchState.updateState(params);
-        console.log('pager check',params);
+        console.log('pager check', params);
         this.search(params).subscribe((results: any) => {
             this._resultStore.updateResults(results);
         });

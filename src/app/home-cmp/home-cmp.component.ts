@@ -27,7 +27,7 @@ export class HomeCmpComponent implements OnInit {
     private location: PlatformLocation
   ) {
     location.onPopState((test: any) => {
-     // console.log('popping', test, this.route.snapshot.params);
+      // console.log('popping', test, this.route.snapshot.params);
       this.checkQueryStingParams(true);
     });
   }
@@ -114,7 +114,7 @@ export class HomeCmpComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (location.href.includes('catalog')){
+    if (location.href.includes('catalog')) {
       this.router.navigate(['/']);
     }
     this.checkQueryStingParams();

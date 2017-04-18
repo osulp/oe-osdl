@@ -99,6 +99,6 @@ export class AppModule {
           ga('send', 'pageview', window.location.href);
         }
       }
-    })
+    });
   }
 }

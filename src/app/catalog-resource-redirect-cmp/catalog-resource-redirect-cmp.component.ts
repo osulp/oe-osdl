@@ -12,8 +12,8 @@ export class CatalogResourceRedirectCmpComponent implements OnInit {
 
   ngOnInit() {
     console.log('details url', location);
-    //get the uuid
-    let uuid = location.href.split('uuid=').length > 1 ? location.href.split('uuid=')[1] : '';
+    // get the uuid
+    const uuid = location.href.split('uuid=').length > 1 ? location.href.split('uuid=')[1] : '';
     if (uuid !== '') {
       this.router.navigate(['/details', {
         id: decodeURI(uuid)
