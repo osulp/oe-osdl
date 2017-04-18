@@ -123,7 +123,7 @@ export class HomeCmpComponent implements OnInit {
       : this.resultsCmp.pagerNumberRows;
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        console.log('store updated! in home cmp', results);
+        // console.log('store updated! in home cmp', results);
         this.solr_results = results;
       },
       err => console.error(err),

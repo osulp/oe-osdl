@@ -32,7 +32,7 @@ export class OsdlSolrSrvService {
     }
 
     setParams(newParams: any[], searchType: any, update?: boolean) {
-        console.log('setting params', newParams, searchType, update);
+        // console.log('setting params', newParams, searchType, update);
         const frameworkQuery = 'keywords_ss:*ramework OR title:*ramework*';
         let params: URLSearchParams = this._searchState.getState();
         params.delete('defType');
@@ -114,7 +114,7 @@ export class OsdlSolrSrvService {
                     }
                 });
                 if (remove_q) {
-                    console.log('removing q');
+                    // console.log('removing q');
                     params.delete('q');
                     params.set('q', '*:*');
                 }
@@ -161,7 +161,7 @@ export class OsdlSolrSrvService {
         if (update) {
             this._searchState.updateState(params);
         }
-        console.log('after param set', params);
+        // console.log('after param set', params);
         return params;
     }
 
@@ -189,14 +189,14 @@ export class OsdlSolrSrvService {
 
     pager(start: any, rows: any) {
         const params: URLSearchParams = this._searchState.getState();
-        console.log('pager check', params);
+        // console.log('pager check', params);
         // check if rows changed, if so set start back to 0        
         params.delete('start');
         params.set('start', params.get('rows') !== rows.toString() ? '0' : start.toString());
         params.delete('rows');
         params.set('rows', rows.toString());
         this._searchState.updateState(params);
-        console.log('pager check', params);
+        // console.log('pager check', params);
         this.search(params).subscribe((results: any) => {
             this._resultStore.updateResults(results);
         });
