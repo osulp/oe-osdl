@@ -75,8 +75,7 @@ export class OsdlSolrSrvService {
                                     params.delete('fq');
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
-                                params.append(p.key, p.value.trim()
-                                    .replace(/\ /g,'+')
+                                params.append(p.key, p.value.trim()                                    
                                     .replace(' and ', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
                                     .replace('Land Use Land Cover', 'Land*Use Land*Cover')

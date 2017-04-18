@@ -11,6 +11,7 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
   metaInfo: any = 'all';
   record: any = {};
   facet_counts: any = {};
+  serviceUrl = '';
 
   constructor() { }
 
@@ -23,7 +24,16 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
       this.record = change.solrResponse.currentValue.response.docs[0];
       console.log('details', this.record);
       this.facet_counts = change.solrResponse.currentValue.facet_counts;
+      this.serviceUrl = this.record['url.mapserver_ss']
+        ? this.record['url.mapserver_ss'][0]
+        : this.record['url.wms_ss']
+          ? this.record['url.wms_ss'][0]
+          : this.record['url.wfs_ss']
+            ? this.record['url.wfs_ss'][0]
+            : this.record['url.kml_ss']
+              ? this.record['url.kml_ss'][0]
+              : ''
+                .replace('arcgis/services', 'arcgis/rest/services').split('/WMSServer?')[0];
     }
   }
-
 }

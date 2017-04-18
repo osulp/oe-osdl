@@ -125,7 +125,7 @@ export class SearchCmpComponent implements OnInit {
       case filter.includes('organizations'):
         returnCategory = 'Source: ';
         break;
-      case filter.includes('ramework'):
+      case filter.includes('*ramework'):
         returnCategory = '';
         break;
       case filter.includes('keywords'):
@@ -139,7 +139,7 @@ export class SearchCmpComponent implements OnInit {
   }
 
   processFilters(params: any) {
-    // console.log('processing filters', params);
+    console.log('processing filters', params);
     this.filters = [];
     // process faceted additions, skipping first for all docs
     if (params.fq.constructor === Array) {
@@ -153,6 +153,7 @@ export class SearchCmpComponent implements OnInit {
               .replace(/\*/g, '');
             filter.query = f;
             filter.category = this.filterLookup(f);
+            console.log('passport',f,filter);
             filter.type = f.includes('ramework') ? 'framework' : 'facets';
           } else {
             filter.facet = f

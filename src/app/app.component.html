@@ -19,7 +19,7 @@
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav pull-right">
                                     <li><a class="a-nav" (click)="goClearHome()" [routerLink]="['/']"><span class="glyphicon glyphicon-home"></span></a></li>
-                                    <!--<li *ngIf="!isMobile"><a class="a-nav" [routerLink]="['/download']">Download</a></li>-->
+                                    <li *ngIf="!isMobile"><a class="a-nav" [routerLink]="['/download']">Download</a></li>
                                     <li><a class="a-nav" [routerLink]="['/help']">Help</a></li>
                                     <li><a class="a-nav" [routerLink]="['/about']">About</a></li>
                                     <!--<li *ngIf="isMobile"><a class="a-nav" [routerLink]="['/feedback']">Feedback</a></li>-->
@@ -69,7 +69,7 @@
                 <div class="col-lg-5 col-md-6 col-xs-12">
                     <div class="row footer-links">
                         <div class="col-xs-1 rss">
-                            <a href="http://spatialdata.oregonexplorer.info/GPT9/rest/find/document?f=georss"><img src="assets/img/rss-button.png" alt="rss feed link" /></a>
+                            <a href="http://spatialdata.oregonexplorer.info/osdl-geoportal/rest/find/document?f=georss" target="_blank"><img src="assets/img/rss-button.png" alt="rss feed link" /></a>
                         </div>
                         <div class="col-xs-2">
                             <a href="mailto:virtualoregon.support@oregonstate.edu&subject=Oregon Spatial Data Library">Contact</a>
@@ -78,7 +78,7 @@
                             <a [routerLink]="['/resources']">Resources</a>
                         </div>
                         <div class="col-xs-2">
-                            <a href="http://spatialdata.oregonexplorer.info/geoportal/catalog/identity/login.page">Login</a>
+                            <a href="http://spatialdata.oregonexplorer.info/osdl-geoportal/catalog/identity/login.page">Login</a>
                         </div>
                         <!--<div class="col-xs-2">
                             <a href="http://spatialdata.oregonexplorer.info/geoportal/catalog/identity/userRegistration.page">Register</a>

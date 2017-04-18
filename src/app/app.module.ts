@@ -29,7 +29,9 @@ import { PagerCmpComponent } from './home-cmp/results-cmp/pager-cmp/pager-cmp.co
 import { MapPreviewCmpComponent } from './map-preview-cmp/map-preview-cmp.component';
 import { OsdlErrorHandler } from './osdl-error-handler';
 import { DownloadCmpComponent } from './download-cmp/download-cmp.component';
+import { RestRedirectCmpComponent } from './rest-redirect-cmp/rest-redirect-cmp.component';
 import { UtilitiesCls } from './utilities-cls';
+import { CatalogResourceRedirectCmpComponent } from './catalog-resource-redirect-cmp/catalog-resource-redirect-cmp.component';
 
 declare var ga: any;
 
@@ -42,7 +44,10 @@ const appRoutes: Routes = [
   { path: 'help', component: HelpCmpComponent },
   { path: 'feedback', component: FeedbackCmpComponent },
   { path: 'resources', component: ResourcesCmpComponent },
-  { path: 'download', component: DownloadCmpComponent }
+  { path: 'download', component: DownloadCmpComponent },
+  { path: 'catalog/main/home.page', component: HomeCmpComponent },
+  { path: 'rest/document', component: RestRedirectCmpComponent },
+  { path: 'catalog/search/resource/details.page', component: CatalogResourceRedirectCmpComponent}
 ];
 
 @NgModule({
@@ -64,7 +69,9 @@ const appRoutes: Routes = [
     PaginationDirective,
     PagerCmpComponent,
     MapPreviewCmpComponent,
-    DownloadCmpComponent
+    DownloadCmpComponent,
+    RestRedirectCmpComponent,
+    CatalogResourceRedirectCmpComponent
   ],
   imports: [
     BrowserModule,

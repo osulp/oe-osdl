@@ -27,8 +27,8 @@ export class HomeCmpComponent implements OnInit {
     private location: PlatformLocation
   ) {
     location.onPopState((test: any) => {
-      // console.log('popping', test, this.route.snapshot.params);
-      this.checkQueryStingParams();
+     // console.log('popping', test, this.route.snapshot.params);
+      this.checkQueryStingParams(true);
     });
   }
 
@@ -47,11 +47,11 @@ export class HomeCmpComponent implements OnInit {
           params.push(
             {
               key: param,
-              value: p.includes('ramework') ? p + ' OR title:*ramework' : p,
+              value: p.includes('*ramework') ? p + ' OR title:*ramework' : p,
               facet: p,
               query: p,
               selected: true,
-              type: p.includes('ramework')
+              type: p.includes('*ramework')
                 ? 'framework'
                 : 'query'
             });
@@ -65,7 +65,7 @@ export class HomeCmpComponent implements OnInit {
             facet: paramVal,
             query: paramVal,
             selected: true,
-            type: paramVal.includes('ramework')
+            type: paramVal.includes('*ramework')
               ? 'framework'
               : param === 'fq'
                 ? 'query'
@@ -114,6 +114,9 @@ export class HomeCmpComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (location.href.includes('catalog')){
+      this.router.navigate(['/']);
+    }
     this.checkQueryStingParams();
     this.resultsCmp.pagerNumberRows = this._search_state_service.getState()
       ? +this._search_state_service.getState().get('rows')

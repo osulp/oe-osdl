@@ -15,14 +15,18 @@
                     <h4>Originator</h4>
                     <p>{{record['contact.organizations_ss'] ? record['contact.organizations_ss'].toString() : ''}}</p>
                 </div>
-                <div id="metadata-description">
+                <div *ngIf="serviceUrl !== ''" id="metadata-serviceurl">
+                    <h4>Service URL</h4>
+                    <p><a [href]="serviceURL" target="_blank">{{serviceUrl}}</a></p>
+                </div>
+                <div *ngIf="record.description" id="metadata-description">
                     <h4>Description</h4>
                     <p [innerHTML]="record.description"></p>
                     <p *ngIf="record.supplinf_t">
                         {{record.supplinf_t}}
                     </p>
                 </div>
-                <div id="metadata-purpose">
+                <div *ngIf="record.purpose_t" id="metadata-purpose">
                     <h4>Purpose</h4>
                     <p>{{record.purpose_t}}</p>
                 </div>
