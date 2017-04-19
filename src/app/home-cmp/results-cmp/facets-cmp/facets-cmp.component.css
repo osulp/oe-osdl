@@ -4,6 +4,7 @@
     border-bottom: 1px solid #D1CDC7;
     width: 100%;
     padding: 14px 0;
+    /*min-width: 190px;*/
 }
 
 .facet-group:hover {

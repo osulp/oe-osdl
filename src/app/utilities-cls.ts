@@ -34,7 +34,9 @@ export class UtilitiesCls {
                     : record['url.kml_ss']
                         ? record['url.kml_ss'][0]
                         : record['sys.src.item.url_s']
-                            ? record['sys.src.item.url_s']
+                            ? record['sys.src.item.url_s'].includes('arcgis')
+                                ? record['sys.src.item.url_s']
+                                : ''
                             : '')
             .replace('arcgis/services', 'arcgis/rest/services')
             .split('/WMSServer?')[0];

@@ -50,6 +50,7 @@ export class SearchStateSrvService {
     this._searchState.append('facet.field', 'sys.src.collections_txt');
     this._searchState.append('facet.field', 'sys.src.collections_ss');
     this._searchState.append('facet.field', 'dataAccessType_ss');
+    this._searchState.append('facet.field', 'contentType_ss');
     this._searchState.append('facet.field', 'sys.src.site.name_s');
     this._searchState.append('facet.field', 'sys.src.site.name_s');
     this._searchState.set('facet.query', 'Admin?Boundaries OR AdminBoundaries* OR *Admin_Bounds*');
@@ -83,6 +84,8 @@ export class SearchStateSrvService {
     this._searchState.set('f.sys.src.collections_ss.facet.limit', '10');
     this._searchState.set('f.dataAccessType_ss.facet.mincount', '1');
     this._searchState.set('f.dataAccessType_ss.facet.limit', '10');
+    this._searchState.set('f.contentType_ss.facet.mincount', '1');
+    this._searchState.set('f.contentType_ss.facet.limit', '10');
     this._searchState.set('f.sys.src.site.name_s.facet.mincount', '1');
     this._searchState.set('f.sys.src.site.name_s.facet.limit', '10');
     this._searchState.set('f.sys.src.collections_ss.facet.limit', '10');

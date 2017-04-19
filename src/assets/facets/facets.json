@@ -10,7 +10,8 @@
             "name": "Formats",
             "expanded": false,
             "solrFields": [
-                { "facet": "dataAccessType_ss" }
+                { "facet": "dataAccessType_ss" },
+                { "facet": "contentType_ss" }
             ]
         },
         {

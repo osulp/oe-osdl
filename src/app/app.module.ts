@@ -33,6 +33,7 @@ import { DownloadCmpComponent } from './download-cmp/download-cmp.component';
 import { RestRedirectCmpComponent } from './rest-redirect-cmp/rest-redirect-cmp.component';
 import { UtilitiesCls } from './utilities-cls';
 import { CatalogResourceRedirectCmpComponent } from './catalog-resource-redirect-cmp/catalog-resource-redirect-cmp.component';
+import { GeorssRedirectCmpComponent } from './georss-redirect-cmp/georss-redirect-cmp.component';
 
 declare var ga: any;
 
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
   { path: 'download', component: DownloadCmpComponent },
   { path: 'catalog/main/home.page', component: HomeCmpComponent },
   { path: 'GPT9/catalog/main/home.page', component: HomeCmpComponent },
+  { path: 'GPT9/rest/find/document?f=georss', component: GeorssRedirectCmpComponent },
   { path: 'rest/document', component: RestRedirectCmpComponent },
   { path: 'catalog/search/resource/details.page', component: CatalogResourceRedirectCmpComponent }
 ];
@@ -73,7 +75,8 @@ const appRoutes: Routes = [
     MapPreviewCmpComponent,
     DownloadCmpComponent,
     RestRedirectCmpComponent,
-    CatalogResourceRedirectCmpComponent
+    CatalogResourceRedirectCmpComponent,
+    GeorssRedirectCmpComponent
   ],
   imports: [
     BrowserModule,

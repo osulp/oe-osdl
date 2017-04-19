@@ -30,7 +30,7 @@ export class HomeCmpComponent implements OnInit {
     private getServiceMetadata: GetMapServicesMetadataSrvService
   ) {
     location.onPopState((test: any) => {
-      // console.log('popping', test, this.route.snapshot.params);
+      console.log('popping', test, this.route.snapshot.params);
       this.checkQueryStingParams(true);
     });
   }
@@ -135,7 +135,8 @@ export class HomeCmpComponent implements OnInit {
     return results;
   }
 
-  ngOnInit() {    
+  ngOnInit() {
+    console.log('home loading',location.href);
     if (location.href.includes('catalog')) {
       this.router.navigate(['/']);
     }

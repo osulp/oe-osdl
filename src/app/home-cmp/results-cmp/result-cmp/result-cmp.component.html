@@ -9,7 +9,7 @@
             <div class="record-thumbnail">
                 <img #thumbnail *ngIf="result['url.thumbnail_s']" [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
                 />
-                <img #thumbnailbinary *ngIf="result['thumbnail_binary_t']" [src]="'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (result.id.substring(0,8) + '-' +result.id.substring(8,12) + '-' + result.id.substring(12,16) + '-' + result.id.substring(16,20) + '-' + result.id.substring(20,result.id.length)).toUpperCase() +'%7D'"
+                <img #thumbnailbinary *ngIf="result['thumbnail_binary_t']" [src]="result.id ? 'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (result.id.substring(0,8) + '-' +result.id.substring(8,12) + '-' + result.id.substring(12,16) + '-' + result.id.substring(16,20) + '-' + result.id.substring(20,result.id.length)).toUpperCase() +'%7D' : 'assets/img/oe_no_image.png'"
                     title="thumbnail of dataset" (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
                 <img *ngIf="result['url.thumbnail_s'] === undefined && result['thumbnail_binary_t'] === undefined" src="assets/img/oe_no_image.png">
             </div>
@@ -41,7 +41,7 @@
             <div class="record-thumbnail col-xs-2">
                 <img #thumbnail *ngIf="result['url.thumbnail_s']" [src]="result['url.thumbnail_s'] !== undefined ? result['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
                 />
-                <img #thumbnailbinary *ngIf="result['thumbnail_binary_t']" [src]="'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (result.id.substring(0,8) + '-' +result.id.substring(8,12) + '-' + result.id.substring(12,16) + '-' + result.id.substring(16,20) + '-' + result.id.substring(20,result.id.length)).toUpperCase() +'%7D'"
+                <img #thumbnailbinary *ngIf="result['thumbnail_binary_t']" [src]="result.id ? 'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (result.id.substring(0,8) + '-' +result.id.substring(8,12) + '-' + result.id.substring(12,16) + '-' + result.id.substring(16,20) + '-' + result.id.substring(20,result.id.length)).toUpperCase() +'%7D' : 'assets/img/oe_no_image.png'"
                     title="thumbnail of dataset" (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
                 <img *ngIf="result['url.thumbnail_s'] === undefined && result['thumbnail_binary_t'] === undefined" src="assets/img/oe_no_image.png">
             </div>

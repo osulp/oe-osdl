@@ -22,11 +22,11 @@ export class TitleBarCmpComponent implements OnChanges {
 
 
   constructor(
-   private _utilities: UtilitiesCls
+    private _utilities: UtilitiesCls
   ) { }
 
   preview(record: any) {
-    this.modal.mapserviceUrl = this._utilities.getMapServiceUrl(record);    
+    this.modal.mapserviceUrl = this._utilities.getMapServiceUrl(record);
     this.modal.serviceName = record['title'];
     this.modal.show();
   }
@@ -97,14 +97,8 @@ export class TitleBarCmpComponent implements OnChanges {
   ngOnChanges(change: any) {
     if (change.solrResponse.currentValue.response) {
       this.record = change.solrResponse.currentValue.response.docs[0];
-      this.loadMap();
-      this.hasPreview = this.record['url.mapserver_ss']
-        || this.record['url.wms_ss']
-        || this.record['url.wfs_ss']
-        || this.record['url.klm_ss']
-        || this.record['sys.src.item.url_s']
-        ? true
-        : false;
+      this.loadMap();      
+      this.hasPreview = this._utilities.getMapServiceUrl(this.record) !== '';
       this.hasDownload = this.record['links']
         ? this.record['links'].length > 1
           ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')

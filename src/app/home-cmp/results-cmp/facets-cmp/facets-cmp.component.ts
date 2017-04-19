@@ -211,14 +211,19 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
           })
           .filter(f => f !== undefined);
         const updated_facet_groups = this;
-        this.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
-          if (sf.facet === ff) {
-            sf.fields = facet_fields;
-          } else {
-            sf.facet_no_space = sf.facet.replace(/\ /g, '');
-            sf.service_lookup = this._utilities.getServiceFilterQuery(sf.facet);
-          }
-        }));
+        this.facet_groups.forEach((group: any) => {
+          let hasResults = false;
+          group.solrFields.forEach((sf: any) => {
+            if (sf.facet === ff) {
+              sf.fields = facet_fields;
+            } else {
+              sf.facet_no_space = sf.facet.replace(/\ /g, '');
+              sf.service_lookup = this._utilities.getServiceFilterQuery(sf.facet);
+            }
+            hasResults = sf.fields ? sf.fields.length > 0 ? true : hasResults : hasResults;
+          });
+          group.hasResults = group.name === 'Topics' ? true : hasResults;
+        });
       }
     }
   }

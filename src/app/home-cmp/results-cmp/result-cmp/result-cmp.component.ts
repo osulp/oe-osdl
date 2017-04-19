@@ -20,7 +20,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   constructor(
     private router: Router,
     private _changeDetectionRef: ChangeDetectorRef,
-    private _utilities: UtilitiesCls    
+    private _utilities: UtilitiesCls
   ) { }
 
   gotoDetails(evt: any, record: any) {
@@ -31,7 +31,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  preview(record: any) {    
+  preview(record: any) {
     this.modal.mapserviceUrl = this._utilities.getMapServiceUrl(record);
     this.modal.serviceName = record['title'];
     this.modal.show();
@@ -42,13 +42,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   }
 
   hasPreview(result: any) {
-    return result['url.mapserver_ss']
-      || result['url.wms_ss']
-      || result['url.wfs_ss']
-      || result['url.klm_ss']
-      || result['sys.src.item.url_s']
-      ? true
-      : false;
+    return this._utilities.getMapServiceUrl(result) !== '';
   }
   hasDownload(result: any) {
     return result['links'] ? result['links'].filter(l => l.includes('.zip') || l.includes('ftp:')).length > 0 : false;

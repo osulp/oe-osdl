@@ -49,7 +49,7 @@ export class MapPreviewCmpComponent implements OnInit {
         }).addTo(this.map);
     }
     this.mapserviceUrl = this.mapserviceUrl.replace('arcgis/services', 'arcgis/rest/services').split('/WMSServer?')[0];
-    console.log('mapservice url',this.mapserviceUrl);
+    console.log('mapservice url', this.mapserviceUrl);
     if (this.mapserviceUrl.includes('ImageServer')) {
       console.log('surely');
       L.esri.imageMapLayer({
@@ -58,7 +58,7 @@ export class MapPreviewCmpComponent implements OnInit {
       }).addTo(this.map);
       // in case being served as a tile layer add
       L.esri.tiledMapLayer({
-        url:this.mapserviceUrl,
+        url: this.mapserviceUrl,
         opacity: 0.7
       }).addTo(this.map);
 

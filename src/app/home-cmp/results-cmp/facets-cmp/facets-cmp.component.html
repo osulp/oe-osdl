@@ -8,6 +8,7 @@
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="facet-group-wrapper" *ngFor="let facet_group of facet_groups">
+                    <!--<div class="facet-group-wrapper" *ngIf="facet_group.hasResults">-->
                     <div class="facet-group" (click)="facet_group.expanded = !facet_group.expanded;">
                         <span class="facet-chevron glyphicon" [ngClass]="facet_group.expanded ? 'glyphicon-menu-up expanded' : 'glyphicon-menu-down'"></span>
                         <span class="facet-group-name">{{facet_group.name}}</span>
@@ -15,8 +16,9 @@
                     <div class="facet-list-wrapper" *ngIf="facet_group.expanded">
                         <div *ngFor="let solr_facet of facet_group.solrFields">
                             <div *ngIf="facet_group.name !== 'Topics'">
+                                <div *ngIf="!facet_group.hasResults">No {{facet_group.name.toLowerCase()}} match the selected filters</div>
                                 <div *ngFor="let sf of solr_facet.fields">
-                                    <div *ngIf="!sf.field.includes('REQUIRED:') && sf.field.length < 200" class="facet">
+                                    <div *ngIf="!sf.field.includes('REQUIRED:') && sf.field.length < 60" class="facet">
                                         <input [id]="'sf'+sf.field" #facetChkBox type="checkbox" [(ngModel)]="sf.selected" (ngModelChange)="setSelectedFacets([{facet:solr_facet.facet,query:sf.field,selected:facetChkBox.checked,type:'facet'}],'facet', true)" />
                                         <label [for]="'sf'+sf.field"><span></span>{{sf.field}} <b *ngIf="sf.count">({{sf.count}})</b></label>
                                     </div>
@@ -49,6 +51,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--</div>-->
                     </div>
                 </li>
             </ul>

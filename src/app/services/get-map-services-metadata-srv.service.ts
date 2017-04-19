@@ -9,18 +9,18 @@ export class GetMapServicesMetadataSrvService {
   constructor(private jsonp: Jsonp) { }
 
   getMetedata(url: string): Observable<any[]> {
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
     params.set('f', 'json');
     params.set('callback', 'JSONP_CALLBACK');
     url = url
       .replace('arcgis/services', 'arcgis/rest/services')
       .split('/WMSServer')[0]
       + '/info/iteminfo';
-    console.log(url);
+    // console.log(url);
     return this.jsonp
       .get(url, { search: params })
       .map(function (res: Response) {
-        console.log('item info?', res);
+        // console.log('item info?', res);
         return res.json() || {};
       });
   }

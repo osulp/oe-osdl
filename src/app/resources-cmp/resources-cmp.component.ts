@@ -10,6 +10,10 @@ export class ResourcesCmpComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('rest url', location);
+    if (!location.href.includes('localhost')) {
+      location.href = location.href.replace('/GPT9/', '/osdl-geoportal/');
+    }
   }
 
 }
