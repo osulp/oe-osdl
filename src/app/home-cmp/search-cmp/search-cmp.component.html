@@ -32,7 +32,7 @@
                                     <div *ngIf="item.links ? item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 || item.links[1].indexOf('ftp:') !== -1 : false : false" class="download-link col-xs-2">
                                         <span class="glyphicon glyphicon-download-alt"></span>
                                         <a *ngIf="item.links[1].indexOf('.zip') !== -1" [href]="item.links[1]" class="download-link-a" download>Download</a>
-                                        <a *ngIf="item.links[1].indexOf('ftp:') !== -1" [href]="item.links[1]" class="download-link-a" target="_blank">Download</a>
+                                        <a *ngIf="item.links[1].indexOf('ftp:') !== -1 && item.links[1].indexOf('.zip') === -1" [href]="item.links[1]" class="download-link-a" target="_blank">Download</a>
                                     </div>
                                 </div>
                             </div>

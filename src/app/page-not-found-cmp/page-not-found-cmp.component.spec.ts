@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ResourcesCmpComponent } from './resources-cmp.component';
+import { PageNotFoundCmpComponent } from './page-not-found-cmp.component';
 
-describe('ResourcesCmpComponent', () => {
-  let component: ResourcesCmpComponent;
-  let fixture: ComponentFixture<ResourcesCmpComponent>;
+describe('PageNotFoundCmpComponent', () => {
+  let component: PageNotFoundCmpComponent;
+  let fixture: ComponentFixture<PageNotFoundCmpComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResourcesCmpComponent ]
+      declarations: [ PageNotFoundCmpComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResourcesCmpComponent);
+    fixture = TestBed.createComponent(PageNotFoundCmpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -12,7 +12,7 @@ export class GeorssRedirectCmpComponent implements OnInit {
   ngOnInit() {
     console.log('rest url', location);
     if (!location.href.includes('localhost')) {
-      location.href = location.href.replace('/geoportal/', '/osdl-geoportal/');
+      location.href = location.href.replace('/geoportal/GPT9/', '/osdl-geoportal/');
     }
   }
 

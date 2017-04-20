@@ -30,10 +30,12 @@ import { PagerCmpComponent } from './home-cmp/results-cmp/pager-cmp/pager-cmp.co
 import { MapPreviewCmpComponent } from './map-preview-cmp/map-preview-cmp.component';
 import { OsdlErrorHandler } from './osdl-error-handler';
 import { DownloadCmpComponent } from './download-cmp/download-cmp.component';
-import { RestRedirectCmpComponent } from './rest-redirect-cmp/rest-redirect-cmp.component';
 import { UtilitiesCls } from './utilities-cls';
-import { CatalogResourceRedirectCmpComponent } from './catalog-resource-redirect-cmp/catalog-resource-redirect-cmp.component';
-import { GeorssRedirectCmpComponent } from './georss-redirect-cmp/georss-redirect-cmp.component';
+import { CatalogResourceRedirectCmpComponent } from './redirects/catalog-resource-redirect-cmp/catalog-resource-redirect-cmp.component';
+import { GeorssRedirectCmpComponent } from './redirects/georss-redirect-cmp/georss-redirect-cmp.component';
+import { PageNotFoundCmpComponent } from './page-not-found-cmp/page-not-found-cmp.component';
+import { ToOsdlGeoportalRedirectCmpComponent } from './redirects/to-osdl-geoportal-redirect-cmp/to-osdl-geoportal-redirect-cmp.component';
+
 
 declare var ga: any;
 
@@ -47,11 +49,14 @@ const appRoutes: Routes = [
   { path: 'feedback', component: FeedbackCmpComponent },
   { path: 'resources', component: ResourcesCmpComponent },
   { path: 'download', component: DownloadCmpComponent },
-  { path: 'catalog/main/home.page', component: HomeCmpComponent },
-  { path: 'GPT9/catalog/main/home.page', component: HomeCmpComponent },
-  { path: 'GPT9/rest/find/document?f=georss', component: GeorssRedirectCmpComponent },
-  { path: 'rest/document', component: RestRedirectCmpComponent },
-  { path: 'catalog/search/resource/details.page', component: CatalogResourceRedirectCmpComponent }
+  { path: 'catalog/main/home.page', redirectTo: '', pathMatch: 'full' },
+  { path: 'GPT9/catalog/main/home.page', redirectTo: '', pathMatch: 'full' },
+  { path: 'GPT9/rest/find/document', component: GeorssRedirectCmpComponent },
+  { path: 'rest/document', component: ToOsdlGeoportalRedirectCmpComponent },
+  { path: 'csw', component: ToOsdlGeoportalRedirectCmpComponent },
+  { path: 'viewer_download', redirectTo: 'download', pathMatch: 'prefix' },
+  { path: 'catalog/search/resource/details.page', component: CatalogResourceRedirectCmpComponent },
+  { path: '**', component: PageNotFoundCmpComponent }
 ];
 
 @NgModule({
@@ -74,9 +79,10 @@ const appRoutes: Routes = [
     PagerCmpComponent,
     MapPreviewCmpComponent,
     DownloadCmpComponent,
-    RestRedirectCmpComponent,
     CatalogResourceRedirectCmpComponent,
-    GeorssRedirectCmpComponent
+    GeorssRedirectCmpComponent,
+    PageNotFoundCmpComponent,
+    ToOsdlGeoportalRedirectCmpComponent
   ],
   imports: [
     BrowserModule,
