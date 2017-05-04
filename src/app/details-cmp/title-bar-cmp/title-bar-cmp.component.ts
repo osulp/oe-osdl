@@ -3,6 +3,7 @@ import { MapPreviewCmpComponent } from '../../map-preview-cmp/map-preview-cmp.co
 import { UtilitiesCls } from '../../utilities-cls';
 
 declare var L: any;
+declare var ga: any;
 
 @Component({
   selector: 'app-title-bar-cmp',
@@ -72,6 +73,16 @@ export class TitleBarCmpComponent implements OnChanges {
     a.href = href;
     if (type === 'download') {
       a.download = this.record.title;
+      if (!window.location.href.includes('localhost')) {
+        if (ga) {
+          ga('send', 'event', {
+            eventCategory: 'Download Link',
+            eventAction: 'click',
+            eventLabel: this.record.title,
+            transport: 'beacon'
+          });
+        }
+      }
     }
     a.target = '_blank';
     document.body.appendChild(a);
@@ -97,7 +108,7 @@ export class TitleBarCmpComponent implements OnChanges {
   ngOnChanges(change: any) {
     if (change.solrResponse.currentValue.response) {
       this.record = change.solrResponse.currentValue.response.docs[0];
-      this.loadMap();      
+      this.loadMap();
       this.hasPreview = this._utilities.getMapServiceUrl(this.record) !== '';
       this.hasDownload = this.record['links']
         ? this.record['links'].length > 1

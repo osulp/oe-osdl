@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UtilitiesCls } from '../../../utilities-cls';
 
 declare var $: any;
+declare var ga: any;
 
 @Component({
   selector: 'app-result-cmp',
@@ -52,6 +53,16 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     a.href = record.links.length > 1 ? record.links[1] : '';
     if (record.links[1].includes('.zip')) {
       a.download = record.title[0];
+      if (!window.location.href.includes('localhost')) {
+        if (ga) {
+          ga('send', 'event', {
+            eventCategory: 'Download Link',
+            eventAction: 'click',
+            eventLabel: record.title[0],
+            transport: 'beacon'
+          });
+        }
+      }
     }
     a.target = '_blank';
     document.body.appendChild(a);

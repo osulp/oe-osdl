@@ -136,7 +136,7 @@ export class HomeCmpComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('home loading',location.href);
+    // console.log('home loading',location.href);
     if (location.href.includes('catalog')) {
       this.router.navigate(['/']);
     }
