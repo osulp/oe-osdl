@@ -92,7 +92,9 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
       // check selected_facets for value, if there remove, else add    
       facet.query = facet.query.split(' OR')[0];
       if (!facet.selected) {
+        console.log('remove?',facet);
         this.selected_facets = this.selected_facets.filter((f: any) => {
+          console.log('f facet',f,facet);
           return f.value.toLowerCase() !== (facet.type === 'facet' ?
             (facet.facet + ':"' + facet.query + '"').toLowerCase()
             : facet.query
@@ -153,7 +155,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     if (textParams !== '') {
       qsParams.push({ key: 'q', value: textParams });
     }
-
+    console.log('selected_facets',this.selected_facets);
     this._osdl_solr_service.get(this.selected_facets, searchType, updateState);
 
     if (updateState) {

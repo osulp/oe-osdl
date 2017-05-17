@@ -6,6 +6,8 @@ import { ResultsStoreSrvService } from './results-store-srv.service';
 import { SearchStateSrvService } from './search-state-srv.service';
 import { UtilitiesCls } from '../utilities-cls';
 
+declare var ga: any;
+
 @Injectable()
 export class OsdlSolrSrvService {
     // SOLRURL: string = 'http://lib-solr1.library.oregonstate.edu:8984/solr/geoportal/select';
@@ -205,7 +207,20 @@ export class OsdlSolrSrvService {
     get(newParams?: any[], searchType?: any, update?: boolean) {
         const params = this.setParams(newParams, searchType, update);
         this.search(params).subscribe((results: any) => {
-            this._resultStore.updateResults(results);
+            if (results.responseHeader) {
+                this._resultStore.updateResults(results);
+            } else {
+                if (!window.location.href.includes('localhost')) {
+                    if (ga) {
+                        ga('send', 'event', {
+                            eventCategory: 'Failed search',
+                            eventAction: 'search',
+                            eventLabel: window.location.href,
+                            transport: 'beacon'
+                        });
+                    }
+                }
+            }
         });
     }
 

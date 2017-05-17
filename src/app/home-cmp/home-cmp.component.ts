@@ -36,6 +36,7 @@ export class HomeCmpComponent implements OnInit {
   }
 
   onTextFilterChangeHandler(filter: any) {
+    console.log('filter',filter);
     this.resultsCmp.facetsCmp.setSelectedFacets([filter], 'textquery', true);
   }
 
