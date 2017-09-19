@@ -1,6 +1,9 @@
 <div id="details-title-bar-wrapper">
     <div id="dataset-title">{{record.title}}
     </div>
+    <div *ngIf="record['sys.src.collections_ss']" class="record-collection">-- Part of collection(s):
+        <span *ngFor="let collection of record['sys.src.collections_ss']"><a [routerLink]="['/search', {fq:'sys.src.collections_ss:'+collection}]" > {{collection}}</a></span>
+    </div>
     <!--Add ngif framework check for display-->
     <div *ngIf="record['keywords'] ? record['keywords'].indexOf('Framework') !== -1 : false" id="framework-dataset">
         <span>Framework </span><span><img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" /></span>
@@ -55,3 +58,4 @@
     </div>
 </div>
 <app-map-preview-cmp></app-map-preview-cmp>
+<app-map-srvc-download-form-cmp></app-map-srvc-download-form-cmp>

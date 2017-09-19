@@ -130,6 +130,12 @@
     color: #6F7C82;
 }
 
+.record-collection {
+    font-size: .7em;
+    font-style: italic;
+    color: #244068;
+}
+
 .bottom-row {
     max-height: 40px;
     width: 100%;

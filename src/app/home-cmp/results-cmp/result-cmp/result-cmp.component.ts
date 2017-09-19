@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../../map-preview-cmp/map-preview-cmp.component';
+import { MapSrvcDownloadFormCmpComponent } from '../../../map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
 import { Router } from '@angular/router';
 import { UtilitiesCls } from '../../../utilities-cls';
+//import { GetMapServiceDownloadSrvService} from '../../../services/index'
 
 declare var $: any;
+declare var L: any;
 declare var ga: any;
 
 @Component({
@@ -15,6 +18,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   @Input() viewType: any;
   @Input() solrResults: any[];
   @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
+  @ViewChild(MapSrvcDownloadFormCmpComponent) downloadModal: MapSrvcDownloadFormCmpComponent;
   serviceUrl: any;
 
 
@@ -22,6 +26,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private _changeDetectionRef: ChangeDetectorRef,
     private _utilities: UtilitiesCls
+    //private _getMapSrvcDownload: GetMapServiceDownloadSrvService
   ) { }
 
   gotoDetails(evt: any, record: any) {
@@ -46,30 +51,14 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     return this._utilities.getMapServiceUrl(result) !== '';
   }
   hasDownload(result: any) {
-    return result['links'] ? result['links'].filter(l => l.includes('.zip') || l.includes('ftp:')).length > 0 : false;
+    let isAGS = result['url.mapserver_ss'] ? result['url.mapserver_ss'].length > 0 : false
+    return result['links']
+      ? (result['links'].filter(l => l.includes('.zip') || l.includes('ftp:')).length > 0
+        || isAGS)
+      : false;
   }
   download(record: any) {
-    const a = window.document.createElement('a');
-    a.href = record.links.length > 1 ? record.links[1] : '';
-    if (record.links[1].includes('.zip')) {
-      a.download = record.title[0];
-      if (!window.location.href.includes('localhost')) {
-        if (ga) {
-          ga('send', 'event', {
-            eventCategory: 'Download Link',
-            eventAction: 'click',
-            eventLabel: record.title[0],
-            transport: 'beacon'
-          });
-        }
-      }
-    }
-    a.target = '_blank';
-    document.body.appendChild(a);
-    // IE: "Access is denied"; 
-    // see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
-    a.click();
-    document.body.removeChild(a);
+    this.downloadModal.checkDownload(record);
   }
 
   ngAfterViewChecked() {

@@ -41,6 +41,7 @@ export class MapPreviewCmpComponent implements OnInit {
       this.map = L.map('map', {});
       const initialCoords = [44, -121];
       const initialZoom = 6;
+      L.control.scale().addTo(this.map);
       this.map.setView(initialCoords, initialZoom);
       L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
         {
@@ -63,8 +64,14 @@ export class MapPreviewCmpComponent implements OnInit {
       }).addTo(this.map);
 
     } else {
+      let layerid = this.mapserviceUrl.split('MapServer/').length > 1
+          ? this.mapserviceUrl.split('MapServer/')[1] 
+          : '0';
+      let url =  this.mapserviceUrl.split('MapServer/').length > 1 
+      ? this.mapserviceUrl.split('MapServer/')[0] + 'MapServer' : this.mapserviceUrl;
       L.esri.dynamicMapLayer({
-        url: this.mapserviceUrl,
+        url: url,
+        layers: [layerid],
         opacity: 0.7
       }).addTo(this.map);
       $('#map').css('height', $(window).height() < 600 ? $(window).height() * .60 + 'px' : '500px');

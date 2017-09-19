@@ -1,0 +1,9 @@
+.modal {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-footer {
+    text-align: left;
+    word-wrap: break-word;
+    word-break: keep-all;
+}

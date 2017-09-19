@@ -27,12 +27,17 @@
                                         <img #thumbnailbinary *ngIf="item['thumbnail_binary_t']" [src]="'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (item.id.substring(0,8) + '-' +item.id.substring(8,12) + '-' + item.id.substring(12,16) + '-' + item.id.substring(16,20) + '-' + item.id.substring(20,item.id.length)).toUpperCase() +'%7D'"
                                             title="thumbnail of dataset" (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
                                     </div>
-                                    <div [title]="item.description" [innerHTML]="item.description" class="search-result-desc col-xs-5">
+                                    <div [title]="item.description" [innerHTML]="item.description ? item.description.substring(0,100) : ''" class="search-result-desc col-xs-5">
                                     </div>
-                                    <div *ngIf="item.links ? item.links.length > 1 ? item.links[1].indexOf('.zip') !== -1 || item.links[1].indexOf('ftp:') !== -1 : false : false" class="download-link col-xs-2">
+                                    <div *ngIf="item.links ? item.links.length > 1 ? (item.links[1].indexOf('.zip') !== -1 || item.links[1].indexOf('ftp:') !== -1) : (item['url.mapserver_ss'] ? item['url.mapserver_ss'].length > 0 : false) : false" class="download-link col-xs-2">
                                         <span class="glyphicon glyphicon-download-alt"></span>
+                                        <span *ngIf="item.links.length > 1">   
                                         <a *ngIf="item.links[1].indexOf('.zip') !== -1" [href]="item.links[1]" class="download-link-a" download>Download</a>
                                         <a *ngIf="item.links[1].indexOf('ftp:') !== -1 && item.links[1].indexOf('.zip') === -1" [href]="item.links[1]" class="download-link-a" target="_blank">Download</a>
+                                        </span>
+                                        <span *ngIf="item.links.length <= 1">
+                                        <a (click)="checkDownload($event,item)" class="download-link-a" target="_blank">Download</a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -50,9 +55,10 @@
                     {{filter.facet.includes('ramework OR') ? ' Framework ' : filter.category}}
                     <br/> {{filter.facet.includes('ramework OR') ? ' Data ' : filter.facet}}
                     <span class="removeFilter"><img src="assets/img/closeX2.png" alt="remove selected filter" />&nbsp;</span>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
 </div>
+<app-map-srvc-download-form-cmp></app-map-srvc-download-form-cmp>

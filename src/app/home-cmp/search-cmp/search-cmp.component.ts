@@ -1,7 +1,9 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { OsdlSolrSrvService, ResultsStoreSrvService } from '../../services/index';
+import { OsdlSolrSrvService, ResultsStoreSrvService, GetMapServicesMetadataSrvService } from '../../services/index';
+import { MapSrvcDownloadFormCmpComponent } from './../../map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
+import { UtilitiesCls } from '../../utilities-cls';
 import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
@@ -14,6 +16,7 @@ declare var $: any;
 
 export class SearchCmpComponent implements OnInit {
   @Output() onTextFilterChange = new EventEmitter();
+  @ViewChild(MapSrvcDownloadFormCmpComponent) downloadModal: MapSrvcDownloadFormCmpComponent;
   isHandheld: boolean = $(window).width() < 768;
   temp_search_results: any = [];
   searchTerm = new FormControl();
@@ -25,11 +28,14 @@ export class SearchCmpComponent implements OnInit {
   tempTabIndex: number = -1;
   searchPushed: boolean = false;
   initLoad: boolean = true;
+  downloadClicked: boolean = false;
 
   constructor(
     private router: Router,
     public _osdl_solr_service: OsdlSolrSrvService,
-    public _results_store_service: ResultsStoreSrvService
+    public _results_store_service: ResultsStoreSrvService, 
+    private getServiceMetadata: GetMapServicesMetadataSrvService,
+    private _utilities: UtilitiesCls
   ) { }
 
   inputSearchClickHandler(event: any) {
@@ -53,7 +59,7 @@ export class SearchCmpComponent implements OnInit {
     this.searchString = '';
   }
 
-  inputKeypressHandler(event: any) {
+  inputKeypressHandler(event: any) {    
     const code = event.keyCode || event.which;
     if (code === 13) {
       const scope = this;
@@ -96,7 +102,7 @@ export class SearchCmpComponent implements OnInit {
     }, 100);
   }
 
-  blurHandler(event: any) {
+  blurHandler(event: any) {    
     const searchScope = this;
     if (!this.searchPushed) {
       setTimeout(function () {
@@ -110,7 +116,10 @@ export class SearchCmpComponent implements OnInit {
     event.preventDefault();
   }
   eventHandler(event: any, searchItem: any) {
-    this.router.navigate(['/details', { id: searchItem.id }]);
+    if (!this.downloadClicked) {
+      this.router.navigate(['/details', { id: searchItem.id }]);
+    }
+    this.downloadClicked = false;
   }
 
   filterLookup(filter: string) {
@@ -136,6 +145,11 @@ export class SearchCmpComponent implements OnInit {
         break;
     }
     return returnCategory.toUpperCase();
+  }
+
+  checkDownload(evt: any, record: any) {
+    this.downloadClicked = true;
+    this.downloadModal.checkDownload(record);
   }
 
   processFilters(params: any) {
@@ -215,7 +229,23 @@ export class SearchCmpComponent implements OnInit {
         }
       });
 
-    this.items.subscribe(value => this.temp_search_results = value);
+    this.items.subscribe((value: any) => {
+      value.forEach((item:any) => {
+        let srvcUrl = this._utilities.getMapServiceUrl(item);
+        if (srvcUrl){
+          this.getServiceMetadata.getMetedata(srvcUrl).subscribe((res => {
+            if (!item['description']){
+              item['description'] = res['description'];
+            }
+            if (!item['url.thumbnail_s']){
+              item['url.thumbnail_s'] = srvcUrl + '/info/' + res['thumbnail'];
+            }
+          }));
+        }
+      });      
+      this.temp_search_results = value;
+      console.log('value', value);
+    });
 
 
     this._results_store_service.selectionChanged$.subscribe(

@@ -22,7 +22,8 @@ import {
   ResultsStoreSrvService,
   SearchStateSrvService,
   FacetsStoreSrvService,
-  GetMapServicesMetadataSrvService
+  GetMapServicesMetadataSrvService,
+  GetMapServiceDownloadSrvService
 } from './services/index';
 import { ResourcesCmpComponent } from './resources-cmp/resources-cmp.component';
 import { PaginationDirective } from './directives/pagination.directive';
@@ -35,6 +36,7 @@ import { CatalogResourceRedirectCmpComponent } from './redirects/catalog-resourc
 import { GeorssRedirectCmpComponent } from './redirects/georss-redirect-cmp/georss-redirect-cmp.component';
 import { PageNotFoundCmpComponent } from './page-not-found-cmp/page-not-found-cmp.component';
 import { ToOsdlGeoportalRedirectCmpComponent } from './redirects/to-osdl-geoportal-redirect-cmp/to-osdl-geoportal-redirect-cmp.component';
+import { MapSrvcDownloadFormCmpComponent } from './map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
 
 
 declare var ga: any;
@@ -82,7 +84,8 @@ const appRoutes: Routes = [
     CatalogResourceRedirectCmpComponent,
     GeorssRedirectCmpComponent,
     PageNotFoundCmpComponent,
-    ToOsdlGeoportalRedirectCmpComponent
+    ToOsdlGeoportalRedirectCmpComponent,
+    MapSrvcDownloadFormCmpComponent
   ],
   imports: [
     BrowserModule,
@@ -98,6 +101,7 @@ const appRoutes: Routes = [
     SearchStateSrvService,
     FacetsStoreSrvService,
     GetMapServicesMetadataSrvService,
+    GetMapServiceDownloadSrvService,
     UtilitiesCls,
     { provide: ErrorHandler, useClass: OsdlErrorHandler }],
   bootstrap: [AppComponent]

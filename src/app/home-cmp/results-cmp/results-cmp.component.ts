@@ -27,7 +27,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     public _results_store_service: ResultsStoreSrvService,
-    public _search_state_service: SearchStateSrvService
+    public _search_state_service: SearchStateSrvService    
   ) { }
 
   onViewTypeChangeHandler(view: any) {

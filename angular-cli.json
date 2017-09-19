@@ -33,6 +33,7 @@
             "../node_modules/proj4/dist/proj4.js",
             "../node_modules/leaflet/dist/leaflet.js",
             "../node_modules/esri-leaflet/dist/esri-leaflet.js",
+            "../node_modules/esri-leaflet-gp/dist/esri-leaflet-gp.js",
             "../node_modules/toastr/package/toastr.js"
         ],
         "environments": {

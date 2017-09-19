@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../map-preview-cmp/map-preview-cmp.component';
+import { MapSrvcDownloadFormCmpComponent } from '../../map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
 import { UtilitiesCls } from '../../utilities-cls';
 
 declare var L: any;
@@ -13,6 +14,7 @@ declare var ga: any;
 export class TitleBarCmpComponent implements OnChanges {
   @Input() solrResponse: any = {};
   @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
+  @ViewChild(MapSrvcDownloadFormCmpComponent) downloadModal: MapSrvcDownloadFormCmpComponent;
   record: any = {};
   facet_counts: any = {};
   topics: any[] = [];
@@ -101,8 +103,9 @@ export class TitleBarCmpComponent implements OnChanges {
   }
 
   download(record: any) {
-    const linkType = record.links.length > 1 ? record.links[1].includes('.zip') ? 'download' : 'link' : 'link';
-    this.goto(record.links.length > 1 ? record.links[1] : '', linkType);
+    this.downloadModal.checkDownload(record);
+    // const linkType = record.links.length > 1 ? record.links[1].includes('.zip') ? 'download' : 'link' : 'link';
+    // this.goto(record.links.length > 1 ? record.links[1] : '', linkType);
   }
 
   ngOnChanges(change: any) {
@@ -110,11 +113,20 @@ export class TitleBarCmpComponent implements OnChanges {
       this.record = change.solrResponse.currentValue.response.docs[0];
       this.loadMap();
       this.hasPreview = this._utilities.getMapServiceUrl(this.record) !== '';
+
       this.hasDownload = this.record['links']
         ? this.record['links'].length > 1
-          ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')
-          : false
+          ? (this.record['links'][1].indexOf('.zip') !== -1
+            || this.record['links'][1].indexOf('ftp:') !== -1)
+          : this.record['url.mapserver_ss']
+            ? this.record['url.mapserver_ss'].length > 0
+            : false        
         : false;
+      // this.hasDownload = this.record['links']
+      //   ? this.record['links'].length > 1
+      //     ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')
+      //     : false
+      //   : false;
       for (const topic in change.solrResponse.currentValue.facet_counts.facet_queries) {
         if (change.solrResponse.currentValue.facet_counts.facet_queries[topic] > 0) {
           this.topics.push(topic);
