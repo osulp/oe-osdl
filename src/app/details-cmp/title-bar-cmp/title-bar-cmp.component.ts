@@ -22,6 +22,7 @@ export class TitleBarCmpComponent implements OnChanges {
   map: any;
   hasPreview: boolean = false;
   hasDownload: boolean = true;
+  isApplication: boolean = false;
 
 
   constructor(
@@ -102,6 +103,10 @@ export class TitleBarCmpComponent implements OnChanges {
     this.goto(record['url.metadata_s'], 'link');
   }
 
+  gotoCollection(collection: any) {
+    window.location.href = 'search;fq=sys.src.collections_ss:"' + collection + '"';
+  }
+
   download(record: any) {
     this.downloadModal.checkDownload(record);
     // const linkType = record.links.length > 1 ? record.links[1].includes('.zip') ? 'download' : 'link' : 'link';
@@ -114,13 +119,15 @@ export class TitleBarCmpComponent implements OnChanges {
       this.loadMap();
       this.hasPreview = this._utilities.getMapServiceUrl(this.record) !== '';
 
+      this.isApplication = this.record['contentType_ss'] ? this.record['contentType_ss'][0] === 'Applications' : false;
+
       this.hasDownload = this.record['links']
         ? this.record['links'].length > 1
           ? (this.record['links'][1].indexOf('.zip') !== -1
             || this.record['links'][1].indexOf('ftp:') !== -1)
           : this.record['url.mapserver_ss']
             ? this.record['url.mapserver_ss'].length > 0
-            : false        
+            : false
         : false;
       // this.hasDownload = this.record['links']
       //   ? this.record['links'].length > 1

@@ -43,10 +43,19 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     this.modal.show();
   }
 
+  openApplication(record:any)
+{
+  window.open(record['links'][record['links'].length > 1 ? 1 : 0],'_blank');
+}
   sourceLookup(source: any) {
     return this._utilities.sourceLookup(source);
   }
 
+  isApplication(result:any){
+    return (result['contentType_ss'] 
+    ? result['contentType_ss'][0] === 'Applications'
+    : false);
+  }
   hasPreview(result: any) {
     return this._utilities.getMapServiceUrl(result) !== '';
   }

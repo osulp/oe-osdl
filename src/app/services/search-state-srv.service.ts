@@ -39,8 +39,8 @@ export class SearchStateSrvService {
     this._searchState.set('fl',
       'description,title,id,url.thumbnail_s,sys.src.item.lastmodified_tdt,'
       + 'osdl.pub_date_tdt desc,metadata.ref.org_t,links,url.mapserver_ss,'
-      + 'url.wms_ss,url.wfs_ss,url.kml_ss,keywords_ss,keywords,thumbnail_binary_t,sys.src.item.url_s,'
-      + 'sys.src.collections_ss'
+      + 'url.imageserver_ss,url.wms_ss,url.wfs_ss,url.kml_ss,keywords_ss,keywords,thumbnail_binary_t,sys.src.item.url_s,'
+      + 'sys.src.collections_ss,contentType_ss'
     );
     this._searchState.set('sort', 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc');
     this._searchState.set('facet.field', 'sys.metadatatype.identifier_s');

@@ -4,7 +4,8 @@ import { ResultCmpComponent } from './result-cmp/result-cmp.component';
 import { SortBarCmpComponent } from './sort-bar-cmp/sort-bar-cmp.component';
 import { FacetsCmpComponent } from './facets-cmp/facets-cmp.component';
 import { PagerCmpComponent } from './pager-cmp/pager-cmp.component';
-import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService } from '../../services/index';
+import { OsdlSolrSrvService, ResultsStoreSrvService, SearchStateSrvService, GetMapServicesMetadataSrvService } from '../../services/index';
+import { UtilitiesCls } from '../../utilities-cls';
 
 declare var $: any;
 
@@ -27,7 +28,9 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     public _results_store_service: ResultsStoreSrvService,
-    public _search_state_service: SearchStateSrvService    
+    public _search_state_service: SearchStateSrvService,    
+    private _utilities: UtilitiesCls,
+    private getServiceMetadata: GetMapServicesMetadataSrvService
   ) { }
 
   onViewTypeChangeHandler(view: any) {
@@ -86,9 +89,24 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        this.solr_results = results;
+        results.response.docs.forEach(result => {
+          const serviceUrl = this._utilities.getMapServiceUrl(result);
+          if (serviceUrl !== '') {
+            this.getServiceMetadata.getMetedata(serviceUrl).subscribe((res => {
+              if (!result['description']) {
+                result['description'] = res['description'];
+              }
+              if (!result['url.thumbnail_s']) {
+                result['url.thumbnail_s'] = serviceUrl + '/info/' + res['thumbnail'];
+              }
+            }));
+          }
+        });
+        this.solr_results = results;        
+        console.log('results',results);
         // check if framework removed from filter bar
         this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('ramework');
       },

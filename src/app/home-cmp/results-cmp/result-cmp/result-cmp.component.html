@@ -24,13 +24,15 @@
                 <!--<div class="record-date col-xs-6"><b>Updated:</b> {{result['sys.src.item.lastmodified_tdt'] }}</div>-->
                 <div *ngIf="result['metadata.ref.org_t'] ? !result['metadata.ref.org_t'].includes('REQUIRED') : false" class="record-misc col-xs-6"><b>Source:  </b>{{_utilities.sourceLookup(result['metadata.ref.org_t'])}}</div>
             </div>
-            <div #tileRecordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" class="bottom-row row">
+            <div #tileRecordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" [attr.isApplication]="isApplication(result)" class="bottom-row row">
                 <!--Check if download data or map service-->
                 <div *ngIf="tileRecordListing.getAttribute('hasPreview') === 'true'" [ngClass]="tileRecordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-preview" (click)="preview(result)">
                     <span><img src="./assets/img/preview-icn.png" alt="preview map service" /></span>Preview</div>
                 <div *ngIf="tileRecordListing.getAttribute('hasDownload') === 'true'" [ngClass]="tileRecordListing.getAttribute('hasPreview') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-download" (click)="download(result)">
                     <span class="glyphicon glyphicon-download-alt"></span>Download</div>
-                <div [ngClass]="tileRecordListing.getAttribute('hasPreview') === 'true' && tileRecordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : tileRecordListing.getAttribute('hasPreview') !== 'true' && tileRecordListing.getAttribute('hasDownload') !== 'true'  ? 'col-xs-12' : 'col-xs-6'"
+                <div *ngIf="tileRecordListing.getAttribute('isApplication') === 'true'" [ngClass]="'col-xs-6'" class="record-download" (click)="openApplication(result)">
+                    <span class="glyphicon glyphicon-new-window"></span>Open Application</div>
+                <div [ngClass]="tileRecordListing.getAttribute('hasPreview') === 'true' && tileRecordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : tileRecordListing.getAttribute('hasPreview') !== 'true' && tileRecordListing.getAttribute('hasDownload') !== 'true' && tileRecordListing.getAttribute('isApplication') !== 'true' ? 'col-xs-12' : 'col-xs-6'"
                     class="record-details" (click)="gotoDetails($event, result)">Details</div>
             </div>
         </div>
@@ -50,12 +52,13 @@
                 <div class="record-title">{{result.title}}</div>
                 <div *ngIf="result['sys.src.collections_ss']" class="record-collection">-- Part of collection(s): {{result['sys.src.collections_ss'].toString()}} --</div>
                 <div class="record-desc" [innerHTML]="result.description ? result.description.substring(0,100) : ''"></div>
-                <div #recordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" class="row list-download-details">
+                <div #recordListing [attr.hasPreview]="hasPreview(result)" [attr.hasDownload]="hasDownload(result)" [attr.isApplication]="isApplication(result)" class="row list-download-details">
                     <!--Check if download data or map service-->
                     <div *ngIf="recordListing.getAttribute('hasDownload') === 'true'" [ngClass]="recordListing.getAttribute('hasPreview') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-download" (click)="download(result)"><span class="glyphicon glyphicon-download-alt"></span>Download</div>
                     <div *ngIf="recordListing.getAttribute('hasPreview') === 'true'" [ngClass]="recordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-preview" (click)="preview(result)">
                         <span><img src="./assets/img/preview-icn.png" alt="preview map service" /></span>Preview</div>
-
+                    <div *ngIf="recordListing.getAttribute('isApplication') === 'true'" [ngClass]="'col-xs-6'" class="record-download" (click)="openApplication(result)">
+                        <span class="glyphicon glyphicon-new-window"></span>Open Application</div>
                     <div [ngClass]="recordListing.getAttribute('hasPreview') === 'true' && recordListing.getAttribute('hasDownload') === 'true' ? 'col-xs-4' : 'col-xs-6'" class="record-details" (click)="gotoDetails($event, result)">Details</div>
                 </div>
             </div>

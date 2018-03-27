@@ -39,6 +39,12 @@
                                         <a (click)="checkDownload($event,item)" class="download-link-a" target="_blank">Download</a>
                                         </span>
                                     </div>
+                                    <div *ngIf="item.links && item.contentType_ss ? item.links.length && item.contentType_ss.length ? item.contentType_ss[0] === 'Applications' : false : false" class="download-link col-xs-2">
+                                        <span class="glyphicon glyphicon-new-window"></span>
+                                        <span *ngIf="item.links.length > 1">   
+                                        <a [href]="item.links[1]" class="download-link-a" download>Open Application</a>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </a>

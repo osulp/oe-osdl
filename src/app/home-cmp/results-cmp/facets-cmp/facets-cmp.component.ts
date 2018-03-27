@@ -199,6 +199,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
 
   ngOnChanges(change: any) {
     if (change.solrFacets) {
+      console.log('facets',change.solrFacets);
       // tslint:disable-next-line:forin
       for (const ff in change.solrFacets.currentValue.facet_fields) {
         const facet_fields = change.solrFacets.currentValue.facet_fields[ff]

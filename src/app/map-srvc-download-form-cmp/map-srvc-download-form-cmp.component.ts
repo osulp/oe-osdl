@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilitiesCls } from '../utilities-cls'
+import { UtilitiesCls } from '../utilities-cls';
 
 declare var L: any;
 declare var ga: any;
@@ -47,14 +47,14 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
       const gpTask = gpService.createTask();
 
       gpTask.on('initialized', () => {
-        gpTask.setParam("requestURL", srvcUrl);
-        gpTask.setOutputParam("error");
-        gpTask.setOutputParam("isError");
-        gpTask.setOutputParam("processURL");
-        gpTask.setOutputParam("downloadZip");
-        gpTask.setOutputParam("downloadZipURL");
+        gpTask.setParam('requestURL', srvcUrl);
+        gpTask.setOutputParam('error');
+        gpTask.setOutputParam('isError');
+        gpTask.setOutputParam('processURL');
+        gpTask.setOutputParam('downloadZip');
+        gpTask.setOutputParam('downloadZipURL');
         gpTask.run((error, response, raw) => {
-          if (response.downloadZipURL !== "") {
+          if (response.downloadZipURL !== '') {
             this.getDownload(response.downloadZipURL, record.title[0]);
             this.hide();
           } else {
@@ -101,10 +101,10 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
     });
     const gpTaskDownload = gpServiceDownload.createTask();
     gpTaskDownload.on('initialized', () => {
-      gpTaskDownload.setParam("restURL", this.requestURL);
-      gpTaskDownload.setParam("email", email);
+      gpTaskDownload.setParam('restURL', this.requestURL);
+      gpTaskDownload.setParam('email', email);
       gpTaskDownload.run((error, response, raw) => {
-        console.log("download");
+        console.log('download');
       });
     });
     this.hide();

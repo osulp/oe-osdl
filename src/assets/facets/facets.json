@@ -9,9 +9,9 @@
         {
             "name": "Formats",
             "expanded": false,
+            "removed": { "facet": "contentType_ss" },
             "solrFields": [
-                { "facet": "dataAccessType_ss" },
-                { "facet": "contentType_ss" }
+                { "facet": "dataAccessType_ss" }
             ]
         },
         {

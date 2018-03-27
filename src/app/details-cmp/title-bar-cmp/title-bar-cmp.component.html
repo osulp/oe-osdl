@@ -2,7 +2,7 @@
     <div id="dataset-title">{{record.title}}
     </div>
     <div *ngIf="record['sys.src.collections_ss']" class="record-collection">-- Part of collection(s):
-        <span *ngFor="let collection of record['sys.src.collections_ss']"><a [routerLink]="['/search', {fq:'sys.src.collections_ss:'+collection}]" > {{collection}}</a></span>
+        <span *ngFor="let collection of record['sys.src.collections_ss']" #collectionSpan [attr.formatted-coll]="collection"><a (click)="gotoCollection(collection)"> {{collection}}</a></span>
     </div>
     <!--Add ngif framework check for display-->
     <div *ngIf="record['keywords'] ? record['keywords'].indexOf('Framework') !== -1 : false" id="framework-dataset">
@@ -39,6 +39,10 @@
                 <div *ngIf="hasDownload" class="col-xss" [ngClass]="hasPreview ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6 col-xs-6' ">
                     <div id="download-btn" (click)="download(record) ">
                         <span class="glyphicon glyphicon-download-alt "></span>Download</div>
+                </div>
+                <div *ngIf="isApplication" class="col-xss" [ngClass]="'col-md-12 col-sm-6 col-xs-6' ">
+                    <div id="download-btn" (click)="download(record) ">
+                        <span class="glyphicon glyphicon-new-window "></span>Open Application</div>
                 </div>
                 <div class="col-xss links" [ngClass]="hasPreview && hasDownload ? 'col-md-12 col-sm-12 col-xs-12' : hasPreview || hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12' ">
                     <div class="row">

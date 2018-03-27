@@ -78,7 +78,9 @@ export class OsdlSolrSrvService {
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
                                 params.append(p.key, p.value.trim()
-                                    .replace(' and ', ' ')
+                                    .replace(p.value.indexOf('contact.organizations_ss:') === -1 
+                                        ? ' and ' 
+                                        : '', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
                                     .replace('Land Use Land Cover', 'Land*Use Land*Cover')
                                     + (p.type === 'query'
