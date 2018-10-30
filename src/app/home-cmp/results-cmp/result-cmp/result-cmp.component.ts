@@ -52,7 +52,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   }
 
   isApplication(result:any){
-    return (result['contentType_ss'] 
+    return (result['contentType_ss']
     ? result['contentType_ss'][0] === 'Applications'
     : false);
   }
