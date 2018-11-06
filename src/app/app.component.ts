@@ -27,16 +27,6 @@ export class AppComponent implements OnInit {
     .split('/about')[0]
     .split('/help')[0]
     .split('/download')[0];
-    //this.router.navigate(['/']);
-    // if (this.homeCmp) {
-    //   if (this.homeCmp.searchCmp) {
-    //     this.homeCmp.searchCmp.clearFilters();
-    //   } else {
-    //     this.router.navigate(['/']);
-    //   }
-    // } else {
-    //   this.router.navigate(['/']);
-    // }
   }
   ngOnInit() {
     const windowScope = this;

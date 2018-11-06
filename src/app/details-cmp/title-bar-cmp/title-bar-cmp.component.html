@@ -5,10 +5,8 @@
         <span *ngFor="let collection of record['sys.src.collections_ss']" #collectionSpan [attr.formatted-coll]="collection"><a (click)="gotoCollection(collection)"> {{collection}}</a></span>
     </div>
     <!--Add ngif framework check for display-->
-    <div *ngIf="record['keywords'] ? record['keywords'].indexOf('Framework') !== -1 : false" id="framework-dataset">
+    <div *ngIf="record['keywords'] ? record['keywords'].toUpperCase().indexOf('FRAMEWORK') !== -1 : false" id="framework-dataset">
         <span>Framework </span><span><img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" /></span>
-        <!--<span class="glyphicon glyphicon-certificate f" title="Oregon Framework Dataset"></span>-->
-        <!--<span class="glyphicon glyphicon-certificate" title="Oregon Framework Dataset"></span>-->
     </div>
     <div id="dataset-tags">
         <span>Topics:</span>

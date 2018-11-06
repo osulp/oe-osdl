@@ -3,7 +3,7 @@ import { MapPreviewCmpComponent } from '../../../map-preview-cmp/map-preview-cmp
 import { MapSrvcDownloadFormCmpComponent } from '../../../map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
 import { Router } from '@angular/router';
 import { UtilitiesCls } from '../../../utilities-cls';
-//import { GetMapServiceDownloadSrvService} from '../../../services/index'
+// import { GetMapServiceDownloadSrvService} from '../../../services/index'
 
 declare var $: any;
 declare var L: any;
