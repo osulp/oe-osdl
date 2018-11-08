@@ -11,7 +11,7 @@ declare var ga: any;
 @Injectable()
 export class OsdlSolrSrvService {
     // SOLRURL: string = 'http://lib-solr1.library.oregonstate.edu:8984/solr/geoportal/select';
-    SOLRURL: string = 'http://solr1.library.oregonstate.edu/solr/geoportal/select';
+    SOLRURL: string = 'https://solr1.library.oregonstate.edu/solr/geoportal/select';
 
     constructor(
         private jsonp: Jsonp,
@@ -78,8 +78,8 @@ export class OsdlSolrSrvService {
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
                                 params.append(p.key, p.value.trim()
-                                    .replace(p.value.indexOf('contact.organizations_ss:') === -1 
-                                        ? ' and ' 
+                                    .replace(p.value.indexOf('contact.organizations_ss:') === -1
+                                        ? ' and '
                                         : '', ' ')
                                     .replace('Admin Boundaries', 'Admin?Boundaries')
                                     .replace('Land Use Land Cover', 'Land*Use Land*Cover')
@@ -138,7 +138,7 @@ export class OsdlSolrSrvService {
                 }
             } else {
                 if (searchType === 'framework') {
-                    // means just remove the framework query                   
+                    // means just remove the framework query
                     params.delete('fq');
                     fqParams.forEach((fp: any, fidx: number) => {
                         if (fidx === 0) {
@@ -183,7 +183,7 @@ export class OsdlSolrSrvService {
         //                 .replace('*', '')
         //                 .replace('Admin_Bounds', 'AdminBoundaries')
         //             + '*ramework OR title:*ramework';
-        //         params.append('fq', fqQuery);                
+        //         params.append('fq', fqQuery);
         //         console.log('fq query', fqQuery);
         //     }
         // });
@@ -194,7 +194,7 @@ export class OsdlSolrSrvService {
     pager(start: any, rows: any) {
         const params: URLSearchParams = this._searchState.getState();
         // console.log('pager check', params);
-        // check if rows changed, if so set start back to 0        
+        // check if rows changed, if so set start back to 0
         params.delete('start');
         params.set('start', params.get('rows') !== rows.toString() ? '0' : start.toString());
         params.delete('rows');
