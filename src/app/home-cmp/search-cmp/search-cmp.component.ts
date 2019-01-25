@@ -33,7 +33,7 @@ export class SearchCmpComponent implements OnInit {
   constructor(
     private router: Router,
     public _osdl_solr_service: OsdlSolrSrvService,
-    public _results_store_service: ResultsStoreSrvService, 
+    public _results_store_service: ResultsStoreSrvService,
     private getServiceMetadata: GetMapServicesMetadataSrvService,
     private _utilities: UtilitiesCls
   ) { }
@@ -59,7 +59,7 @@ export class SearchCmpComponent implements OnInit {
     this.searchString = '';
   }
 
-  inputKeypressHandler(event: any) {    
+  inputKeypressHandler(event: any) {
     const code = event.keyCode || event.which;
     if (code === 13) {
       const scope = this;
@@ -102,7 +102,7 @@ export class SearchCmpComponent implements OnInit {
     }, 100);
   }
 
-  blurHandler(event: any) {    
+  blurHandler(event: any) {
     const searchScope = this;
     if (!this.searchPushed) {
       setTimeout(function () {
@@ -230,19 +230,27 @@ export class SearchCmpComponent implements OnInit {
       });
 
     this.items.subscribe((value: any) => {
-      value.forEach((item:any) => {
+      value.forEach((item: any) => {
         let srvcUrl = this._utilities.getMapServiceUrl(item);
-        if (srvcUrl){
+        if (srvcUrl) {
           this.getServiceMetadata.getMetedata(srvcUrl).subscribe((res => {
-            if (!item['description']){
+            if (!item['description']) {
               item['description'] = res['description'];
             }
-            if (!item['url.thumbnail_s']){
+            if (!item['url.thumbnail_s']) {
               item['url.thumbnail_s'] = srvcUrl + '/info/' + res['thumbnail'];
             }
           }));
         }
-      });      
+      });
+      value.sort((a:any,b:any)=>{
+        console.log('sorting returns',a,b);
+        if (a.description){
+          return a.description.indexOf('Oregon GIS Framework') ? -1 : 0;
+        } else {
+          return 1;
+        }
+      })
       this.temp_search_results = value;
       console.log('value', value);
     });

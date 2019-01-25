@@ -43,13 +43,16 @@ export class MapPreviewCmpComponent implements OnInit {
       const initialZoom = 6;
       L.control.scale().addTo(this.map);
       this.map.setView(initialCoords, initialZoom);
-      L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
         {
           // tslint:disable-next-line:max-line-length
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+          attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>'
         }).addTo(this.map);
     }
-    this.mapserviceUrl = this.mapserviceUrl.replace('arcgis/services', 'arcgis/rest/services').split('/WMSServer?')[0];
+    this.mapserviceUrl = this.mapserviceUrl
+    .replace('arcgis/services', 'arcgis/rest/services')
+    .replace('http:','https:')
+    .split('/WMSServer?')[0];
     console.log('mapservice url', this.mapserviceUrl);
     if (this.mapserviceUrl.includes('ImageServer')) {
       console.log('surely');
@@ -65,9 +68,9 @@ export class MapPreviewCmpComponent implements OnInit {
 
     } else {
       let layerid = this.mapserviceUrl.split('MapServer/').length > 1
-          ? this.mapserviceUrl.split('MapServer/')[1] 
+          ? this.mapserviceUrl.split('MapServer/')[1]
           : '0';
-      let url =  this.mapserviceUrl.split('MapServer/').length > 1 
+      let url =  this.mapserviceUrl.split('MapServer/').length > 1
       ? this.mapserviceUrl.split('MapServer/')[0] + 'MapServer' : this.mapserviceUrl;
       L.esri.dynamicMapLayer({
         url: url,
@@ -77,10 +80,10 @@ export class MapPreviewCmpComponent implements OnInit {
       $('#map').css('height', $(window).height() < 600 ? $(window).height() * .60 + 'px' : '500px');
     }
 
-    L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
       {
         // tslint:disable-next-line:max-line-length
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>'
       }).addTo(this.map);
 
     this.refreshMap();

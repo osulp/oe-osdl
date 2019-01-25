@@ -44,7 +44,7 @@
 
 <!ENTITY % HTMLlat1 PUBLIC
 	"-//W3C//ENTITIES Full Latin 1//EN//HTML"
-	"http://www.fgdc.gov/metadata/HTMLlat1"
+	"https://www.fgdc.gov/metadata/HTMLlat1"
 	>
 
 <!-- %HTMLlat1; -->

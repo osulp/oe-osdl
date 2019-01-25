@@ -10,7 +10,6 @@ declare var ga: any;
 
 @Injectable()
 export class OsdlSolrSrvService {
-    // SOLRURL: string = 'http://lib-solr1.library.oregonstate.edu:8984/solr/geoportal/select';
     SOLRURL: string = 'https://solr1.library.oregonstate.edu/solr/geoportal/select';
 
     constructor(

@@ -24,14 +24,14 @@
                                     <div class="search-result-thumb col-xs-1">
                                         <img *ngIf="item['url.thumbnail_s'] !== undefined" #thumbnail [src]="item['url.thumbnail_s'] !== undefined ? item['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset"
                                             (error)="thumbnail.src = 'assets/img/oe_no_image.png'" title="thumbnail of dataset" />
-                                        <img #thumbnailbinary *ngIf="item['thumbnail_binary_t']" [src]="'http://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (item.id.substring(0,8) + '-' +item.id.substring(8,12) + '-' + item.id.substring(12,16) + '-' + item.id.substring(16,20) + '-' + item.id.substring(20,item.id.length)).toUpperCase() +'%7D'"
+                                        <img #thumbnailbinary *ngIf="item['thumbnail_binary_t']" [src]="'https://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (item.id.substring(0,8) + '-' +item.id.substring(8,12) + '-' + item.id.substring(12,16) + '-' + item.id.substring(16,20) + '-' + item.id.substring(20,item.id.length)).toUpperCase() +'%7D'"
                                             title="thumbnail of dataset" (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
                                     </div>
                                     <div [title]="item.description" [innerHTML]="item.description ? item.description.substring(0,100) : ''" class="search-result-desc col-xs-5">
                                     </div>
                                     <div *ngIf="item.links ? item.links.length > 1 ? (item.links[1].indexOf('.zip') !== -1 || item.links[1].indexOf('ftp:') !== -1) : (item['url.mapserver_ss'] ? item['url.mapserver_ss'].length > 0 : false) : false" class="download-link col-xs-2">
                                         <span class="glyphicon glyphicon-download-alt"></span>
-                                        <span *ngIf="item.links.length > 1">   
+                                        <span *ngIf="item.links.length > 1">
                                         <a *ngIf="item.links[1].indexOf('.zip') !== -1" [href]="item.links[1]" class="download-link-a" download>Download</a>
                                         <a *ngIf="item.links[1].indexOf('ftp:') !== -1 && item.links[1].indexOf('.zip') === -1" [href]="item.links[1]" class="download-link-a" target="_blank">Download</a>
                                         </span>
@@ -41,7 +41,7 @@
                                     </div>
                                     <div *ngIf="item.links && item.contentType_ss ? item.links.length && item.contentType_ss.length ? item.contentType_ss[0] === 'Applications' : false : false" class="download-link col-xs-2">
                                         <span class="glyphicon glyphicon-new-window"></span>
-                                        <span *ngIf="item.links.length > 1">   
+                                        <span *ngIf="item.links.length > 1">
                                         <a [href]="item.links[1]" class="download-link-a" download>Open Application</a>
                                         </span>
                                     </div>

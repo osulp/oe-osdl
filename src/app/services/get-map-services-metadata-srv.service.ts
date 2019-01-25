@@ -13,6 +13,7 @@ export class GetMapServicesMetadataSrvService {
     params.set('f', 'json');
     params.set('callback', 'JSONP_CALLBACK');
     url = url
+      .replace('http:', 'https:')
       .replace('arcgis/services', 'arcgis/rest/services')
       .split('/WMSServer')[0]
       + '/info/iteminfo';

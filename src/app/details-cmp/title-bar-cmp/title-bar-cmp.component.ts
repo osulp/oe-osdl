@@ -43,10 +43,10 @@ export class TitleBarCmpComponent implements OnChanges {
     const initialCoords = [44, -121];
     const initialZoom = 5;
     this.map.setView(initialCoords, initialZoom);
-    L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
       {
         // tslint:disable-next-line:max-line-length
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>'
       }).addTo(this.map);
 
     if (this.record.envelope_geo) {
@@ -89,7 +89,7 @@ export class TitleBarCmpComponent implements OnChanges {
     }
     a.target = '_blank';
     document.body.appendChild(a);
-    // IE: "Access is denied"; 
+    // IE: "Access is denied";
     // see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
     a.click();
     document.body.removeChild(a);

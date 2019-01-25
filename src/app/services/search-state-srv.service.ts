@@ -36,6 +36,8 @@ export class SearchStateSrvService {
     this._searchState.set('q', '*:*');
     this._searchState.set('q.op', 'AND');
     this._searchState.set('fq', 'id.table_s:table.docindex');
+    this._searchState.set('qf', 'title^2');
+    this._searchState.set('bq','description:Framework^1000');
     this._searchState.set('fl',
       'description,title,id,url.thumbnail_s,sys.src.item.lastmodified_tdt,'
       + 'osdl.pub_date_tdt desc,metadata.ref.org_t,links,url.mapserver_ss,'

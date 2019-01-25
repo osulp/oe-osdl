@@ -11,7 +11,7 @@ export class GetMapServiceDownloadSrvService {
 
   getStatus(url: string): Observable<any[]> {
     var gpService = L.esri.GP.service({
-      url: 'http://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/_sandbox/URLToShapefile/GPServer/ZipExists/executeJob',
+      url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/_sandbox/URLToShapefile/GPServer/ZipExists/executeJob',
       useCors: false
     });
 
@@ -25,24 +25,6 @@ export class GetMapServiceDownloadSrvService {
     });
 
     return null;
-    // const params = new URLSearchParams();
-    // params.set('f', 'json');
-    // params.set('url', url);
-    // params.set('callback', 'JSONP_CALLBACK');
-    // const gp_url = 'http://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/_sandbox/URLToShapefile/GPServer/ZipExists/executeJob';
-    // let hasResponse = true;
-    // let response;
-    // do {
-    //   this.jsonp
-    //     .get(gp_url, { search: params })
-    //     .map(function (res: Response) {
-    //       console.log('gp status?', res);
-    //       response = res.json();
-    //       hasResponse = false;
-    //     });
-    // }
-    // while (hasResponse);
-    // return hasResponse ? response : {};
   }
 }
 
