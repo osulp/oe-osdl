@@ -23,14 +23,13 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this._facet_store_service.getFacetStore().subscribe((results: any) => {
-      results.groups.forEach((group: any) => {
-        group.solrFields.forEach((facet: any) => {
-          facet.selected = false;
-        });
+    let facets = this._facet_store_service.getFacetStore();
+    facets.groups.forEach((group: any) => {
+      group.solrFields.forEach((facet: any) => {
+        facet.selected = false;
       });
-      this.facet_groups = results.groups;
     });
+    this.facet_groups = facets.groups;
   }
 
   getTopicQuery(topic) {
@@ -82,14 +81,14 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
 
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
-    // console.log('set FACETS', facets, searchType, updateState);   
+    // console.log('set FACETS', facets, searchType, updateState);
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
       const scope = this;
       window.setTimeout(() => {
         scope.updateFacet(facet);
       }, !updateState ? 100 : 0);
-      // check selected_facets for value, if there remove, else add    
+      // check selected_facets for value, if there remove, else add
       facet.query = facet.query.split(' OR')[0];
       if (!facet.selected) {
         console.log('remove?',facet);

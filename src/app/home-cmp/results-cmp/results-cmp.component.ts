@@ -28,7 +28,7 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   constructor(
     public _osdl_solr_service: OsdlSolrSrvService,
     public _results_store_service: ResultsStoreSrvService,
-    public _search_state_service: SearchStateSrvService,    
+    public _search_state_service: SearchStateSrvService,
     private _utilities: UtilitiesCls,
     private getServiceMetadata: GetMapServicesMetadataSrvService
   ) { }
@@ -89,7 +89,6 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
     this._results_store_service.selectionChanged$.subscribe(
       results => {
         results.response.docs.forEach(result => {
@@ -101,11 +100,14 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
               }
               if (!result['url.thumbnail_s']) {
                 result['url.thumbnail_s'] = serviceUrl + '/info/' + res['thumbnail'];
+                if (result['url.thumbnail_s'].indexOf('http://spatialdata') !== -1) {
+                  result['url.thumbnail_s'] = result['url.thumbnail_s'].replace('http://', 'https://');
+                }
               }
             }));
           }
         });
-        this.solr_results = results;        
+        this.solr_results = results;
         console.log('results',results);
         // check if framework removed from filter bar
         this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('ramework');
@@ -113,5 +115,5 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
       err => console.error(err),
       () => console.log('done with subscribe event results store selected')
     );
-  }
+    }
 }

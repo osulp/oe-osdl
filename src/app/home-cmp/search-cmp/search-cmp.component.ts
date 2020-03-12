@@ -5,6 +5,7 @@ import { OsdlSolrSrvService, ResultsStoreSrvService, GetMapServicesMetadataSrvSe
 import { MapSrvcDownloadFormCmpComponent } from './../../map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
 import { UtilitiesCls } from '../../utilities-cls';
 import { Observable } from 'rxjs/Observable';
+import { connectableObservableDescriptor } from 'rxjs/observable/ConnectableObservable';
 
 declare var $: any;
 
@@ -230,8 +231,10 @@ export class SearchCmpComponent implements OnInit {
       });
 
     this.items.subscribe((value: any) => {
+      console.log('frantisek', value);
       value.forEach((item: any) => {
         let srvcUrl = this._utilities.getMapServiceUrl(item);
+
         if (srvcUrl) {
           this.getServiceMetadata.getMetedata(srvcUrl).subscribe((res => {
             if (!item['description']) {
@@ -241,6 +244,12 @@ export class SearchCmpComponent implements OnInit {
               item['url.thumbnail_s'] = srvcUrl + '/info/' + res['thumbnail'];
             }
           }));
+        }
+        if (item['url.thumbnail_s']){
+          console.log('kocky', item['url.thumbnail_s']);
+          if (item['url.thumbnail_s'].indexOf('http://spatialdata') !== -1){
+            item['url.thumbnail_s'] = item['url.thumbnail_s'].replace('http://','https://');
+          }
         }
       });
       value.sort((a:any,b:any)=>{

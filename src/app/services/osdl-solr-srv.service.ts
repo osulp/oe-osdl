@@ -25,9 +25,11 @@ export class OsdlSolrSrvService {
 
     textSearch(newParams?: any[], update?: boolean): Observable<any[]> {
         const params = this.setParams(newParams, 'textquery', update);
+        console.log('frantisek params', params);
         return this.jsonp
             .get(this.SOLRURL, { search: params })
             .map(function (res: Response) {
+                console.log('frantisek?', res.json().response.docs);
                 return res.json().response.docs || {};
             });
     }
