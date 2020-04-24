@@ -110,7 +110,9 @@ export class ResultsCmpComponent implements OnInit, AfterViewInit {
         this.solr_results = results;
         console.log('results',results);
         // check if framework removed from filter bar
-        this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('ramework');
+        if (this.sortCmp && results.responseHeader.params.fq){
+          this.sortCmp.showFrameworkOnly = results.responseHeader.params.fq.toString().includes('ramework');
+        }
       },
       err => console.error(err),
       () => console.log('done with subscribe event results store selected')

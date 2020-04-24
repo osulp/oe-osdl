@@ -44,11 +44,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     if (facet) {
       this.facet_groups.forEach(group => {
         group.solrFields.forEach((sf: any) => {
-          sf.selected = facet.facet
-            ? facet.facet.includes(sf.facet.replace(' and ', ' OR '))
-              ? facet.selected
-              : sf.selected
-            : sf.selected;
+          sf.selected = sf.facet === facet.facet ? facet.selected : sf.selected;
           if (sf.fields) {
             if (facet.facet) {
               sf.fields.forEach(sff => {
@@ -89,18 +85,14 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
         scope.updateFacet(facet);
       }, !updateState ? 100 : 0);
       // check selected_facets for value, if there remove, else add
-      facet.query = facet.query.split(' OR')[0];
+      //facet.query = facet.query.split(' OR')[0];
       if (!facet.selected) {
         console.log('remove?',facet);
         this.selected_facets = this.selected_facets.filter((f: any) => {
           console.log('f facet',f,facet);
           return f.value.toLowerCase() !== (facet.type === 'facet' ?
             (facet.facet + ':"' + facet.query + '"').toLowerCase()
-            : facet.query
-              .replace('Coastal Marine', 'Coastal and Marine')
-              .replace('Land*Use Land*Cover', 'Land Use Land Cover')
-              .replace('?', ' ')
-              .toLowerCase());
+            : facet.query.toLowerCase());
         });
       } else if (facet.type === 'sort') {
         const sortFacet = this.selected_facets.filter(sf => sf.type === 'sort');

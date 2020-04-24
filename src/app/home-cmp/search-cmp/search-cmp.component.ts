@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { OsdlSolrSrvService, ResultsStoreSrvService, GetMapServicesMetadataSrvService } from '../../services/index';
+import { OsdlSolrSrvService, ResultsStoreSrvService, GetMapServicesMetadataSrvService, FacetsStoreSrvService } from '../../services/index';
 import { MapSrvcDownloadFormCmpComponent } from './../../map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
 import { UtilitiesCls } from '../../utilities-cls';
 import { Observable } from 'rxjs/Observable';
@@ -26,6 +26,7 @@ export class SearchCmpComponent implements OnInit {
   solr_results: any;
   selectedSearchResult: {};
   filters: any[] = [];
+  facets: any = [];
   tempTabIndex: number = -1;
   searchPushed: boolean = false;
   initLoad: boolean = true;
@@ -36,6 +37,7 @@ export class SearchCmpComponent implements OnInit {
     public _osdl_solr_service: OsdlSolrSrvService,
     public _results_store_service: ResultsStoreSrvService,
     private getServiceMetadata: GetMapServicesMetadataSrvService,
+    private _facets_store_service: FacetsStoreSrvService,
     private _utilities: UtilitiesCls
   ) { }
 
@@ -171,13 +173,14 @@ export class SearchCmpComponent implements OnInit {
             // console.log('passport',f,filter);
             filter.type = f.includes('ramework') ? 'framework' : 'facets';
           } else {
-            filter.facet = f
-              .split(' OR')[0]
-              .replace(/"/g, '')
-              .replace(/\*/g, '')
-              .replace('Coastal Marine', 'Coastal and Marine')
-              .replace('LandUse LandCover', 'Land Use Land Cover')
-              .replace('?', ' ');
+            filter.facet = this.facetLookup(f);
+            // filter.facet = f
+            //   .split(' OR')[0]
+            //   .replace(/"/g, '')
+            //   .replace(/\*/g, '')
+            //   .replace('Coastal Marine', 'Coastal and Marine')
+            //   .replace('LandUse LandCover', 'Land Use Land Cover')
+            //   .replace('?', ' ');
             filter.query = f;
             filter.category = this.filterLookup(f);
             filter.type = 'query';
@@ -196,6 +199,18 @@ export class SearchCmpComponent implements OnInit {
       textFilter.type = 'textquery';
       this.filters.push(textFilter);
     }
+  }
+
+  facetLookup(facet){
+    let returnFacet = '';
+    this.facets.groups.forEach(fg => {
+      fg.solrFields.forEach(f => {
+        if (f.query === facet){
+          returnFacet = f.facet;
+        }
+      });
+    });
+    return returnFacet;
   }
 
   removeFilter(filter: any) {
@@ -275,6 +290,8 @@ export class SearchCmpComponent implements OnInit {
       err => console.log(err),
       () => console.log('done with subscribe event results store selected')
     );
+
+    this.facets = this._facets_store_service.getFacetStore();
   }
 }
 

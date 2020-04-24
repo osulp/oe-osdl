@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Jsonp, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { ResultsStoreSrvService } from './results-store-srv.service';
-import { SearchStateSrvService } from './search-state-srv.service';
+import { ResultsStoreSrvService} from './results-store-srv.service';
+import { SearchStateSrvService} from './search-state-srv.service';
+import { FacetsStoreSrvService} from './facets-store-srv.service';
 import { UtilitiesCls } from '../utilities-cls';
 
 declare var ga: any;
@@ -11,13 +12,15 @@ declare var ga: any;
 @Injectable()
 export class OsdlSolrSrvService {
     SOLRURL: string = 'https://solr1.library.oregonstate.edu/solr/geoportal/select';
+    facets: any = [];
 
     constructor(
         private jsonp: Jsonp,
         private _resultStore: ResultsStoreSrvService,
         private _searchState: SearchStateSrvService,
-        private _utilities: UtilitiesCls
-    ) { }
+        private _utilities: UtilitiesCls,
+        private _facets_store_service: FacetsStoreSrvService
+    ) {}
 
     setBaseSearchState() {
         this._searchState.setBaseSearchState();
@@ -78,21 +81,7 @@ export class OsdlSolrSrvService {
                                     params.delete('fq');
                                     params.set('fq', 'id.table_s:table.docindex');
                                 }
-                                params.append(p.key, p.value.trim()
-                                    .replace(p.value.indexOf('contact.organizations_ss:') === -1
-                                        ? ' and '
-                                        : '', ' ')
-                                    .replace('Admin Boundaries', 'Admin?Boundaries')
-                                    .replace('Land Use Land Cover', 'Land*Use Land*Cover')
-                                    + (p.type === 'query'
-                                        && !p.value.includes('keywords')
-                                        && !p.value.includes('dataAccessType_ss')
-                                        && !p.value.includes('contact.organizations_ss')
-                                        && !p.value.includes('sys.src.collections_ss')
-                                        ? ' OR ' + p.value.replace(/\ /g, '') + '*' + (this._utilities.getServiceFilterQuery(p.value) !== ''
-                                            ? ' OR ' + this._utilities.getServiceFilterQuery(p.value)
-                                            : '')
-                                        : ''));
+                                params.append(p.key, p.value.trim());
                                 fqCounter++;
                                 break;
                             case 'sort':
@@ -231,22 +220,18 @@ export class OsdlSolrSrvService {
         const params = new URLSearchParams();
         params.set('q', 'id:' + recordID);
         params.set('facet', 'true');
-        params.set('facet.query', 'Admin Boundaries');
-        params.append('facet.query', 'Bioscience');
-        params.append('facet.query', 'Cadastral');
-        params.append('facet.query', 'Climate');
-        params.append('facet.query', 'Coastal and Marine');
-        params.append('facet.query', 'Elevation');
-        params.append('facet.query', 'Geodetic Control');
-        params.append('facet.query', 'Geoscience');
-        params.append('facet.query', 'Hazards');
-        params.append('facet.query', 'Preparedness');
-        params.append('facet.query', 'Hydrography');
-        params.append('facet.query', 'Imagery');
-        params.append('facet.query', 'Land Use/Land Cover');
-        params.append('facet.query', 'Transportation');
-        params.append('facet.query', 'Utilities');
-        params.append('facet.query', 'Reference');
+        this.facets = this._facets_store_service.getFacetStore();
+        this.facets.groups.forEach(fg => {
+            if (fg.name === 'Topics'){
+                fg.solrFields.forEach((f, idx) => {
+                    if (idx === 0){
+                        params.set('facet.query', f.query);
+                    } else {
+                        params.append('facet.query', f.query);
+                    }
+                });
+            }
+        });
         params.set('wt', 'json');
         params.set('json.wrf', 'JSONP_CALLBACK');
         return this.jsonp
@@ -255,7 +240,6 @@ export class OsdlSolrSrvService {
                 return res.json() || {};
             });
     }
-
 
     search(params: URLSearchParams): Observable<any[]> {
         return this.jsonp

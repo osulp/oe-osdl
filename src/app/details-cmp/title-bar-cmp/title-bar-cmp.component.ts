@@ -134,8 +134,14 @@ export class TitleBarCmpComponent implements OnChanges {
       //     ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')
       //     : false
       //   : false;
-      for (const topic in change.solrResponse.currentValue.facet_counts.facet_queries) {
+
+      for (let topic in change.solrResponse.currentValue.facet_counts.facet_queries) {
         if (change.solrResponse.currentValue.facet_counts.facet_queries[topic] > 0) {
+          console.log(topic);
+          topic = topic.split(' OR')[0]
+          .replace('Coastal Marine', 'Coastal and Marine')
+            .replace('Land*Use Land*Cover', 'Land Use Land Cover')
+            .replace('?', ' ');
           this.topics.push(topic);
         }
       }

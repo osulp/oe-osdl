@@ -44,7 +44,7 @@ export class PaginationDirective implements ControlValueAccessor, OnChanges {
     let i: number, count: number;
     this.seletedPage = this.currentpage;
     const remaining = this.totalItems % this.itemsPerPage;
-    this.totalSize = ((this.totalItems - remaining) / this.itemsPerPage) + 1; // + (remaining === 0 ? 0 : 1);
+    this.totalSize = ((this.totalItems - remaining) / this.itemsPerPage) + (remaining === 0 ? 0 : 1);
 
     // want to get the range that this page is in
     let firstPageRangeVal = 1;
@@ -55,7 +55,7 @@ export class PaginationDirective implements ControlValueAccessor, OnChanges {
         : firstPageRangeVal;
     }
 
-    for (i = (firstPageRangeVal), count = 0; i <= this.totalSize && count < this.pageSize; i++ , count++) {
+    for (i = (firstPageRangeVal), count = 0; i <= this.totalSize && count <= this.pageSize; i++ , count++) {
       this.pageList.push(i);
     }
     this.setPrevNext();
