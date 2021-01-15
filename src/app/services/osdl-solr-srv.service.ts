@@ -38,7 +38,7 @@ export class OsdlSolrSrvService {
     }
 
     setParams(newParams: any[], searchType: any, update?: boolean) {
-        // console.log('setting params', newParams, searchType, update);
+        console.log('setting params', newParams, searchType, update);
         const frameworkQuery = 'keywords_ss:*ramework OR title:*ramework*';
         let params: URLSearchParams = this._searchState.getState();
         params.delete('defType');

@@ -35,5 +35,5 @@ Run `ng github-pages:deploy` to deploy to GitHub Pages.
 To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 =======
 # oe-osdl
-Redesined Oregon Spatial Data Library site. 
+Redesigned Oregon Spatial Data Library site.
 >>>>>>> fc50e13d97870a2125409e96dea79edae23fd593

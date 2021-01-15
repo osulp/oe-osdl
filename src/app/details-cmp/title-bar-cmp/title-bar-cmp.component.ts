@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { MapPreviewCmpComponent } from '../../map-preview-cmp/map-preview-cmp.component';
 import { MapSrvcDownloadFormCmpComponent } from '../../map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
+// import { DownloadHelperCmpComponent } from '../../download-helper-cmp/download-helper-cmp.component';
 import { UtilitiesCls } from '../../utilities-cls';
+import { Agent } from 'https';
 
 declare var L: any;
 declare var ga: any;
@@ -15,6 +17,7 @@ export class TitleBarCmpComponent implements OnChanges {
   @Input() solrResponse: any = {};
   @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
   @ViewChild(MapSrvcDownloadFormCmpComponent) downloadModal: MapSrvcDownloadFormCmpComponent;
+  // @ViewChild(DownloadHelperCmpComponent) downloadHelperModal: DownloadHelperCmpComponent;
   record: any = {};
   facet_counts: any = {};
   topics: any[] = [];
@@ -23,6 +26,7 @@ export class TitleBarCmpComponent implements OnChanges {
   hasPreview: boolean = false;
   hasDownload: boolean = true;
   isApplication: boolean = false;
+  downloadUrl: any = '';
 
 
   constructor(
@@ -61,10 +65,10 @@ export class TitleBarCmpComponent implements OnChanges {
         [lat_max, long_max],
         [lat_min, long_max]
       ], {
-          color: '#C34500',
-          fillColor: '#C34500',
-          fillOpacity: 0.2
-        }).addTo(this.map);
+        color: '#C34500',
+        fillColor: '#C34500',
+        fillOpacity: 0.2
+      }).addTo(this.map);
       this.map.fitBounds(polygon.getBounds().pad(.1));
     }
     this.map.dragging.disable();
@@ -108,7 +112,13 @@ export class TitleBarCmpComponent implements OnChanges {
   }
 
   download(record: any) {
+    // const isFTP = record.links.length > 1 ? record.links[1].includes('ftp:') ? true : false : false;
+    // const browserAgent = this._utilities.browserCheck();
     this.downloadModal.checkDownload(record);
+    // if (browserAgent['browser']['name'] === 'Chrome' && isFTP) {
+    //   this.downloadHelperModal.show(record.links[1]);
+    // }
+
     // const linkType = record.links.length > 1 ? record.links[1].includes('.zip') ? 'download' : 'link' : 'link';
     // this.goto(record.links.length > 1 ? record.links[1] : '', linkType);
   }
@@ -129,6 +139,8 @@ export class TitleBarCmpComponent implements OnChanges {
             ? this.record['url.mapserver_ss'].length > 0
             : false
         : false;
+
+      this.downloadUrl = this.hasDownload ? this.record.links.length > 1 ? this.record.links[1] : '' : '';
       // this.hasDownload = this.record['links']
       //   ? this.record['links'].length > 1
       //     ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')
@@ -139,7 +151,7 @@ export class TitleBarCmpComponent implements OnChanges {
         if (change.solrResponse.currentValue.facet_counts.facet_queries[topic] > 0) {
           console.log(topic);
           topic = topic.split(' OR')[0]
-          .replace('Coastal Marine', 'Coastal and Marine')
+            .replace('Coastal Marine', 'Coastal and Marine')
             .replace('Land*Use Land*Cover', 'Land Use Land Cover')
             .replace('?', ' ');
           this.topics.push(topic);

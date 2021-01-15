@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DownloadHelperCmpComponent } from '../download-helper-cmp/download-helper-cmp.component';
 import { UtilitiesCls } from '../utilities-cls';
 
 declare var L: any;
@@ -10,6 +11,7 @@ declare var ga: any;
   styleUrls: ['./map-srvc-download-form-cmp.component.css']
 })
 export class MapSrvcDownloadFormCmpComponent implements OnInit {
+  @ViewChild(DownloadHelperCmpComponent) downloadHelperModal: DownloadHelperCmpComponent;
   visible = false;
   visibleAnimate = false;
   requestURL = '';
@@ -35,6 +37,7 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
     let srvcUrl = this._utilities.getMapServiceUrl(record);
     srvcUrl = srvcUrl.endsWith('/MapServer') ? srvcUrl + '/0'
       : srvcUrl;
+    let returnUrl = '';
     if (srvcUrl !== '' && record.links.length <= 1) {
       //
       this.requestURL = srvcUrl;
@@ -69,8 +72,15 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
       });
     } else {
       this.hide();
-      this.getDownload(record.links.length > 1 ? record.links[1] : '', record.title);
+      returnUrl = record.links.length > 1 ? record.links[1] : '';
+      this.getDownload(returnUrl, record.title);
+      const isFTP = record.links.length > 1 ? record.links[1].includes('ftp:') ? true : false : false;
+      const browserAgent = this._utilities.browserCheck();
+      if (browserAgent['browser']['name'] === 'Chrome' && isFTP) {
+        this.downloadHelperModal.show(record.links[1]);
+      }
     }
+    return returnUrl;
   }
 
   getDownload(url: string, title?: string) {
@@ -95,6 +105,7 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
     // see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
     a.click();
     document.body.removeChild(a);
+    this.visible = true;
   }
 
   onFormSubmit(email: string) {

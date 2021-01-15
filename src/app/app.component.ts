@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit() {
     const windowScope = this;
+    console.log('initiating');
     $(window).on('resize', () => {
       windowScope.isMobile = $(window).width() < 768;
       windowScope.pageObj = {

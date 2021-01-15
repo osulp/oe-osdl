@@ -1,26 +1,37 @@
 <div id="details-title-bar-wrapper">
     <div id="dataset-title">{{record.title}}
     </div>
-    <div *ngIf="record['sys.src.collections_ss']" class="record-collection">-- Part of collection(s):
-        <span *ngFor="let collection of record['sys.src.collections_ss']" #collectionSpan [attr.formatted-coll]="collection"><a (click)="gotoCollection(collection)"> {{collection}}</a></span>
+    <div *ngIf="record['sys.src.collections_ss']" class="record-collection">--
+        Part of collection(s):
+        <span *ngFor="let collection of record['sys.src.collections_ss']"
+            #collectionSpan [attr.formatted-coll]="collection"><a
+                (click)="gotoCollection(collection)"> {{collection}}</a></span>
     </div>
     <!--Add ngif framework check for display-->
-    <div *ngIf="record['keywords'] ? record['keywords'].toUpperCase().indexOf('FRAMEWORK') !== -1 : false" id="framework-dataset">
-        <span>Framework </span><span><img src="assets/img/framework-icn.png" alt="Oregon Framework Dataset" title="Oregon Framework Dataset" /></span>
+    <div *ngIf="record['keywords'] ? record['keywords'].toUpperCase().indexOf('FRAMEWORK') !== -1 : false"
+        id="framework-dataset">
+        <span>Framework </span><span><img src="assets/img/framework-icn.png"
+                alt="Oregon Framework Dataset"
+                title="Oregon Framework Dataset" /></span>
     </div>
     <div id="dataset-tags">
         <span>Topics:</span>
         <span *ngFor="let topic of topics; let idx = index">
-            <a [routerLink]="['/search', {fq:topic}]" > {{topic}}</a>
-            {{idx < topics.length -1 ? ', ': ''}}</span>
+            <a [routerLink]="['/search', {fq:topic}]"> {{topic}}</a>
+            {{idx < topics.length -1 ? ', ' : '' }}</span>
     </div>
     <div id="dataset-thumbnail-row" class="row">
         <div id="thumbnail-wrapper" class="col-md-4 col-sm-6 col-xs-6">
-            <img #thumbnail *ngIf="record['url.thumbnail_s']" [src]="record['url.thumbnail_s'] !== undefined ? record['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail').replace('http:','https:') : 'assets/img/oe_no_image.png' " title="thumbnail of dataset" (error)="thumbnail.src = 'assets/img/oe_no_image.png'"
-            />
-            <img #thumbnailbinary *ngIf="record['thumbnail_binary_t']" [src]="'https://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (record.id.toUpperCase().substring(0,8) + '-' +record.id.substring(8,12) + '-' + record.id.substring(12,16) + '-' + record.id.substring(16,20) + '-' + record.id.substring(20,record.id.length)).toUpperCase() +'%7D'"
-                title="thumbnail of dataset" (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
-            <img *ngIf="record['url.thumbnail_s'] === undefined && record['thumbnail_binary_t'] === undefined" src="assets/img/oe_no_image.png">
+            <img #thumbnail *ngIf="record['url.thumbnail_s']"
+                [src]="record['url.thumbnail_s'] !== undefined ? record['url.thumbnail_s'].replace('/export?size=256,256&f=image','/info/thumbnail').replace('http:','https:') : 'assets/img/oe_no_image.png' "
+                title="thumbnail of dataset"
+                (error)="thumbnail.src = 'assets/img/oe_no_image.png'" />
+            <img #thumbnailbinary *ngIf="record['thumbnail_binary_t']"
+                [src]="'https://spatialdata.oregonexplorer.info/geoportal/thumbnail?uuid=%7B'+ (record.id.toUpperCase().substring(0,8) + '-' +record.id.substring(8,12) + '-' + record.id.substring(12,16) + '-' + record.id.substring(16,20) + '-' + record.id.substring(20,record.id.length)).toUpperCase() +'%7D'"
+                title="thumbnail of dataset"
+                (error)="thumbnailbinary.src = 'assets/img/oe_no_image.png'" />
+            <img *ngIf="record['url.thumbnail_s'] === undefined && record['thumbnail_binary_t'] === undefined"
+                src="assets/img/oe_no_image.png">
         </div>
         <div id="static-map-wrapper" class="col-md-4 col-sm-6 col-xs-6">
             <div id="static-map"></div>
@@ -29,27 +40,47 @@
         <div class="col-md-4 col-sm-12 col-xs-12">
             <!--<div class="row">-->
             <div id="links-wrapper" class="row">
-                <div *ngIf="hasPreview" [ngClass]="hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6'" class="record-preview col-xss" (click)="preview(record) ">
+                <div *ngIf="hasPreview"
+                    [ngClass]="hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6'"
+                    class="record-preview col-xss" (click)="preview(record) ">
                     <div id="preview-btn">
-                        <span><img src="./assets/img/icn-view.svg " alt="preview map service " /></span> Preview
+                        <span><img src="./assets/img/icn-view.svg "
+                                alt="preview map service " /></span> Preview
                     </div>
                 </div>
-                <div *ngIf="hasDownload" class="col-xss" [ngClass]="hasPreview ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6 col-xs-6' ">
-                    <div id="download-btn" (click)="download(record) ">
-                        <span class="glyphicon glyphicon-download-alt "></span>Download</div>
+                <div *ngIf="hasDownload" class="col-xss"
+                    [ngClass]="hasPreview ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6 col-xs-6' ">
+                    <!-- <a [download]="record['title']" [href]="downloadUrl"
+                        target="_blank"> -->
+                        <div id="download-btn" (click)="download(record) ">
+                            <span
+                                class="glyphicon glyphicon-download-alt "></span>Download
+                        </div>
+                    <!-- </a> -->
                 </div>
-                <div *ngIf="isApplication" class="col-xss" [ngClass]="'col-md-12 col-sm-6 col-xs-6' ">
+                <div *ngIf="isApplication" class="col-xss"
+                    [ngClass]="'col-md-12 col-sm-6 col-xs-6' ">
                     <div id="download-btn" (click)="download(record) ">
-                        <span class="glyphicon glyphicon-new-window "></span>Open Application</div>
+                        <span
+                            class="glyphicon glyphicon-new-window "></span>Open
+                        Application
+                    </div>
                 </div>
-                <div class="col-xss links" [ngClass]="hasPreview && hasDownload ? 'col-md-12 col-sm-12 col-xs-12' : hasPreview || hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12' ">
+                <div class="col-xss links"
+                    [ngClass]="hasPreview && hasDownload ? 'col-md-12 col-sm-12 col-xs-12' : hasPreview || hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12' ">
                     <div class="row">
-                        <div id="metadata-link" [ngClass]="hasPreview && hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6 col-xs-6' ">
-                            <div class="link" (click)="gotoMetadata(record) ">Metadata<span class="glyphicon glyphicon-menu-right "></span>
+                        <div id="metadata-link"
+                            [ngClass]="hasPreview && hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6 col-xs-6' ">
+                            <div class="link" (click)="gotoMetadata(record) ">
+                                Metadata<span
+                                    class="glyphicon glyphicon-menu-right "></span>
                             </div>
                         </div>
-                        <div id="source-site" [ngClass]="hasPreview && hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6 col-xs-6'">
-                            <div class="link" (click)="gotoSource(record) ">Source site <span class="glyphicon glyphicon-menu-right "></span>
+                        <div id="source-site"
+                            [ngClass]="hasPreview && hasDownload ? 'col-md-12 col-sm-6 col-xs-6' : 'col-md-12 col-sm-6 col-xs-6'">
+                            <div class="link" (click)="gotoSource(record) ">
+                                Source site <span
+                                    class="glyphicon glyphicon-menu-right "></span>
                             </div>
                         </div>
                     </div>

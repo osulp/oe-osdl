@@ -37,6 +37,7 @@ import { GeorssRedirectCmpComponent } from './redirects/georss-redirect-cmp/geor
 import { PageNotFoundCmpComponent } from './page-not-found-cmp/page-not-found-cmp.component';
 import { ToOsdlGeoportalRedirectCmpComponent } from './redirects/to-osdl-geoportal-redirect-cmp/to-osdl-geoportal-redirect-cmp.component';
 import { MapSrvcDownloadFormCmpComponent } from './map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
+import { DownloadHelperCmpComponent } from './download-helper-cmp/download-helper-cmp.component';
 
 
 declare var ga: any;
@@ -85,7 +86,8 @@ const appRoutes: Routes = [
     GeorssRedirectCmpComponent,
     PageNotFoundCmpComponent,
     ToOsdlGeoportalRedirectCmpComponent,
-    MapSrvcDownloadFormCmpComponent
+    MapSrvcDownloadFormCmpComponent,
+    DownloadHelperCmpComponent
   ],
   imports: [
     BrowserModule,

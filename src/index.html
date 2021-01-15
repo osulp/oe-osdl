@@ -12,9 +12,9 @@
     <link rel="icon" type="image/x-icon" href="assets/img/oe_fav_icon.png">
     <script>
         if (window.location.href.indexOf('localhost') === -1) {
-            (function(i, s, o, g, r, a, m) {
+            (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function() {
+                i[r] = i[r] || function () {
                     (i[r].q = i[r].q || []).push(arguments)
                 }, i[r].l = 1 * new Date();
                 a = s.createElement(o),
@@ -27,6 +27,17 @@
             ga('send', 'pageview');
         }
     </script>
+    <!-- <script>
+        //for testing cookies!
+        setCookie('showOSDLSurvey', true, 90);
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+    </script> -->
+    <script src="https://spatialdata.oregonexplorer.info/geoportal/survey/surveyPopUp.js"></script>
 </head>
 
 <body>
@@ -36,5 +47,182 @@
         </div>
     </app-root>
 </body>
+<!-- <script>
+    window.onload = function (evt) {
+        //check cookie to show
+        console.log('cookies....',getCookie('showOSDLSurvey'));
+       setCookie('showOSDLSurvey', true, 90);
+        if (getCookie('showOSDLSurvey') !== ' ' && getCookie('showOSDLSurvey') !== 'false') {
+            //CSS
+//             var styles = `
+//     /* The Modal (background) */
+// #modalDiv {
+//   position: fixed; /* Stay in place */
+//   z-index: 100; /* Sit on top */
+//   padding-top: 100px; /* Location of the box */
+//   left: 0;
+//   top: 0;
+//   width: 100%; /* Full width */
+//   height: 100%; /* Full height */
+//   overflow: auto; /* Enable scroll if needed */
+//   background-color: rgb(0,0,0); /* Fallback color */
+//   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+// }
+
+// /* Modal Content */
+// #innerModalDiv {
+//   background-color: #fefefe;
+//   margin: auto;
+//   padding: 20px;
+//   border: 1px solid #888;
+//   width: 50%;
+//   text-align: center;
+// }
+
+// #innerModalDiv p {
+//     text-align: left;
+//     padding: 0 20px;
+// }
+
+// /* The Close Button */
+// .close {
+//   color: #aaaaaa;
+//   float: right;
+//   font-size: 28px;
+//   font-weight: bold;
+// }
+
+// .close:hover,
+// .close:focus {
+//   color: #000;
+//   text-decoration: none;
+//   cursor: pointer;
+// }
+
+// .surveyBtn{
+//     padding:10px;
+//     background-color: #98BD85;
+//     color:black;
+//     display: inline-block;
+//     max-width: 30%;
+//     margin:10px 10%;
+//     text-align: center;
+// }
+
+// .surveyBtn.no {
+//     background-color: #C34500;
+//     color: white;
+// }
+
+// .surveyBtn:hover{
+//     text-decoration: underline;
+//     cursor: pointer;
+
+// }
+// #dontShowAgain{
+//     display:inline-block;
+//     padding:10px;
+//     margin-left:20px;
+// }
+// #dontShowAgainLbl{
+//     margin-left: 8px;
+//     color:gray;
+// }
+// `;
+            var styles = '#modalDiv{position:fixed;z-index:100;padding-top:100px;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,.4)}#innerModalDiv{background-color:#fefefe;margin:auto;padding:20px;border:1px solid #888;width:50%;text-align:center}#innerModalDiv p{text-align:left;padding:0 20px}.close{color:#aaa;float:right;font-size:28px;font-weight:700}.close:hover,.close:focus{color:#000;text-decoration:none;cursor:pointer}.surveyBtn{padding:10px;background-color:#98BD85;color:#000;display:inline-block;max-width:30%;margin:10px 10%;text-align:center}.surveyBtn.no{background-color:#C34500;color:#fff}.surveyBtn:hover{text-decoration:underline;cursor:pointer}#dontShowAgain{display:inline-block;padding:10px;margin-left:20px}#dontShowAgainLbl{margin-left:8px;color:gray}';
+            var styleSheet = document.createElement("style");
+            styleSheet.type = "text/css";
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
+
+            //Add HTML
+            //Modal
+            var modalDiv = document.createElement('div');
+            modalDiv.id = 'modalDiv';
+            //Popup content
+            var innerModalDiv = document.createElement('div');
+            innerModalDiv.id = 'innerModalDiv';
+            //Close button
+            var innerModalDivSpan = document.createElement('span');
+            innerModalDivSpan.className = 'close';
+            innerModalDivSpan.innerHTML = '&times;';
+            innerModalDiv.appendChild(innerModalDivSpan);
+            //Text and description
+            var innerModalDivP = document.createElement('p');
+            innerModalDivP.innerHTML = '<center><h2>Take our Survey!</h2></center><hr>';
+            innerModalDivP.innerHTML += 'We are gathering feedback on the Oregon Spatial Data Library and the Oregon Imagery Explorer. We are looking for input on the usefulness of these tools and the possibility of combining the tools.  Your feedback will be greatly appreaciated!';
+            innerModalDiv.appendChild(innerModalDivP);
+            //Div for buttons
+            var innerModalDivButtonOk = document.createElement('div');
+            innerModalDivButtonOk.id = 'btnSurvey';
+            innerModalDivButtonOk.className = 'surveyBtn';
+            innerModalDivButtonOk.innerHTML = "Sure, I will take the survey!";
+            innerModalDivButtonOk.onclick = function(){
+                setCookie('showOSDLSurvey', false, 90);
+                window.open('https://oregonstate.qualtrics.com/jfe/form/SV_1FwtP2IcwrqpTQ9','_blank');
+                modalDiv.style.display = 'none';
+            }
+            var innerModalDivButtonNo = document.createElement('div');
+            innerModalDivButtonNo.id = 'btnNo';
+            innerModalDivButtonNo.className = 'surveyBtn no';
+            innerModalDivButtonNo.innerHTML = "No, thanks.";
+            innerModalDivButtonNo.onclick = function(){
+                if (dontShowAgain.checked){
+                    setCookie('showOSDLSurvey', false, 90);
+                }
+                modalDiv.style.display = 'none';
+            }
+            innerModalDiv.appendChild(innerModalDivButtonOk);
+            innerModalDiv.appendChild(innerModalDivButtonNo);
+            //Bottom don't show
+            var dontShowAgain = document.createElement('input');
+            dontShowAgain.type = 'checkbox';
+            dontShowAgain.id = 'dontShowAgain';
+            dontShowAgain.name = 'dontShowAgain';
+            var dontShowAgainLbl = document.createElement('label');
+            dontShowAgainLbl.htmlFor = 'dontShowAgain';
+            dontShowAgainLbl.id = 'dontShowAgainLbl';
+            dontShowAgainLbl.innerHTML = "Don't show again";
+            innerModalDiv.appendChild(document.createElement('hr'));
+            innerModalDiv.appendChild(dontShowAgain);
+            innerModalDiv.appendChild(dontShowAgainLbl);
+            modalDiv.appendChild(innerModalDiv);
+            document.getElementsByTagName('body')[0].appendChild(modalDiv);
+            //Events
+            innerModalDivSpan.onclick = function () {
+                modalDiv.style.display = 'none';
+                if (dontShowAgain.checked) {
+                    setCookie('showOSDLSurvey', false, 90);
+                }
+            }
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+    };
+</script> -->
+<!-- <script>
+    window.onload = function (evt) { console.log('cookies....', getCookie('showOSDLSurvey')); if (getCookie('showOSDLSurvey') !== ' ' && getCookie('showOSDLSurvey') !== 'false') { var styles = '#modalDiv{position:fixed;z-index:100;padding-top:100px;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,.4)}#innerModalDiv{background-color:#fefefe;margin:auto;padding:20px;border:1px solid #888;width:50%;text-align:center}#innerModalDiv p{text-align:left;padding:0 20px}.close{color:#aaa;float:right;font-size:28px;font-weight:700}.close:hover,.close:focus{color:#000;text-decoration:none;cursor:pointer}.surveyBtn{padding:10px;background-color:#98BD85;color:#000;display:inline-block;max-width:30%;margin:10px 10%;text-align:center}.surveyBtn.no{background-color:#C34500;color:#fff}.surveyBtn:hover{text-decoration:underline;cursor:pointer}#dontShowAgain{display:inline-block;padding:10px;margin-left:20px}#dontShowAgainLbl{margin-left:8px;color:gray}'; var styleSheet = document.createElement("style"); styleSheet.type = "text/css"; styleSheet.innerText = styles; document.head.appendChild(styleSheet); var modalDiv = document.createElement('div'); modalDiv.id = 'modalDiv'; var innerModalDiv = document.createElement('div'); innerModalDiv.id = 'innerModalDiv'; var innerModalDivSpan = document.createElement('span'); innerModalDivSpan.className = 'close'; innerModalDivSpan.innerHTML = '&times;'; innerModalDiv.appendChild(innerModalDivSpan); var innerModalDivP = document.createElement('p'); innerModalDivP.innerHTML = '<center><h2>Take our Survey!</h2></center><hr>'; innerModalDivP.innerHTML += 'We are gathering feedback on the Oregon Spatial Data Library and the Oregon Imagery Explorer. We are looking for input on the usefulness of these tools and the possibility of combining the tools.  Your feedback will be greatly appreaciated!'; innerModalDiv.appendChild(innerModalDivP); var innerModalDivButtonOk = document.createElement('div'); innerModalDivButtonOk.id = 'btnSurvey'; innerModalDivButtonOk.className = 'surveyBtn'; innerModalDivButtonOk.innerHTML = "Sure, I will take the survey!"; innerModalDivButtonOk.onclick = function () { setCookie('showOSDLSurvey', false, 90); window.open('https://oregonstate.qualtrics.com/jfe/form/SV_1FwtP2IcwrqpTQ9', '_blank'); modalDiv.style.display = 'none' }; var innerModalDivButtonNo = document.createElement('div'); innerModalDivButtonNo.id = 'btnNo'; innerModalDivButtonNo.className = 'surveyBtn no'; innerModalDivButtonNo.innerHTML = "No, thanks."; innerModalDivButtonNo.onclick = function () { if (dontShowAgain.checked) { setCookie('showOSDLSurvey', false, 90) } modalDiv.style.display = 'none' }; innerModalDiv.appendChild(innerModalDivButtonOk); innerModalDiv.appendChild(innerModalDivButtonNo); var dontShowAgain = document.createElement('input'); dontShowAgain.type = 'checkbox'; dontShowAgain.id = 'dontShowAgain'; dontShowAgain.name = 'dontShowAgain'; var dontShowAgainLbl = document.createElement('label'); dontShowAgainLbl.htmlFor = 'dontShowAgain'; dontShowAgainLbl.id = 'dontShowAgainLbl'; dontShowAgainLbl.innerHTML = "Don't show again"; innerModalDiv.appendChild(document.createElement('hr')); innerModalDiv.appendChild(dontShowAgain); innerModalDiv.appendChild(dontShowAgainLbl); modalDiv.appendChild(innerModalDiv); document.getElementsByTagName('body')[0].appendChild(modalDiv); innerModalDivSpan.onclick = function () { modalDiv.style.display = 'none'; if (dontShowAgain.checked) { setCookie('showOSDLSurvey', false, 90) } } } function getCookie(cname) { var name = cname + "="; var decodedCookie = decodeURIComponent(document.cookie); var ca = decodedCookie.split(';'); for (var i = 0; i < ca.length; i += 1) { var c = ca[i]; while (c.charAt(0) == ' ') { c = c.substring(1) } if (c.indexOf(name) == 0) { return c.substring(name.length, c.length) } } return "" } function setCookie(cname, cvalue, exdays) { var d = new Date(); d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000)); var expires = "expires=" + d.toUTCString(); document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/" } };
+</script> -->
 
 </html>
