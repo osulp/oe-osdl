@@ -21,13 +21,14 @@ export class AppComponent implements OnInit {
 
   goClearHome() {
     window.location.href = window.location.href
-    .split('/search')[0]
-    .split('/details')[0]
-    .split('/feedback')[0]
-    .split('/about')[0]
-    .split('/help')[0]
-    .split('/download')[0]
-    .split('/resources')[0];
+      .split('/search')[0]
+      .split('/details')[0]
+      .split('/feedback')[0]
+      .split('/imagery')[0]
+      .split('/about')[0]
+      .split('/help')[0]
+      .split('/download')[0]
+      .split('/resources')[0];
   }
   ngOnInit() {
     const windowScope = this;

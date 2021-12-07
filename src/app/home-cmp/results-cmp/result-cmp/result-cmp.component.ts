@@ -20,13 +20,14 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
   @ViewChild(MapPreviewCmpComponent) modal: MapPreviewCmpComponent;
   @ViewChild(MapSrvcDownloadFormCmpComponent) downloadModal: MapSrvcDownloadFormCmpComponent;
   serviceUrl: any;
-
+  imageExtractionUrl = 'https://geo.maps.arcgis.com/apps/MapSeries/index.html?appid=0ab5c3f0a4364e049348cd4daa621443';
+  isImageExtraction = false;
 
   constructor(
     private router: Router,
     private _changeDetectionRef: ChangeDetectorRef,
     private _utilities: UtilitiesCls
-    //private _getMapSrvcDownload: GetMapServiceDownloadSrvService
+    // private _getMapSrvcDownload: GetMapServiceDownloadSrvService
   ) { }
 
   gotoDetails(evt: any, record: any) {
@@ -43,31 +44,42 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     this.modal.show();
   }
 
-  openApplication(record:any)
-{
-  window.open(record['links'][record['links'].length > 1 ? 1 : 0],'_blank');
-}
+  openApplication(record: any) {
+    window.open(record['links'][record['links'].length > 1 ? 1 : 0], '_blank');
+  }
   sourceLookup(source: any) {
     return this._utilities.sourceLookup(source);
   }
 
-  isApplication(result:any){
+  isApplication(result: any) {
     return (result['contentType_ss']
-    ? result['contentType_ss'][0] === 'Applications'
-    : false);
+      ? result['contentType_ss'][0] === 'Applications'
+      : false);
   }
   hasPreview(result: any) {
     return this._utilities.getMapServiceUrl(result) !== '';
   }
   hasDownload(result: any) {
     let isAGS = result['url.mapserver_ss'] ? result['url.mapserver_ss'].length > 0 : false
-    return result['links']
-      ? (result['links'].filter(l => l.includes('.zip') || l.includes('ftp:')).length > 0
-        || isAGS)
-      : false;
+    this.isImageExtraction = result['links'].filter(li => li.indexOf(this.imageExtractionUrl) !== -1).length > 0;
+    if (this.isImageExtraction) {
+      return true;
+    } else {
+      return result['links']
+        ? (result['links'].filter(l => l.includes('.zip') || l.includes('ftp:')).length > 0
+          || isAGS)
+        : false;
+    }
+
   }
   download(record: any) {
-    this.downloadModal.checkDownload(record);
+    console.log('download from result',this.isImageExtraction);
+    if (this.isImageExtraction) {
+      window.open(this.imageExtractionUrl, '_blank');
+    } else {
+      this.downloadModal.checkDownload(record);
+    }
+
   }
 
   ngAfterViewChecked() {

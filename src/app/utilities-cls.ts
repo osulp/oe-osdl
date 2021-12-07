@@ -13,7 +13,7 @@ export class UtilitiesCls {
                 returnVal = '*Cadastral*';
                 break;
             case 'Imagery':
-                returnVal = 'image';
+                returnVal = '';//'image';
                 break;
             case 'Elevation':
                 returnVal = '*LiDAR*';

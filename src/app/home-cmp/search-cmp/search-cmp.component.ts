@@ -161,7 +161,8 @@ export class SearchCmpComponent implements OnInit {
     // process faceted additions, skipping first for all docs
     if (params.fq.constructor === Array) {
       params.fq.forEach((f: string, idx: number) => {
-        if (idx !== 0) {
+        if (idx !== 0 && this.facets.groups !== undefined) {
+          console.log('filter facet',f);
           const filter: any = {};
           if (f.includes(':')) {
             filter.facet = f
@@ -202,15 +203,19 @@ export class SearchCmpComponent implements OnInit {
   }
 
   facetLookup(facet){
-    let returnFacet = '';
-    this.facets.groups.forEach(fg => {
-      fg.solrFields.forEach(f => {
-        if (f.query === facet){
-          returnFacet = f.facet;
-        }
+    try {
+      let returnFacet = '';
+      this.facets.groups.forEach(fg => {
+        fg.solrFields.forEach(f => {
+          if (f.query === facet) {
+            returnFacet = f.facet !== undefined ? f.facet : f;
+          }
+        });
       });
-    });
-    return returnFacet;
+      return returnFacet;
+    } catch(ex) {
+      console.log('facetLookup',ex);
+    }
   }
 
   removeFilter(filter: any) {
@@ -245,8 +250,10 @@ export class SearchCmpComponent implements OnInit {
         }
       });
 
+    this.facets = this._facets_store_service.getFacetStore();
+
     this.items.subscribe((value: any) => {
-      console.log('frantisek', value);
+      // console.log('frantisek', value);
       value.forEach((item: any) => {
         let srvcUrl = this._utilities.getMapServiceUrl(item);
 
@@ -291,7 +298,7 @@ export class SearchCmpComponent implements OnInit {
       () => console.log('done with subscribe event results store selected')
     );
 
-    this.facets = this._facets_store_service.getFacetStore();
+
   }
 }
 

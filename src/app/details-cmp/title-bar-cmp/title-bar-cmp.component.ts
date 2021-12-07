@@ -27,6 +27,7 @@ export class TitleBarCmpComponent implements OnChanges {
   hasDownload: boolean = true;
   isApplication: boolean = false;
   downloadUrl: any = '';
+  imageExtractionUrl = 'https://geo.maps.arcgis.com/apps/MapSeries/index.html?appid=0ab5c3f0a4364e049348cd4daa621443';
 
 
   constructor(
@@ -114,7 +115,12 @@ export class TitleBarCmpComponent implements OnChanges {
   download(record: any) {
     // const isFTP = record.links.length > 1 ? record.links[1].includes('ftp:') ? true : false : false;
     // const browserAgent = this._utilities.browserCheck();
-    this.downloadModal.checkDownload(record);
+    if (this.downloadUrl === this.imageExtractionUrl){
+window.open(this.imageExtractionUrl,'_blank');
+    } else {
+      this.downloadModal.checkDownload(record);
+    }
+
     // if (browserAgent['browser']['name'] === 'Chrome' && isFTP) {
     //   this.downloadHelperModal.show(record.links[1]);
     // }
@@ -126,6 +132,7 @@ export class TitleBarCmpComponent implements OnChanges {
   ngOnChanges(change: any) {
     if (change.solrResponse.currentValue.response) {
       this.record = change.solrResponse.currentValue.response.docs[0];
+
       this.loadMap();
       this.hasPreview = this._utilities.getMapServiceUrl(this.record) !== '';
 
@@ -140,7 +147,15 @@ export class TitleBarCmpComponent implements OnChanges {
             : false
         : false;
 
-      this.downloadUrl = this.hasDownload ? this.record.links.length > 1 ? this.record.links[1] : '' : '';
+      // add download button for imagery tile download tool
+      let hasImageExtractionUrl = this.record['links'].filter(li => li.indexOf(this.imageExtractionUrl) !== -1 )
+        .length > 0;
+      this.hasDownload = hasImageExtractionUrl ? true : this.hasDownload;
+
+      this.downloadUrl = hasImageExtractionUrl
+        ? this.imageExtractionUrl
+        : this.hasDownload
+          ? this.record.links.length > 1 ? this.record.links[1] : '' : '';
       // this.hasDownload = this.record['links']
       //   ? this.record['links'].length > 1
       //     ? this.record['links'][1].includes('.zip') || this.record['links'][1].includes('ftp:')
@@ -153,7 +168,8 @@ export class TitleBarCmpComponent implements OnChanges {
           topic = topic.split(' OR')[0]
             .replace('Coastal Marine', 'Coastal and Marine')
             .replace('Land*Use Land*Cover', 'Land Use Land Cover')
-            .replace('?', ' ');
+            .replace('?', ' ')
+            .replace('OSIP', 'Imagery');
           this.topics.push(topic);
         }
       }

@@ -38,6 +38,7 @@ import { PageNotFoundCmpComponent } from './page-not-found-cmp/page-not-found-cm
 import { ToOsdlGeoportalRedirectCmpComponent } from './redirects/to-osdl-geoportal-redirect-cmp/to-osdl-geoportal-redirect-cmp.component';
 import { MapSrvcDownloadFormCmpComponent } from './map-srvc-download-form-cmp/map-srvc-download-form-cmp.component';
 import { DownloadHelperCmpComponent } from './download-helper-cmp/download-helper-cmp.component';
+import { ImageryCmpComponent } from './imagery-cmp/imagery-cmp.component';
 
 
 declare var ga: any;
@@ -49,6 +50,7 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutCmpComponent },
   { path: 'details', component: DetailsCmpComponent },
   { path: 'help', component: HelpCmpComponent },
+  { path: 'imagery', component: ImageryCmpComponent },
   { path: 'feedback', component: FeedbackCmpComponent },
   { path: 'resources', component: ResourcesCmpComponent },
   { path: 'download', component: DownloadCmpComponent },
@@ -87,7 +89,8 @@ const appRoutes: Routes = [
     PageNotFoundCmpComponent,
     ToOsdlGeoportalRedirectCmpComponent,
     MapSrvcDownloadFormCmpComponent,
-    DownloadHelperCmpComponent
+    DownloadHelperCmpComponent,
+    ImageryCmpComponent
   ],
   imports: [
     BrowserModule,

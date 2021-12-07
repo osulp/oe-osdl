@@ -1,0 +1,319 @@
+<div id="imagery-wrapper">
+  <h2>Imagery</h2>
+  <hr>
+  <div class="imagery_info">
+    <p>The Oregon Spatial Data Library and the Oregon Imagery Explorer have been
+      integrated!
+    </p>
+    <b>Oregon Imagery Program </b>
+    <p>The Oregon Statewide Imagery Program (OSIP) meets increased demand for
+      high
+      resolution aerial imagery and distributes new and historical imagery via
+      web
+      hosted services to every level of government in Oregon, the academic
+      community, private sector business, non-governmental organizations, and
+      the
+      public.</p>
+    <p>Services are provided in both Web Mercator (EPSG:3857) and Oregon Lambert
+      projections (EPSG:2992).</p>
+    <p>Both Web Mercator and Oregon Lambert projections are provided as dynamic
+      <a href="https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-ImageryLayer.html"
+        target="_blank">image services</a>. Image services support client side
+      pixel
+      filtering, server defined or client-defined rendering rules (e.g. remap,
+      colormap), and mosaic rules.</p>
+    <p>Web Mercator services also support access to the tile cache through <a
+        href="https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-TileLayer.html"
+        target="_blank">tile services</a>. Tile services will have better
+      performance than image services and should be the preferred mechanism for
+      web
+      mapping.</p>
+    <p>Oregon Framework Imagery is hosted by the State of Oregon Enterprise
+      Information Services. Imagery can be used in two ways:</p>
+    <ul>
+      <li><a href="https://imagery.oregonexplorer.info/arcgis/rest/services"
+          target="_blank">Streaming services</a></li>
+      <li><a
+          href="https://geo.maps.arcgis.com/apps/MapSeries/index.html?appid=0ab5c3f0a4364e049348cd4daa621443"
+          target="_blank">Tile downloads</a></li>
+    </ul>
+    <hr>
+    <b>How to Stream Imagery</b>
+    <p>The Oregon Framework Aerial Imagery is published as image services. This
+      is the link to the imagery service list: <br><br> <a
+        href="https://imagery.oregonexplorer.info/arcgis/rest/services"
+        target="_blank">Imagery Services:
+        https://imagery.oregonexplorer.info/arcgis/rest/services</a></p>
+    <hr>
+
+    <div class="imagery_tool_option_wrapper">
+      <div class="services-table-wrapper">
+        <b id="inventory-epsg3857"> Inventory (EPSG:3857) </b>
+        <br>
+        <small>Web Mercator (Auxilary Sphere)</small>
+        <!-- <p>Base URL: <a href="https://imagery.oregonexplorer.info/arcgis/rest/"
+            target="_blank">https://imagery.oregonexplorer.info/arcgis/rest/</a>
+        </p> -->
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Year</th>
+                <th style="text-align: left">Resolution</th>
+                <th style="text-align: left">Service</th>
+                <th style="text-align: left">Preview</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">1995</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_1995/NAIP_1995_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_1995/NAIP_1995_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2000</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2000/NAIP_2000_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2000/NAIP_2000_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2005</td>
+                <td style="text-align: left">1/2 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2005/NAIP_2005_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2005/NAIP_2005_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2009</td>
+                <td style="text-align: left">1/2 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2009/NAIP_2009_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2009/NAIP_2009_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2011</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2012</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2012/NAIP_2012_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2012/NAIP_2012_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2014</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2014/NAIP_2014_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2014/NAIP_2014_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2016</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2016/NAIP_2016_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2016/NAIP_2016_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2017</td>
+                <td style="text-align: left">1 foot</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2017/OSIP_2017_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2017/OSIP_2017_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2018</td>
+                <td style="text-align: left">1 foot</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2018/OSIP_2018_WM/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2018/OSIP_2018_WM/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="services-table-wrapper">
+        <b id="inventory-epsg2992"> Inventory (EPSG:2992) </b>
+        <br>
+        <small>Oregon Lambert (ft)</small>
+        <!-- <p>Base URL: <a href="https://imagery.oregonexplorer.info/arcgis/rest/"
+            target="_blank">https://imagery.oregonexplorer.info/arcgis/rest/</a>
+        </p> -->
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Year</th>
+                <th style="text-align: left">Resolution</th>
+                <th style="text-align: left">Service</th>
+                <th style="text-align: left">Preview</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">1995</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_1995/NAIP_1995_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_1995/NAIP_1995_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2000</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2000/NAIP_2000_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2000/NAIP_2000_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2005</td>
+                <td style="text-align: left">1/2 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2005/NAIP_2005_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2005/NAIP_2005_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2009</td>
+                <td style="text-align: left">1/2 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2009/NAIP_2009_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2009/NAIP_2009_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2011</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2011/NAIP_2011_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2012</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2012/NAIP_2012_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2012/NAIP_2012_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2014</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2014/NAIP_2014_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2014/NAIP_2014_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2016</td>
+                <td style="text-align: left">1 meter</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2016/NAIP_2016_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/NAIP_2016/NAIP_2016_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2017</td>
+                <td style="text-align: left">1 foot</td>
+                <td style="text-align: left"><a
+                    href="https://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2017/OSIP_2017_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=https://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2017/OSIP_2017_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">2018</td>
+                <td style="text-align: left">1 foot</td>
+                <td style="text-align: left"><a
+                    href="http://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2018/OSIP_2018_SL/ImageServer"
+                    target="_blank">view layer</a></td>
+                <td style="text-align: left"><a
+                    href="https://www.arcgis.com/home/webmap/viewer.html?url=http://imagery.oregonexplorer.info/arcgis/rest/services/OSIP_2018/OSIP_2018_SL/ImageServer"
+                    target="_blank">preview layer</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <b>To download custom area selections</b>
+    <div class="imagery_tool_option_wrapper">
+
+      <div
+        onclick="window.open('https://geo.maps.arcgis.com/apps/MapSeries/index.html?appid=0ab5c3f0a4364e049348cd4daa621443','_blank')">
+        <h3>Framework Imagery</h3>
+        <img
+          src="https://tools.oregonexplorer.info/Geocortex/Custom/images/ORimagerydownloadthumb.png"
+          alt="Oregon Statewide Aerial Imagery Download">
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- <iframe id="frame" src="https://tools.oregonexplorer.info/OE_HtmlViewer/Index.html?viewer=osdl" style="overflow-y: auto; overflow-x: hidden; height: 790px;" width="100%" frameborder="0" marginheight="0" marginwidth="0" height="100%">
+</iframe>
+    <div>
+        <a href="https://tools.oregonexplorer.info/OE_HtmlViewer/Index.html?viewer=osdl" target="_blank"><span class="glyphicon glyphicon-new-window"></span><span>  Open tool in new tab</span></a>
+    </div> -->
+</div>

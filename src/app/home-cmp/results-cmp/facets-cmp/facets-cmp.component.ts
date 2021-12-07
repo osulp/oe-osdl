@@ -26,10 +26,11 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
     let facets = this._facet_store_service.getFacetStore();
     facets.groups.forEach((group: any) => {
       group.solrFields.forEach((facet: any) => {
-        facet.selected = false;
+        facet.selected = facet.selected !== undefined ? facet.selected : false;
       });
     });
     this.facet_groups = facets.groups;
+    console.log('facet!!', facets);
   }
 
   getTopicQuery(topic) {
@@ -41,7 +42,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
   }
 
   updateFacet(facet: any) {
-    if (facet) {
+    if (facet && this.facet_groups) {
       this.facet_groups.forEach(group => {
         group.solrFields.forEach((sf: any) => {
           sf.selected = sf.facet === facet.facet ? facet.selected : sf.selected;
@@ -77,7 +78,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
 
 
   setSelectedFacets(facets: any[], searchType: any, updateState: boolean) {
-    // console.log('set FACETS', facets, searchType, updateState);
+    console.log('set FACETS', facets, searchType, updateState);
     facets.forEach((facet: any) => {
       // coming from url so need to wait to sync with facet_group get response
       const scope = this;
@@ -85,7 +86,7 @@ export class FacetsCmpComponent implements OnInit, OnChanges {
         scope.updateFacet(facet);
       }, !updateState ? 100 : 0);
       // check selected_facets for value, if there remove, else add
-      //facet.query = facet.query.split(' OR')[0];
+      // facet.query = facet.query.split(' OR')[0];
       if (!facet.selected) {
         console.log('remove?',facet);
         this.selected_facets = this.selected_facets.filter((f: any) => {

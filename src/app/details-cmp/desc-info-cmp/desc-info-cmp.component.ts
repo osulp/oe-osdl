@@ -14,6 +14,8 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
   record: any = {};
   facet_counts: any = {};
   serviceUrl = '';
+  isImageryRecord = false;
+  imageExtractionUrl = 'https://geo.maps.arcgis.com/apps/MapSeries/index.html?appid=0ab5c3f0a4364e049348cd4daa621443';
 
   constructor(
     private getServiceMetadata: GetMapServicesMetadataSrvService,
@@ -30,6 +32,7 @@ export class DescInfoCmpComponent implements OnInit, OnChanges {
       console.log('details', this.record);
       this.facet_counts = change.solrResponse.currentValue.facet_counts;
       this.serviceUrl = this._utilities.getMapServiceUrl(this.record);
+      this.isImageryRecord = this.record['links'].filter(li => li.indexOf(this.imageExtractionUrl) !== -1).length > 0;
       if (this.serviceUrl) {
         this.getServiceMetadata.getMetedata(this.serviceUrl).subscribe((res => {
           if (!this.record['description']) {

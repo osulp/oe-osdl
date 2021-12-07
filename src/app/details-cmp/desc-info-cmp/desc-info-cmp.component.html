@@ -19,6 +19,11 @@
                     <h4>Service URL</h4>
                     <p><a [href]="serviceUrl" target="_blank">{{serviceUrl}}</a></p>
                 </div>
+                <div *ngIf="isImageryRecord">
+                    <h4>Imagery Extraction Tool</h4>
+                    <p>Oregon Statewide Aerial Imagery is made available as <a href="https://oregonexplorer.info/content/web-services-stream-imagery?topic=119&ptopic=98" target="_blank">streaming services</a> that can be brought into other applications.  In addtion to streaming the imagery, the individual image tiles can be downloaded at the following tool:</p>
+                    <p><a [href]="imageExtractionUrl" target="_blank">Oregon Statewide Aerial Imagery Download</a></p>
+                </div>
                 <div *ngIf="record.description" id="metadata-description">
                     <h4>Description</h4>
                     <p [innerHTML]="record.description"></p>
@@ -43,15 +48,15 @@
                         <p>{{record.keywords_ss ? record.keywords_ss.toString().split(',').join(', ') : ''}}</p>
                     </div>-->
                     <h4>Keywords</h4>
-                    <span *ngFor="let keyword of record['keywords_ss'];let idx = index">                       
+                    <span *ngFor="let keyword of record['keywords_ss'];let idx = index">
                         <a [routerLink]="['/search', {fq:'keywords:' + keyword}]" > {{keyword}}</a>
-                        {{idx !== record['keywords_ss'].length -1 ? '|   ' : ''}}           
+                        {{idx !== record['keywords_ss'].length -1 ? '|   ' : ''}}
                     </span>
                     <div *ngIf="record['iso.keywords_ss']">
                         <h4>ISO Topic Categories</h4>
-                        <span *ngFor="let keyword of record['iso.keywords_ss']; let sidx = index"> 
+                        <span *ngFor="let keyword of record['iso.keywords_ss']; let sidx = index">
                         <a [routerLink]="['/search', {fq:'keywords:' + keyword}]" > {{keyword}} </a>
-                        {{sidx !== record['keywords_ss'].length -1 ? '|   ' : ''}}  
+                        {{sidx !== record['keywords_ss'].length -1 ? '|   ' : ''}}
                     </span>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
   visibleAnimate = false;
   requestURL = '';
   status = 'checking';
+  imageExtractionUrl = 'https://geo.maps.arcgis.com/apps/MapSeries/index.html?appid=0ab5c3f0a4364e049348cd4daa621443';
 
   constructor(
     private _utilities: UtilitiesCls
@@ -44,8 +45,8 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
       this.status = 'checking';
       this.show();
       const gpService = L.esri.GP.service({
-        //url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/_sandbox/URLToShapefile/GPServer/ZipExists'
-        url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/geoprocessing/URLToShp/GPServer/URLToShapefileValidate'
+        // url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/_sandbox/URLToShapefile/GPServer/ZipExists'
+        url: 'https://lib-arcgis1.library.oregonstate.edu/arcgis/rest/services/geoprocessing/URLToShapefileValidate/GPServer/URLToShapefileValidate'
       });
 
       const gpTask = gpService.createTask();
@@ -73,11 +74,22 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
     } else {
       this.hide();
       returnUrl = record.links.length > 1 ? record.links[1] : '';
-      this.getDownload(returnUrl, record.title);
-      const isFTP = record.links.length > 1 ? record.links[1].includes('ftp:') ? true : false : false;
-      const browserAgent = this._utilities.browserCheck();
-      if (browserAgent['browser']['name'] === 'Chrome' && isFTP) {
-        this.downloadHelperModal.show(record.links[1]);
+      let hasimageExtractionUrl = record.links.filter(li => li.indexOf(this.imageExtractionUrl) !== -1).length > 0;
+      if (hasimageExtractionUrl) {
+        window.open(this.imageExtractionUrl, '_blank');
+      } else {
+
+
+        this.getDownload(returnUrl, record.title);
+        const isFTP = record.links.length > 1 ? record.links[1].includes('ftp:') ? true : false : false;
+        const isHTTP = record.links.length > 1 ? record.links[1].includes('http:') ? true : false : false;
+        const browserAgent = this._utilities.browserCheck();
+        if (browserAgent['browser']['name'] === 'Chrome' && (isFTP || isHTTP)) {
+          this.downloadHelperModal.show(record.links[1]);
+          this.hide();
+        } else {
+          this.hide();
+        }
       }
     }
     return returnUrl;
@@ -110,8 +122,9 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
 
   onFormSubmit(email: string) {
     const gpServiceDownload = L.esri.GP.service({
-      //url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/_sandbox/URLToShapefile/GPServer/URLToShp'
-      url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/geoprocessing/URLToShp/GPServer/URLToShp'
+      // url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/_sandbox/URLToShapefile/GPServer/URLToShp'
+      // url: 'https://lib-arcgis5.library.oregonstate.edu/arcgis/rest/services/geoprocessing/URLToShp/GPServer/URLToShp'
+      url: 'https://lib-arcgis1.library.oregonstate.edu/arcgis/rest/services/geoprocessing/URLToShp/GPServer/URLToShp'
     });
     const gpTaskDownload = gpServiceDownload.createTask();
     gpTaskDownload.on('initialized', () => {
@@ -122,5 +135,6 @@ export class MapSrvcDownloadFormCmpComponent implements OnInit {
       });
     });
     this.hide();
+
   }
 }

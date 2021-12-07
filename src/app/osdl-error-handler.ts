@@ -29,7 +29,7 @@ export class OsdlErrorHandler extends ErrorHandler {
         toastr.clear();
         toastr['warning']('Error!<br /><br />'
             , error.name
-            + error.message.substring(0, 200)
+            + error.message !== undefined ? error.message.substring(0, 200) : ''
             + ' Sorry, there was a problem.  We are working through the glitches in this new tool, so you may need to refresh page.'
             + ' If the problem continues, let us know so we can look into fixing it.');
         // super.handleError(error);
@@ -38,7 +38,7 @@ export class OsdlErrorHandler extends ErrorHandler {
 
 // export default class MyErrorHandler extends ErrorHandler {
 
-//   constructor() { 
+//   constructor() {
 //     // We rethrow exceptions, so operations like 'bootstrap' will result in an error
 //     // when an error happens. If we do not rethrow, bootstrap will always succeed.
 //     super(true);
@@ -47,6 +47,6 @@ export class OsdlErrorHandler extends ErrorHandler {
 //   handleError(error) {
 //     alert
 //     console.log('error', error);
-//     super.handleError(error);  
+//     super.handleError(error);
 //   }
 // }

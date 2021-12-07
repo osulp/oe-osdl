@@ -41,7 +41,7 @@ export class FacetsStoreSrvService {
         { 'facet': 'Geoscience', 'query': 'Geoscience OR Geoscience*' },
         { 'facet': 'Hazards', 'query': 'Hazards OR Hazards*' },
         { 'facet': 'Hydrography', 'query': 'Hydrography OR Hydrography*' },
-        { 'facet': 'Imagery', 'query': 'Imagery OR Imagery* OR image' },
+        { 'facet': 'Imagery', 'query': 'OSIP OR OSIP*' },
         { 'facet': 'Land Use Land Cover', 'query': 'Land*Use Land*Cover OR LandUseLandCover*' },
         { 'facet': 'Preparedness', 'query': 'Preparedness OR Preparedness*' },
         { 'facet': 'Reference', 'query': 'Reference OR Reference*' },

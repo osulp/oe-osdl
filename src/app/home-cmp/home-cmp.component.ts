@@ -30,82 +30,92 @@ export class HomeCmpComponent implements OnInit {
     private getServiceMetadata: GetMapServicesMetadataSrvService
   ) {
     location.onPopState((test: any) => {
-      console.log('popping', test, this.route.snapshot.params);
+      // console.log('popping', test, this.route.snapshot.params);
       this.checkQueryStingParams(true);
     });
   }
 
   onTextFilterChangeHandler(filter: any) {
-    console.log('filter',filter);
-    this.resultsCmp.facetsCmp.setSelectedFacets([filter], 'textquery', true);
+    // console.log('filter',filter);
+    try{
+      this.resultsCmp.facetsCmp.setSelectedFacets([filter], 'textquery', true);
+    } catch(ex){
+      console.log(ex);
+    }
+
   }
 
   checkQueryStingParams(updateFromPop?: boolean) {
-    const params = [];
-    let sortParam = '';
-    // tslint:disable-next-line:forin
-    for (const param in this.route.snapshot.params) {
-      const paramVal = this.route.snapshot.params[param];
-      if (param === 'fq') {
-        paramVal.split(',').forEach(p => {
+    try{
+      const params = [];
+      let sortParam = '';
+      // tslint:disable-next-line:forin
+      for (const param in this.route.snapshot.params) {
+        const paramVal = this.route.snapshot.params[param];
+        if (param === 'fq') {
+          paramVal.split(',').forEach(p => {
+            params.push(
+              {
+                key: param,
+                value: p.includes('*ramework') ? p + ' OR title:*ramework' : p,
+                facet: p,
+                query: p,
+                selected: true,
+                type: p.includes('*ramework')
+                  ? 'framework'
+                  : 'query'
+              });
+          });
+        } else {
+          sortParam = param === 'sort' ? paramVal : sortParam;
           params.push(
             {
               key: param,
-              value: p.includes('*ramework') ? p + ' OR title:*ramework' : p,
-              facet: p,
-              query: p,
+              value: paramVal,
+              facet: paramVal,
+              query: paramVal,
               selected: true,
-              type: p.includes('*ramework')
+              type: paramVal.includes('*ramework')
                 ? 'framework'
-                : 'query'
+                : param === 'fq'
+                  ? 'query'
+                  : param === 'q'
+                    ? 'textquery'
+                    : param === 'sort'
+                      ? 'sort' : 'facet'
             });
-        });
-      } else {
-        sortParam = param === 'sort' ? paramVal : sortParam;
-        params.push(
-          {
-            key: param,
-            value: paramVal,
-            facet: paramVal,
-            query: paramVal,
-            selected: true,
-            type: paramVal.includes('*ramework')
-              ? 'framework'
-              : param === 'fq'
-                ? 'query'
-                : param === 'q'
-                  ? 'textquery'
-                  : param === 'sort'
-                    ? 'sort' : 'facet'
-          });
+        }
       }
+
+      if (this._search_state_service.getState() === undefined) {
+        this._osdl_solr_service.setBaseSearchState();
+      }
+      const scope = this;
+      if (params.length > 0) {
+        this.resultsCmp.facetsCmp.setSelectedFacets(params, 'framework', updateFromPop);
+        window.setTimeout(() => {
+          scope.resultsCmp.sortCmp.selectedSortBy = sortParam === ''
+            ? 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc'
+            : sortParam;
+          scope.resultsCmp.sortCmp.refreshSort(sortParam);
+          scope.refreshSelectPickers();
+        }, 300);
+      } else {
+        // clear all facets
+        this.resultsCmp.facetsCmp.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
+          sf.selected = false;
+        }));
+        this.resultsCmp.facetsCmp.selected_facets = [];
+        this._osdl_solr_service.get([], '', updateFromPop);
+        window.setTimeout(() => {
+          // console.log('selectdisplay', $('.bootstrap-select').css('display'));
+          scope.refreshSelectPickers();
+        }, 300);
+      }
+    } catch(ex){
+      console.log('checkQueryStringParams',ex);
     }
 
-    if (this._search_state_service.getState() === undefined) {
-      this._osdl_solr_service.setBaseSearchState();
-    }
-    const scope = this;
-    if (params.length > 0) {
-      this.resultsCmp.facetsCmp.setSelectedFacets(params, 'framework', updateFromPop);
-      window.setTimeout(() => {
-        scope.resultsCmp.sortCmp.selectedSortBy = sortParam === ''
-          ? 'osdl.pub_date_tdt desc, sys.src.item.lastmodified_tdt desc'
-          : sortParam;
-        scope.resultsCmp.sortCmp.refreshSort(sortParam);
-        scope.refreshSelectPickers();
-      }, 300);
-    } else {
-      // clear all facets
-      this.resultsCmp.facetsCmp.facet_groups.forEach(group => group.solrFields.forEach((sf: any) => {
-        sf.selected = false;
-      }));
-      this.resultsCmp.facetsCmp.selected_facets = [];
-      this._osdl_solr_service.get([], '', updateFromPop);
-      window.setTimeout(() => {
-        // console.log('selectdisplay', $('.bootstrap-select').css('display'));
-        scope.refreshSelectPickers();
-      }, 300);
-    }
   }
 
   refreshSelectPickers() {
@@ -147,7 +157,7 @@ export class HomeCmpComponent implements OnInit {
       : this.resultsCmp.pagerNumberRows;
     this._results_store_service.selectionChanged$.subscribe(
       results => {
-        // console.log('store updated! in home cmp', results);       
+        // console.log('store updated! in home cmp', results);
         this.solr_results = this.processResults(results);
       },
       err => console.error(err),

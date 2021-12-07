@@ -1,0 +1,47 @@
+#imagery-wrapper {
+  max-width: 1168px;
+  margin: -125px auto 0 auto;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.30);
+  min-height: 590px;
+  max-height: 100%;
+  padding: 30px;
+  height: 100%;
+  position: relative;
+}
+
+.imagery_info{
+   padding:20px;
+   font-size:1.3em;
+}
+
+.imagery_tool_option_wrapper {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.imagery_tool_option_wrapper div {
+  padding: 20px;
+}
+
+.imagery_tool_option_wrapper div:hover {
+  cursor: pointer;
+}
+
+.imagery_tool_option_wrapper img {
+  width: 100%;
+  border: 4px solid #a7a7a7;
+  border-radius: 4px;
+}
+
+.table-wrapper table td, .table-wrapper table th{
+padding:10px;
+border: 1px solid #ccc;
+}
+
+.services-table-wrapper{
+  /* flex-wrap: wrap; */
+  /* display:flex; */
+  /* flex-wrap: nowrap; */
+}
