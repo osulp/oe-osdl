@@ -60,8 +60,9 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
     return this._utilities.getMapServiceUrl(result) !== '';
   }
   hasDownload(result: any) {
-    let isAGS = result['url.mapserver_ss'] ? result['url.mapserver_ss'].length > 0 : false
-    this.isImageExtraction = result['links'].filter(li => li.indexOf(this.imageExtractionUrl) !== -1).length > 0;
+    let isAGS = result['url.mapserver_ss'] ? result['url.mapserver_ss'].length > 0 : false;
+    this.isImageExtraction = result['links'] !== undefined
+      ? result['links'].filter(li => li.indexOf(this.imageExtractionUrl) !== -1).length > 0 : false;
     if (this.isImageExtraction) {
       return true;
     } else {
@@ -73,7 +74,7 @@ export class ResultCmpComponent implements OnInit, AfterViewChecked {
 
   }
   download(record: any) {
-    console.log('download from result',this.isImageExtraction);
+    console.log('download from result', this.isImageExtraction);
     if (this.isImageExtraction) {
       window.open(this.imageExtractionUrl, '_blank');
     } else {

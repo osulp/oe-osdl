@@ -40,13 +40,13 @@
                                     .replace(' and ', ' OR ')
                                     .replace('Admin Boundaries','Admin?Boundaries')
                                     .replace('Land Use Land Cover','Land*Use Land*Cover')
-                                    .replace('Imagery','OSIP')
-                                    + ' OR ' + solr_facet.facet_no_space.replace('Imagery','OSIP') + '*' + (solr_facet.service_lookup !== '' ? + ' OR ' + solr_facet.service_lookup : '') ]">({{solrFacets.facet_queries[solr_facet.facet
+                                    .replace('Imagery','OregonImagery')
+                                    + ' OR ' + solr_facet.facet_no_space.replace('Imagery','OregonImagery') + '*' + (solr_facet.service_lookup !== '' ? + ' OR ' + solr_facet.service_lookup : '') ]">({{solrFacets.facet_queries[solr_facet.facet
                                         .replace(' and ',' OR ')
                                         .replace('Admin Boundaries','Admin?Boundaries')
                                         .replace('Land Use Land Cover','Land*Use Land*Cover')
-                                        .replace('Imagery','OSIP')
-                                        + ' OR ' + solr_facet.facet_no_space.replace('Imagery','OSIP') + '*'
+                                        .replace('Imagery','OregonImagery')
+                                        + ' OR ' + solr_facet.facet_no_space.replace('Imagery','OregonImagery') + '*'
                                         + (solr_facet.service_lookup !== ''
                                             ? + ' OR ' + solr_facet.service_lookup
                                             : '') ]}})

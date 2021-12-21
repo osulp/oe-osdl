@@ -68,7 +68,7 @@ export class SearchStateSrvService {
     this._searchState.append('facet.query', 'Preparedness OR Preparedness*');
     this._searchState.append('facet.query', 'Hydrography OR Hydrography*');
     // this._searchState.append('facet.query', 'Imagery OR Imagery* OR image');
-    this._searchState.append('facet.query', 'OSIP OR OSIP*');
+    this._searchState.append('facet.query', 'OregonImagery OR OregonImagery*');
     this._searchState.append('facet.query', 'Land*Use Land*Cover OR LandUseLandCover*');
     this._searchState.append('facet.query', 'Transportation OR Transportation*');
     this._searchState.append('facet.query', 'Utilities OR Utilities*');

@@ -17,7 +17,7 @@
     <div id="dataset-tags">
         <span>Topics:</span>
         <span *ngFor="let topic of topics; let idx = index">
-            <a [routerLink]="['/search', {fq:topic}]"> {{topic}}</a>
+            <a [routerLink]="['/search', {fq:topic.query}]"> {{topic.label}}</a>
             {{idx < topics.length -1 ? ', ' : '' }}</span>
     </div>
     <div id="dataset-thumbnail-row" class="row">

@@ -163,14 +163,16 @@ window.open(this.imageExtractionUrl,'_blank');
       //   : false;
 
       for (let topic in change.solrResponse.currentValue.facet_counts.facet_queries) {
+       // console.log('topic :: ', topic);
         if (change.solrResponse.currentValue.facet_counts.facet_queries[topic] > 0) {
           console.log(topic);
-          topic = topic.split(' OR')[0]
+          let returntopic = { label : topic.split(' OR')[0]
             .replace('Coastal Marine', 'Coastal and Marine')
             .replace('Land*Use Land*Cover', 'Land Use Land Cover')
             .replace('?', ' ')
-            .replace('OSIP', 'Imagery');
-          this.topics.push(topic);
+            .replace('OregonImagery', 'Imagery'),
+            query : topic};
+          this.topics.push(returntopic);
         }
       }
       this.facet_counts = change.solrResponse.currentValue.facet_counts;

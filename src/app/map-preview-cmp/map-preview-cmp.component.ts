@@ -55,10 +55,11 @@ export class MapPreviewCmpComponent implements OnInit {
     .split('/WMSServer?')[0];
     console.log('mapservice url', this.mapserviceUrl);
     if (this.mapserviceUrl.includes('ImageServer')) {
-      console.log('surely');
+      // Doesn't seem to work...  Only tile services..
       L.esri.imageMapLayer({
         url: this.mapserviceUrl,
-        opacity: 0.7
+        opacity: 0.7,
+        format: 'png'
       }).addTo(this.map);
       // in case being served as a tile layer add
       L.esri.tiledMapLayer({
