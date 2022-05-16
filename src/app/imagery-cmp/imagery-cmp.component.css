@@ -16,6 +16,19 @@
    /* font-size:1.3em; */
 }
 
+#goto_imagery_records{
+  color:white;
+  background-color:#C34500;
+  padding:5px;
+  border-radius: 4px;
+  width:200px;
+}
+
+#goto_imagery_records:hover{
+  text-decoration: underline;
+  cursor:pointer;
+}
+
 .imagery_tool_option_wrapper {
   display: flex;
   flex-flow: wrap;

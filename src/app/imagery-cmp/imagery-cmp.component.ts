@@ -12,4 +12,8 @@ export class ImageryCmpComponent implements OnInit {
   ngOnInit() {
   }
 
+  gotoImagery() {
+    window.open('https://spatialdata.oregonexplorer.info/geoportal/search;fq=OregonImagery%20OR%20OregonImagery*','_parent');
+  }
+
 }
